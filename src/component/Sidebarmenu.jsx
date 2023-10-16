@@ -6,7 +6,7 @@ import { AiOutlineCalendar, AiOutlineSetting } from 'react-icons/ai'
 import { LuNetwork } from 'react-icons/lu'
 export function Sidebarmenu() {
     return (
-        <div className="flex flex-col justify-between items-center w-16 h-full bg-white py-4 shadow-lg rounded-lg">
+        <div className=" flex flex-col justify-between items-center w-16 h-full bg-white py-4 shadow-lg rounded-lg">
             <div className='p-2'>
                 <img src="src/assets/Thinkspedia Main Logo 1.png" alt="" className="w-8 h-8" />
             </div>
