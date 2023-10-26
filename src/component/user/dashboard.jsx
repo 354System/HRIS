@@ -8,16 +8,18 @@ import LateBox from "./Component dashboard/LateBox";
 import WorkingDayThismonthBox from "./Component dashboard/WorkingDayThismonthBox";
 import PremisionBox from "./Component dashboard/PremisionBox";
 import Histori from "./Component dashboard/history";
+import SidebarmenuUser from "./Component dashboard/Sidebarmenu";
+import NavbarUser from "./Component dashboard/Navbar";
 
 
-const Dashboard = () => {
+const DashboardUser = () => {
   return (
     <div className="w-full min-h-screen flex absolute bg-gray-200">
       <div className="p-8">
-        <Sidebarmenu />
+        <SidebarmenuUser />
       </div>
       <div className="w-full p-8">
-        <Navbar title="Dashboard"/>
+        <NavbarUser title="Dashboard"/>
         <div className="w-full mb-10">
           <div className="w-full flex h-72 gap-6">
             <RealtimeInsightBox />
@@ -44,4 +46,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardUser;

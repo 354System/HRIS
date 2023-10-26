@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Webcam from "react-webcam";
+import Webcam from 'react-webcam';
 import { useRef } from "react";
 import { Icon } from "@iconify/react";
 import Result from "./result";
-import { json } from "react-router-dom";
 
 const Camera = ({ WFO, checkInPopUp, status }) => {
 
@@ -148,7 +147,6 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
                 videoConstraints={{ deviceId: device.deviceId }}
                 ref={webcamRef}
                 screenshotFormat="image/png"
-                onUserMedia={OnUserMedia}
                 mirrored={true}
               />
               <button

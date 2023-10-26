@@ -1,8 +1,15 @@
-import React from "react";
-import { AiOutlineSearch, AiOutlineCalendar } from "react-icons/ai";
+import React, { useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 import { Icon } from "@iconify/react";
+import AddUserAdmin from "../../admin/popup-admin/adduser";
 
 const User = () => {
+  const [addUser, setAddUser] = useState(false);
+
+  const handleAdd = () => {
+    setAddUser(true);
+  };
+
   return (
     <div>
       <div className="p-5 bg-white">
@@ -45,7 +52,7 @@ const User = () => {
             </button>
           </div>
           <div className="ml-4">
-            <button className="bg-[purple] w-[168px] h-[40px] rounded-lg flex items-center justify-center">
+            <button onClick={handleAdd} className="bg-[purple] w-[168px] h-[40px] rounded-lg flex items-center justify-center">
               <Icon
                 icon="zondicons:add-solid"
                 width="24"
@@ -53,6 +60,7 @@ const User = () => {
               />
               <span className="text-sm  text-white font-bold">Add User</span>
             </button>
+            {addUser ? <AddUserAdmin AddUser={setAddUser}/> : null}
           </div>
         </div>
       </div>
@@ -76,13 +84,13 @@ const User = () => {
                 <div className="flex items-center">
                   <span>Department</span>
                   <Icon
-                  icon="bxs:up-arrow"
-                  color="#20285a"
-                  width="5.88"
-                  rotate={2}
-                  className="ml-1"
-                />
-                </div>                
+                    icon="bxs:up-arrow"
+                    color="#20285a"
+                    width="5.88"
+                    rotate={2}
+                    className="ml-1"
+                  />
+                </div>
               </th>
               <th>Action</th>
             </tr>

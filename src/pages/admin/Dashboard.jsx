@@ -1,4 +1,4 @@
-import { Navbar } from "../../component/navbar"
+import { Navbar } from "../../component/Navbar"
 import { Sidebarmenu } from "../../component/Sidebarmenu"
 import { LateArrivalBox } from "../../component/admin/dashboard/container info/LateArrivalBox"
 import { OnTimeBox } from "../../component/admin/dashboard/container info/OnTimeBox"
@@ -11,11 +11,11 @@ import ChartAbsensi from "../../component/admin/dashboard/container chart/ChartA
 import ChartDivisiWeekly from "../../component/admin/dashboard/container chart/ChartDivisiWeekly"
 import AODashboard from "../../component/admin/dashboard/container attendance overview/AODashboard"
 
-function Dashboard() {
+function DashboardAdmin() {
   return (
     <div className="min-h-screen flex bg-darkwhite">
       <div className="">
-        <Sidebarmenu />
+        <Sidebarmenu/>
       </div>
       <div className="">
         <Navbar />
@@ -58,4 +58,4 @@ function Dashboard() {
     </div>
   )
 }
-export default Dashboard
+export default DashboardAdmin

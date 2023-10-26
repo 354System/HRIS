@@ -2,7 +2,7 @@ import { FiSearch } from 'react-icons/fi'
 import { IoMdNotificationsOutline } from 'react-icons/io'
 export function Navbar() {
     const pageTitles = {
-        '/dashboard': 'Dashboard',
+        '/admin/dashboard': 'Dashboard',
         '/attendance-overview': 'Attendance Overview',
       };
       

@@ -1,6 +1,6 @@
 import { FiSearch } from 'react-icons/fi'
 import { IoMdNotificationsOutline } from 'react-icons/io'
-export default function Navbar(props){
+export default function NavbarUser(props){
     return (
         <nav className="w-full h-[75px] flex items-center justify-between bg-[#FFFFFF] p-6 shadow-lg rounded-lg mb-10">
             <div>
@@ -23,7 +23,7 @@ export default function Navbar(props){
                 </div>
                 <div className='border-l-2 flex items-center px-5 gap-4'>
                     <div>
-                        <img src="src/assets/image 1584.png" alt="" className='w-10 h-10 rounded-full' />
+                        <img src="/src/assets/image1584.png" alt="" className='w-10 h-10 rounded-full' />
                     </div>
                     <div className='flex flex-col text-xs'>
                         <span>Admin</span>

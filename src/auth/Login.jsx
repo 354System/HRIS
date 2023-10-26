@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import { AiFillExclamationCircle } from 'react-icons/ai'
 const SignIn = () => {
@@ -25,32 +25,34 @@ const SignIn = () => {
         const email = user.email;
         const password = user.password;
         try {
-            const response = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/auth/login', {
+            const response = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email: email, password: password }),
-            });
-
+            })
             if (response.ok) {
                 const responseData = await response.json();
                 console.log(responseData);
-                localStorage.setItem('authToken', responseData.access_token);
-                const userResponse = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/auth/user');
-                const userData = await userResponse.json();
-                const findEmail = userData.find(user => user.email === responseData.useremail);
-                setDataUser(findEmail);
-                navigate('/');
+                
+                if (responseData.role === 'Admin') {
+                    // Jika rolenya admin, arahkan ke halaman admin
+                    navigate('/admin/dashboard')
+                } else if (responseData.role === 'Public') {
+                    // Jika rolenya user, arahkan ke halaman user
+                    navigate('/user/dashboard')
+                } else {
+                    // Tangani peran lain jika diperlukan
+                }
             } else {
                 const errorData = await response.json();
-
+            
                 if (errorData.message === 'Invalid Email') {
                     setErrorMsg("Invalid Email");
                 } else if (errorData.message === 'Invalid Password') {
                     setErrorMsg('Invalid Password');
-                }
-                else if (errorData.message[0] === 'password must be longer than or equal to 6 characters') {
+                } else if (errorData.message[0] === 'password must be longer than or equal to 6 characters') {
                     setErrorMsg('Password harus lebih dari 6 karakter!');
                 } else {
                     // Tangani kesalahan umum di sini
@@ -58,6 +60,7 @@ const SignIn = () => {
                     setErrorMsg('Terjadi kesalahan saat login.');
                 }
             }
+            
         } catch (error) {
             console.error(error);
             console.log('Terjadi kesalahan saat login ');
@@ -65,12 +68,11 @@ const SignIn = () => {
     }
 
     return (
-        <div className={`w-full min-h-screen bg-quarternary font-sans ${darkMode && 'bg-slate-800'}`}>
-            <Navbar />
-            <div className="flex flex-col justify-center items-center mt-16 gap-5">
+        <div className={`w-full min-h-screen bg-quarternary font-sans bg-purple h-full`}>
+            <div className="flex flex-col justify-center items-center mt-16 gap-5 ">
 
                 <div className="flex flex-col gap-2">
-                    <h2 className={`flex justify-center text-primary font-bold text-3xl tracking-tighter ${darkMode && "text-quarternary"}`}>Sign In & Drive</h2>
+                    <h2 className={`flex justify-center text-primary font-bold text-3xl tracking-tighter `}>Sign In & Drive</h2>
                     <span className="text-tertiary text-xs text-center">We will help you get ready today</span>
                 </div>
                 <div className="flex flex-col w-[450px] h-full rounded-xl">
@@ -104,7 +106,7 @@ const SignIn = () => {
                             <span className="text-xs text-tertiary underline">Forgot My Password</span>
                         </div>
                         <div className="mb-4">
-                            <button type="submit" className="block bg-primary shadow shadow-black w-full h-[45px] text-white text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">Sign In</button>
+                            <button type="submit" className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">Sign In</button>
                         </div>
                         <div className="mb-4 flex justify-center text-xs text-tertiary">
                             <span>dont have an account?</span>
