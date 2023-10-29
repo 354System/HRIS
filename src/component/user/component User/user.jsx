@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Icon } from "@iconify/react";
 import AddUserAdmin from "../../admin/popup-admin/adduser";
+import DeleteUser from "../../admin/popup-admin/deleteuser";
 
 const User = () => {
   const [addUser, setAddUser] = useState(false);
+  const [deleteUser, setDeleteUser] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        await fetch("https://fzsxpv5p-3000.asse.devtunnels.ms/user/all", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setUsers(data))
+          .catch((error) => console.error(error));
+      } catch {
+      }
+    };
+    fetchUser()
+  }, []);
 
   const handleAdd = () => {
     setAddUser(true);
   };
+
+  const handleDelete = () => {
+    setDeleteUser(true);
+  }
 
   return (
     <div>
@@ -52,7 +77,10 @@ const User = () => {
             </button>
           </div>
           <div className="ml-4">
-            <button onClick={handleAdd} className="bg-[purple] w-[168px] h-[40px] rounded-lg flex items-center justify-center">
+            <button
+              onClick={handleAdd}
+              className="bg-[purple] w-[168px] h-[40px] rounded-lg flex items-center justify-center"
+            >
               <Icon
                 icon="zondicons:add-solid"
                 width="24"
@@ -60,7 +88,7 @@ const User = () => {
               />
               <span className="text-sm  text-white font-bold">Add User</span>
             </button>
-            {addUser ? <AddUserAdmin AddUser={setAddUser}/> : null}
+            {addUser ? <AddUserAdmin AddUser={setAddUser} /> : null}
           </div>
         </div>
       </div>
@@ -96,55 +124,25 @@ const User = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b">
-              <td className="text-[#252C58] p-4">2341421</td>
-              <td className="text-[#252C58]">Ahmed Rashdan</td>
-              <td className="text-grey">Help Desk Executive</td>
-              <td className="text-grey">IT Department</td>
-              <td className="flex  gap-x-4 mt-4">
-                <Icon icon="solar:pen-bold" width="20" className="" />
-                <Icon
-                  icon="solar:trash-bin-trash-bold"
-                  color="red"
-                  width="18.18"
-                  className=""
-                />
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="border-b">
-              <td className="text-[#252C58] p-4">2341421</td>
-              <td className="text-[#252C58]">Ahmed Rashdan</td>
-              <td className="text-grey">Senior Executive</td>
-              <td className="text-grey">IT Department</td>
-              <td className="flex  gap-x-4 mt-4">
-                <Icon icon="solar:pen-bold" width="20" className="" />
-                <Icon
-                  icon="solar:trash-bin-trash-bold"
-                  color="red"
-                  width="18.18"
-                  className=""
-                />
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="border-b">
-              <td className="text-[#252C58] p-4">2341421</td>
-              <td className="text-[#252C58]">Ahmed Rashdan</td>
-              <td className="text-grey">Senior Manager</td>
-              <td className="text-grey">IT Department</td>
-              <td className="flex  gap-x-4 mt-4">
-                <Icon icon="solar:pen-bold" width="20" className="" />
-                <Icon
-                  icon="solar:trash-bin-trash-bold"
-                  color="red"
-                  width="18.18"
-                  className=""
-                />
-              </td>
-            </tr>
+            {users.map((user, index) => (
+              <tr key={index} className="border-b-2">
+                <td className="text-black p-4">{user._id}</td>
+                <td className="text-[#252C58]">{user.name}</td>
+                <td className="text-grey">{user.position}</td>
+                <td className="text-grey">{user.divisi}</td>
+                <td className="flex  gap-x-4 mt-4">
+                  <Icon icon="solar:pen-bold" width="20" className="" />
+                  <Icon
+                    icon="solar:trash-bin-trash-bold"
+                    color="red"
+                    width="18.18"
+                    className="cursor-pointer"
+                    onClick={handleDelete}
+                  />
+                  {deleteUser ? <DeleteUser deleteuser={setDeleteUser}/> : null}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -14,7 +14,7 @@ const LeaveBox =() => {
                 <span className="text-base text-primary font-bold">Leave</span>
                 <div className='flex items-center gap-1'>
                     <div className='w-4 h-4 bg-[#CE7171] flex items-center justify-center rounded-full'>
-                    <img src="src/assets/Vector1.svg"  alt="" className='text-[#43900C]' />
+                    <img src="/src/assets/Vector2.png"  alt="" className='text-[#43900C]' />
                     </div>
                     <div>
                         <span className='text-xs text-grey'>+3% Increase than yesterday</span>
