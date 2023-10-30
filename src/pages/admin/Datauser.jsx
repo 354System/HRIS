@@ -1,7 +1,7 @@
 import React from "react";
 import { Sidebarmenu } from "../../component/Sidebarmenu";
 import { Navbar } from "../../component/Navbar";
-import User from "../../component/user/component User/user";
+import TableDataUser from "../../component/user/data user/TableDataUser";
 
 const DataUser = () => {
     return(
@@ -13,7 +13,7 @@ const DataUser = () => {
                 <Navbar/>
             </div>
             <div className="p-10 mt-20 ml-20">
-                <User/>
+                <TableDataUser/>
             </div>
         </div>
     )

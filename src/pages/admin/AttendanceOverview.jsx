@@ -1,5 +1,5 @@
 import AOtable from "../../component/admin/attandance overview/AOtable"
-import { Navbar } from "../../component/navbar"
+import { Navbar } from "../../component/Navbar"
 import { Sidebarmenu } from "../../component/Sidebarmenu"
 const AttendanceOverview = () => {
     return (

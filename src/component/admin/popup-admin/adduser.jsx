@@ -1,9 +1,8 @@
 import { useState } from "react";
-import React from "react";
 import { Icon } from "@iconify/react";
 
-const AddUserAdmin = (props) => {
-  const { AddUser } = props;
+const AddUserAdmin = ({ addUserPopUp }) => {
+
   const [userData, setUserData] = useState({
     email: "",
     username: "",
@@ -15,7 +14,7 @@ const AddUserAdmin = (props) => {
   });
 
   const handleExit = () => {
-    AddUser(false);
+    addUserPopUp(false);
   };
 
   const [showPassword, setShowPassword] = useState(false);
