@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import { AiFillExclamationCircle } from 'react-icons/ai'
 const Login = () => {
@@ -54,6 +54,7 @@ const Login = () => {
                     setErrorMsg('Terjadi kesalahan saat login.');
                 }
             }
+            
         } catch (error) {
             console.error(error);
             console.log('Terjadi kesalahan saat login ');
@@ -98,7 +99,7 @@ const Login = () => {
                             <span className="text-xs text-tertiary underline">Forgot My Password</span>
                         </div>
                         <div className="mb-4">
-                            <button type="submit" className="block bg-primary shadow shadow-black w-full h-[45px] text-white text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">Sign In</button>
+                            <button type="submit" className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">Sign In</button>
                         </div>
                     </form>
                 </div>

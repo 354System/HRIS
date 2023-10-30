@@ -9,14 +9,14 @@ export function Sidebarmenu() {
     return (
         <div className="flex flex-col fixed h-[95%] top-6 left-6 justify-between items-center w-16 bg-white py-4 shadow-lg rounded-lg">
             <div className='p-2'>
-                <img src="src/assets/Thinkspedia Main Logo 1.png" alt="" className="w-8 h-8" />
+                <img src="/src/assets/Thinkspedia Main Logo 1.png" alt="" className="w-8 h-8" />
             </div>
             <div className='w-full flex flex-col justify-center items-center'>
-                <Link className='w-full' to={'/dashboard'}>
-                    <PiSquaresFourFill size={23} className={`cursor-pointer mb-5 w-full  ${location.pathname === '/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link className='w-full' to={'/admin/dashboard'}>
+                    <PiSquaresFourFill size={23} className={`cursor-pointer mb-5 w-full  ${location.pathname === '/admin/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
-                <Link className='w-full' to={'/attendance-overview'}>
-                    <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/attendance-overview' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link className='w-full' to={'/Use'}>
+                    <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/Use' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link>
                     <MdShowChart size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/report' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
@@ -24,8 +24,8 @@ export function Sidebarmenu() {
                 <Link>
                     <AiOutlineCalendar size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/calendar' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
-                <Link>
-                    <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/network' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link to={'/admin/user'}>
+                    <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/admin/user' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link>
                     <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/add' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />

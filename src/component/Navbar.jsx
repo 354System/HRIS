@@ -2,14 +2,14 @@ import { FiSearch } from 'react-icons/fi'
 import { IoMdNotificationsOutline } from 'react-icons/io'
 export function Navbar() {
     const pageTitles = {
-        '/dashboard': 'Dashboard',
+        '/admin/dashboard': 'Dashboard',
         '/attendance-overview': 'Attendance Overview',
       };
       
       // Mengambil judul berdasarkan lokasi saat ini
       const currentPageTitle = pageTitles[location.pathname] || '';
     return (
-        <nav className="fixed z-10 top-6 left-28 w-[90%] h-[75px] flex items-center justify-between bg-[#FFFFFF] p-6 shadow-lg rounded-lg mb-10">
+        <nav className="fixed z-10 top-6 left-28 w-[90%] h-[75px] flex items-center justify-between bg-[#FFFFFF] p-6 shadow-lg rounded-lg ">
             <div>
                 <span className="navtitle text-xl font-semibold text-primary">{currentPageTitle}</span>
             </div>
@@ -30,7 +30,7 @@ export function Navbar() {
                 </div>
                 <div className='border-l-2 flex items-center px-5 gap-4'>
                     <div>
-                        <img src="src/assets/image1584.png" alt="" className='w-10 h-10 rounded-full' />
+                        <img src="/src/assets/image1584.png" alt="" className='w-10 h-10 rounded-full' />
                     </div>
                     <div className='flex flex-col text-xs'>
                         <span>Admin</span>

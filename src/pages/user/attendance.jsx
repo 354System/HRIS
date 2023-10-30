@@ -1,7 +1,7 @@
 import React from "react";
 import UserHistori from "../../component/user/component Histori-User/User-Histori";
 import { Sidebarmenu } from "../../component/Sidebarmenu";
-import { Navbar } from "../../component/navbar";
+import { Navbar } from "../../component/Navbar";
 
 const AttendanceHistory = () => {
   return (

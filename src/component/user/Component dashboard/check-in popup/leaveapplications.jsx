@@ -41,11 +41,6 @@ const LeaveApplications = (props) => {
               id="default-input"
               className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Start Date"
             />
-            <Icon
-              icon="solar:calendar-date-bold"
-              width="21.14"
-              className="absolute mt-2 mr-2"
-            />
           </div>
           <div className="mt-4 flex justify-end">
             <div>
@@ -59,11 +54,6 @@ const LeaveApplications = (props) => {
               id="default-input"
               className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="End Date"
-            />
-            <Icon
-              icon="solar:calendar-date-bold"
-              width="21.14"
-              className="absolute mt-2 mr-2"
             />
           </div>
           <div className="flex mt-2 gap-x-6">
