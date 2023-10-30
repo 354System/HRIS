@@ -8,6 +8,8 @@ const User = () => {
   const [addUser, setAddUser] = useState(false);
   const [deleteUser, setDeleteUser] = useState(false);
   const [users, setUsers] = useState([]);
+  const [userId, setUserid] = useState("");
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -31,13 +33,17 @@ const User = () => {
     setAddUser(true);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (user_id) => {
     setDeleteUser(true);
+    setUserid(user_id)
   }
 
+
+
+
   return (
-    <div>
-      <div className="p-5 bg-white">
+    <div className="bg-white ">
+      <div className="p-5 ">
         <div className="flex mb-8">
           <div className="relative flex-1">
             <AiOutlineSearch
@@ -137,9 +143,9 @@ const User = () => {
                     color="red"
                     width="18.18"
                     className="cursor-pointer"
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(user._id)}
                   />
-                  {deleteUser ? <DeleteUser deleteuser={setDeleteUser}/> : null}
+                  {deleteUser ? <DeleteUser userid={userId} deleteuser={setDeleteUser}/> : null}
                 </td>
               </tr>
             ))}

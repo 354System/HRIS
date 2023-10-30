@@ -6,7 +6,7 @@ import DashboardAdmin from './pages/admin/Dashboard'
 import DashboardUser from './component/user/dashboard'
 import Attendance from './component/user/User-histori'
 import SignIn from './auth/Login'
-import User from './component/user/component User/user'
+import DataUser from './pages/admin/Datauser'
 
 function App() {
 
@@ -19,7 +19,7 @@ function App() {
         <Route path="/user/dashboard" element={<DashboardUser />} />
         <Route path="/attendance-overview" element={<AttendanceOverview />} />
         <Route path="/login" element={<SignIn />} />
-        <Route path="/admin/user" element={<User />} />
+        <Route path="/admin/user" element={<DataUser />} />
       </Routes>
     </Router>
     </>

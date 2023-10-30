@@ -1,7 +1,6 @@
 import { useState } from "react";
 import React from "react";
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
 
 const AddUserAdmin = (props) => {
   const { AddUser } = props;

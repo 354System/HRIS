@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { Icon } from "@iconify/react";
 import Result from "./result";
-import Webcam from "react-webcam"
+import Webcam from "react-webcam";
 
 const Camera = ({ WFO, checkInPopUp, status }) => {
 

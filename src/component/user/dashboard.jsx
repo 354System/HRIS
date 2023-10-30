@@ -1,5 +1,4 @@
 import Navbar from "./Component dashboard/Navbar";
-import Sidebarmenu from "./Component dashboard/Sidebarmenu";
 import RealtimeInsightBox from "./Component dashboard/RealtimeBox";
 import OnTimeBox from "./Component dashboard/OneTimeBox";
 import AbsenBox from "./Component dashboard/AbsenBox";
@@ -21,15 +20,15 @@ const DashboardUser = () => {
       <div className="w-full p-8">
         <NavbarUser title="Dashboard"/>
         <div className="w-full mb-10">
-          <div className="w-full flex h-72 gap-6">
+          <div className="w-full  flex h-72 gap-6">
             <RealtimeInsightBox />
-            <div className="flex flex-col gap-6">
-              <div className="flex h-1/2 gap-6">
+            <div className="w-full flex flex-col gap-8">
+              <div className="flex h-1/2 gap-8">
                 <OnTimeBox />
                 <AbsenBox />
                 <LeaveBox />
               </div>
-              <div className="flex h-1/2 items-end gap-6">
+              <div className="flex h-1/2 items-end gap-8">
                 <LateBox />
                 <WorkingDayThismonthBox />
                 <PremisionBox />
