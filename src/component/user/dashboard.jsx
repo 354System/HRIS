@@ -36,7 +36,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="">
-          <h1 className="font-bold text-[#252C58] px-2">Attendance History</h1>
+          <h1 className="font-bold text-[#252C58] px-2">Hello World</h1>
           <Histori />
         </div>
       </div>
