@@ -1,9 +1,9 @@
 import { Icon } from "@iconify/react";
 import { BsSun } from "react-icons/bs";
 import { useState, useEffect } from "react";
-import CheckIn from "./popup/check-in";
+import CheckIn from "./check-in popup/check-in";
 
-const RealtimeInsightBox = ({checkInPopUp}) => {
+const RealtimeInsightBox = ({ checkInPopUp }) => {
   const [realtime, setRealtime] = useState("");
   const [date, setDate] = useState("");
   const [popUp, setPopUp] = useState(false)
@@ -28,6 +28,7 @@ const RealtimeInsightBox = ({checkInPopUp}) => {
     const dateFormatted = `${day} ${month} ${year}`;
     setDate(dateFormatted);
   };
+  
   useEffect(() => {
     setInterval(() => {
       updateRealtime();
@@ -66,7 +67,7 @@ const RealtimeInsightBox = ({checkInPopUp}) => {
             />
             <span className="text-white text-xs font-bold px-10">Check-In</span>
           </button>
-          {popUp ? <CheckIn checkInPopUp={setPopUp}/> : null}
+          {popUp ? <CheckIn checkInPopUp={setPopUp} /> : null}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import { AiFillExclamationCircle } from 'react-icons/ai'
-const SignIn = () => {
+const Login = () => {
 
     const navigate = useNavigate()
 
@@ -24,37 +24,33 @@ const SignIn = () => {
 
         const email = user.email;
         const password = user.password;
+
         try {
-            const response = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/auth/login', {
+            const response = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email: email, password: password }),
             });
-
             if (response.ok) {
-                const responseData = await response.json();
-                console.log(responseData);
-                localStorage.setItem('authToken', responseData.access_token);
-                const userResponse = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/auth/user');
-                const userData = await userResponse.json();
-                const findEmail = userData.find(user => user.email === responseData.useremail);
-                setDataUser(findEmail);
-                navigate('/');
+                const userResponse = await response.json();
+                const token = userResponse.token;
+                localStorage.setItem('authToken', token);
+                navigate('/dashboard')
             } else {
-                const errorData = await response.json();
+                const error = await response.json();
 
-                if (errorData.message === 'Invalid Email') {
+                if (error.message === 'Invalid Email') {
                     setErrorMsg("Invalid Email");
-                } else if (errorData.message === 'Invalid Password') {
+                } else if (error.message === 'Invalid Password') {
                     setErrorMsg('Invalid Password');
                 }
-                else if (errorData.message[0] === 'password must be longer than or equal to 6 characters') {
+                else if (error.message[0] === 'password must be longer than or equal to 6 characters') {
                     setErrorMsg('Password harus lebih dari 6 karakter!');
                 } else {
                     // Tangani kesalahan umum di sini
-                    console.error('Terjadi kesalahan saat login:', errorData.message);
+                    console.error('Terjadi kesalahan saat login:', error.message);
                     setErrorMsg('Terjadi kesalahan saat login.');
                 }
             }
@@ -65,12 +61,10 @@ const SignIn = () => {
     }
 
     return (
-        <div className={`w-full min-h-screen bg-quarternary font-sans ${darkMode && 'bg-slate-800'}`}>
-            <Navbar />
+        <div className={`w-full min-h-screen bg-quarternary font-sans '}`}>
             <div className="flex flex-col justify-center items-center mt-16 gap-5">
-
                 <div className="flex flex-col gap-2">
-                    <h2 className={`flex justify-center text-primary font-bold text-3xl tracking-tighter ${darkMode && "text-quarternary"}`}>Sign In & Drive</h2>
+                    <h2 className={`flex justify-center text-primary font-bold text-3xl tracking-tighter "}`}>Sign In & Drive</h2>
                     <span className="text-tertiary text-xs text-center">We will help you get ready today</span>
                 </div>
                 <div className="flex flex-col w-[450px] h-full rounded-xl">
@@ -106,16 +100,10 @@ const SignIn = () => {
                         <div className="mb-4">
                             <button type="submit" className="block bg-primary shadow shadow-black w-full h-[45px] text-white text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">Sign In</button>
                         </div>
-                        <div className="mb-4 flex justify-center text-xs text-tertiary">
-                            <span>dont have an account?</span>
-                        </div>
-                        <div className="mb-4">
-                            <Link to={"/SignUp"}><button type="button" className={`block bg-quarternary border border-tertiary shadow w-full h-[45px] text-primary text-xs font-semibold rounded-[25px] transition duration-150 delay-100 hover:delay-100 hover:bg-gray-300`}>Create New Account</button></Link>
-                        </div>
                     </form>
                 </div>
             </div>
         </div>
     )
 }
-export default SignIn
+export default Login

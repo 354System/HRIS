@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import Camera from "./camera";
+import Camera from "./capture-check-in";
 
-const CheckIn = ({checkInPopUp}) => {
+const CheckIn = ({ checkInPopUp }) => {
 
   const [WFO, setWFO] = useState(false)
   const [status, setStatus] = useState('')
@@ -11,11 +11,11 @@ const CheckIn = ({checkInPopUp}) => {
     setWFO(true);
     setStatus('Work From Office')
   };
- 
+
   const handleClose = () => {
     checkInPopUp(false)
   }
-  
+
   return (
     <div className="absolute w-full h-full inset-0 flex items-center justify-center z-20 bg-black/60">
       <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-8 w-[684px] h-[394px] rounded-lg">
@@ -35,7 +35,7 @@ const CheckIn = ({checkInPopUp}) => {
             <button onClick={handleCheckinWFO} className="flex justify-center items-center bg-[#A332C3] w-[123px] h-[123px] rounded-full">
               <Icon icon="solar:city-outline" width="42.17" color="white" />
             </button>
-            {WFO ? <Camera WFO={setWFO} status={status} checkInPopUp={checkInPopUp}/> : null}
+            {WFO ? <Camera status={status} checkInPopUp={checkInPopUp} /> : null}
             <h1 className="text-center text-[#252C58] font-bold">
               Work From Office
             </h1>

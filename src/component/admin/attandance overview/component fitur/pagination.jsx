@@ -7,7 +7,7 @@ function Pagination({ setCurrentItems, sortData }) {
 
     const pages = []
 
-    for (let i = 1; i <= Math.ceil(length / itemsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(sortData.length / itemsPerPage); i++) {
         pages.push(i);
     }
 
@@ -17,7 +17,7 @@ function Pagination({ setCurrentItems, sortData }) {
         const newCurrentItems = sortData.slice(startIndex, endIndex);
         setCurrentItems(newCurrentItems);
     }, [currentPage, sortData]);
-
+    
     const nextPage = () => {
         if (currentPage < pages.length) {
             setCurrentPages(currentPage + 1);

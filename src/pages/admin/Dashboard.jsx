@@ -11,7 +11,7 @@ import ChartAbsensi from "../../component/admin/dashboard/container chart/ChartA
 import ChartDivisiWeekly from "../../component/admin/dashboard/container chart/ChartDivisiWeekly"
 import AODashboard from "../../component/admin/dashboard/container attendance overview/AODashboard"
 
-function Dashboard() {
+function DashboardAdmin() {
   return (
     <div className="min-h-screen flex bg-darkwhite">
       <div className="">
@@ -58,4 +58,4 @@ function Dashboard() {
     </div>
   )
 }
-export default Dashboard
+export default DashboardAdmin

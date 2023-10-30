@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
-import Permision from "./popup/permission";
+import Permision from "./check-in popup/permission";
 import { useState } from "react";
-import LeaveApplications from "./popup/leaveapplications";
+import LeaveApplications from "./check-in popup/leaveapplications";
 
 const PremisionBox = () => {
   const [popUp, setPopUp] = useState(false)
