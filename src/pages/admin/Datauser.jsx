@@ -1,7 +1,7 @@
 import React from "react";
 import { Sidebarmenu } from "../../component/Sidebarmenu";
 import { Navbar } from "../../component/Navbar";
-import User from "../../component/user/component User/user";
+import User from "../../component/admin/User/user";
 
 const DataUser = () => {
     return(

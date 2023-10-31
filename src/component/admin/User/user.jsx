@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Icon } from "@iconify/react";
-import AddUserAdmin from "../../admin/popup-admin/adduser";
-import DeleteUser from "../../admin/popup-admin/deleteuser";
+import AddUserAdmin from "../popup-admin/adduser";
+import DeleteUser from "../popup-admin/deleteuser";
+import EditUser from "../popup-admin/edituser";
 
 const User = () => {
   const [addUser, setAddUser] = useState(false);
   const [deleteUser, setDeleteUser] = useState(false);
+  const [editUser, setEditUser] = useState(false);
   const [users, setUsers] = useState([]);
   const [userId, setUserid] = useState("");
+  const [userById, setUserById] = useState('')
 
 
   useEffect(() => {
@@ -36,6 +39,12 @@ const User = () => {
   const handleDelete = (user_id) => {
     setDeleteUser(true);
     setUserid(user_id)
+  }
+
+  const handleedit = (user) => {
+    setEditUser(true);
+    setUserById(user)
+
   }
 
 
@@ -130,14 +139,16 @@ const User = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
-              <tr key={index} className="border-b-2">
+            {users.map((user) => (
+              <tr key={user._id} className="border-b-2">
                 <td className="text-black p-4">{user._id}</td>
                 <td className="text-[#252C58]">{user.name}</td>
                 <td className="text-grey">{user.position}</td>
                 <td className="text-grey">{user.divisi}</td>
                 <td className="flex  gap-x-4 mt-4">
-                  <Icon icon="solar:pen-bold" width="20" className="" />
+                  <Icon icon="solar:pen-bold" width="20" className="cursor-pointer" onClick={()=>handleedit(user)}
+                  />
+                  {editUser ? <EditUser user={userById} edituser={setEditUser} /> : null}
                   <Icon
                     icon="solar:trash-bin-trash-bold"
                     color="red"
@@ -145,7 +156,7 @@ const User = () => {
                     className="cursor-pointer"
                     onClick={() => handleDelete(user._id)}
                   />
-                  {deleteUser ? <DeleteUser userid={userId} deleteuser={setDeleteUser}/> : null}
+                  {deleteUser ? <DeleteUser userid={userId} deleteuser={setDeleteUser} /> : null}
                 </td>
               </tr>
             ))}

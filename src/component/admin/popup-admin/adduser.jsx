@@ -4,6 +4,8 @@ import { Icon } from "@iconify/react";
 
 const AddUserAdmin = (props) => {
   const { AddUser } = props;
+
+  
   const [userData, setUserData] = useState({
     email: "",
     username: "",
@@ -59,7 +61,7 @@ const AddUserAdmin = (props) => {
   };
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-full">
+    <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-[818px]">
       <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[590px] rounded-lg flex flex-col">
         <div className="flex justify-end">
           <button
