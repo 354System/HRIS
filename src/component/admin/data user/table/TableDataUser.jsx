@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import DeleteUser from "./popup/deleteuser";
-import AddUserAdmin from "./popup/adduser";
-import HeaderDataUser from "./HeaderDataUser";
-import { useDataUser } from "../../../features/user/useDataUser";
+import { useFetchAllUsers } from "../../../../api/fetchData/useFetchAllUsers";
 import { Spinner } from "@chakra-ui/react";
-import EditUser from "./popup/edituser";
+import HeaderDataUser from "../component/HeaderDataUser";
+import AddUserAdmin from "../actions/adduser";
+import EditUser from "../actions/edituser";
+import DeleteUser from "../actions/deleteuser";
 
 const TableDataUser = () => {
   //add user popup
   const [addUserPopUp, setAddUserPopUp] = useState(false);
   //delete user popup
   const [deleteUserPopUp, setDeleteUserPopUp] = useState(false);
-  //edit user popup dan passing data user sesuai id ke edit popup
+  //edit user popup dan passing data user sesuai id ke action edit user
   const [editUserPopUp, setEditUserPopUp] = useState(false);
   const [userDataById, setUserDataById] = useState([]);
   //user id
@@ -20,16 +20,14 @@ const TableDataUser = () => {
   //search user
   const [searchUser, setSearchUser] = useState("");
 
-  //get data user from useDataUser
-  const { data: users, isLoading, refetch: refetchDataUser } = useDataUser(searchUser);
-
+  //get data user dari useDataUser
+  const { data: users, isLoading, refetch: refetchDataUser } = useFetchAllUsers();
   //popup tidak bisa discroll
   if (addUserPopUp || deleteUserPopUp || editUserPopUp) {
     document.body.classList.add('overflow-hidden');
   } else {
     document.body.classList.remove('overflow-hidden');
   }
-  
   //handle edit
   const handleActionEdit = (user) => {
     setEditUserPopUp(true);
@@ -64,7 +62,7 @@ const TableDataUser = () => {
                 <td>{user.position}</td>
                 <td>{user.divisi}</td>
                 <td className="flex gap-x-4 mt-4">
-                  <Icon icon="solar:pen-bold" width="20" className="cursor-pointer" onClick={() => handleActionEdit(user)}/>
+                  <Icon icon="solar:pen-bold" width="20" className="cursor-pointer" onClick={() => handleActionEdit(user)} />
                   <Icon
                     icon="solar:trash-bin-trash-bold"
                     color="red"
@@ -77,9 +75,9 @@ const TableDataUser = () => {
             ))}
           </tbody>
         </table>
-        {editUserPopUp && <EditUser user={userDataById} refetchDataUser={refetchDataUser} editUserPopUp={setEditUserPopUp} /> }
-        {addUserPopUp && <AddUserAdmin refetchDataUser={refetchDataUser} addUserPopUp={setAddUserPopUp} /> }
-        {deleteUserPopUp && <DeleteUser userid={userId} refetchDataUser={refetchDataUser} deleteuser={setDelete} /> }
+        {editUserPopUp && <EditUser user={userDataById} refetchDataUser={refetchDataUser} editUserPopUp={setEditUserPopUp} />}
+        {addUserPopUp && <AddUserAdmin refetchDataUser={refetchDataUser} addUserPopUp={setAddUserPopUp} />}
+        {deleteUserPopUp && <DeleteUser userid={userId} refetchDataUser={refetchDataUser} deleteuser={setDelete} />}
         {isLoading && <div className="w-full mt-5 flex items-center justify-center"><Spinner color="purple" speed="1s" /></div>}
       </div>
     </div>

@@ -11,6 +11,8 @@ export default {
         primary: '#252C58',
         purple: '#A332C3',
         yellow: '#F9BE2A',
+        green: '#57C125',
+        red: '#D91A1A',
         grey: '#9295AB',
         white: '#FFFFFF',
         darkwhite: '#F9F9F9',

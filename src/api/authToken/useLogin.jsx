@@ -6,7 +6,7 @@ export const useLogin = ({ onSuccess, onError }) => {
         mutationFn: async (body) => {
             const loginResponse = await axiosInstance.post('/user/login', body)
 
-            return loginResponse
+            return loginResponse.data
         },
         onSuccess,
         onError,

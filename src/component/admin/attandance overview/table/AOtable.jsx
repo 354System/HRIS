@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { DataAbsensi } from "../../../mockdata/DataAbsensi";
-import { DataKaryawan } from "../../../mockdata/DataKaryawan";
-import AOTableHeader from "./AOTableHeader";
-import Pagination from "./features/pagination";
+import { DataAbsensi } from "../../../../mockdata/DataAbsensi";
+import { DataKaryawan } from "../../../../mockdata/DataKaryawan";
+import AOTableHeader from "../component/AOTableHeader";
+import Pagination from "../filtering/pagination";
 const AOtable = () => {
     //data yang sudah dicombine
     const [absensi, setAbsensi] = useState([]);

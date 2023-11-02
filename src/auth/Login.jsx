@@ -25,9 +25,7 @@ const Login = () => {
     const { mutate, isPending } = useLogin({
         onSuccess: (data) => {
             localStorage.setItem('authToken', data.token);
-            localStorage.setItem('role', data.role)
             refetchInfoToken();
-            navigate('/dashboard')
             setErrorMsg('');
         },
         onError: (error) => {
@@ -52,7 +50,7 @@ const Login = () => {
                     <span className="text-tertiary text-xs text-center">We will help you get ready today</span>
                 </div>
                 <div className="flex flex-col w-[450px] h-full rounded-xl">
-                    <form className={`p-10 mb-10 rounded-xl bg-primary`} onSubmit={handleLoginSubmit}>
+                    <form className={`p-10 mb-10 rounded-xl bg-primary`}>
                         <div className="mb-4">
                             <label htmlFor="email" className="block font-bold text-quarternary text-sm">Email Address</label>
                             <input
@@ -82,7 +80,7 @@ const Login = () => {
                             <span className="text-xs text-tertiary underline">Forgot My Password</span>
                         </div>
                         <div className="mb-4">
-                            <button type="submit" className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">{isPending ? <Spinner size="sm" /> : "Sign In"}</button>
+                            <button type="button" onClick={handleLoginSubmit} className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">{isPending ? <Spinner size="sm" /> : "Sign In"}</button>
                         </div>
                     </form>
                 </div>

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Spinner } from "@chakra-ui/react";
-import { useCreateUser } from "../../../../features/user/useCreateUser";
+import { useCreateUser } from "../../../../api/user-crud/useCreateUser";
 
 const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
     name: "",
@@ -278,7 +279,7 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
             <button
               onClick={handleSubmit}
               type="button"
-              className="flex items-center justify-center bg-purple w-[155px] h-[46px] rounded-lg text-white font-semibold">
+              className="flex items-center justify-center bg-purple w-[155px] h-[46px] rounded-lg text-white font-semibold hover:bg-purple/50">
               {isPending ? <Spinner size={20} color="white" /> : "Add User"}
             </button>
           </div>

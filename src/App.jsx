@@ -10,15 +10,17 @@ import { useAuthInfo } from './use context/useAuthInfo'
 import DataUser from './pages/admin/Datauser'
 import PrivateRoute from './privat-router/privatRoute'
 function App() {
+  const { userData } = useAuthInfo()
+  const role = userData?.role
   return (
     <>
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<PrivateRoute requiredRoles={["Public"]} element={<DashboardUser />} />} />
+          <Route path="/dashboard" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <DashboardAdmin /> : <DashboardUser />} />} />
           {/* path admin */}
           <Route path="/attendance-overview" element={<PrivateRoute requiredRoles={["Admin"]} element={<AttendanceOverview />} />} />
-          <Route path="/employee-data" element={<PrivateRoute requiredRoles={["Admin"]} element={<DataUser />} />} />
+          <Route path="/employee-data" element={<PrivateRoute requiredRoles={["Admin", "Public"]} element={<DataUser />} />} />
           {/* path user */}
           <Route path="/attendance-history" element={<PrivateRoute requiredRoles={"Public"} element={<AttendanceHistory />} />} />
         </Routes>

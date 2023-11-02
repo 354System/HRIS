@@ -52,7 +52,7 @@ const TablePremission = () => {
               <td className="text-[#A332C3]">18 August 2023</td>
               <td className="text-[#A332C3]">20 August 2023</td>
               <td className="flex  gap-x-1 mt-4">
-                <button className="bg-[#57C125] w-[31px] h-[31px] flex justify-center items-center rounded-lg text-center mb-4">
+                <button className="bg-green w-[31px] h-[31px] flex justify-center items-center rounded-lg text-center mb-4">
                   <Icon
                     icon="ph:check-circle-fill"
                     color="white"
@@ -80,7 +80,7 @@ const TablePremission = () => {
               <td className="text-[#A332C3]">18 August 2023</td>
               <td className="text-[#A332C3]">20 August 2023</td>
               <td className="flex  gap-x-1 mt-4">
-                <button className="bg-[#57C125] w-[31px] h-[31px] flex justify-center items-center rounded-lg text-center mb-4">
+                <button className="bg-green w-[31px] h-[31px] flex justify-center items-center rounded-lg text-center mb-4">
                   <Icon
                     icon="ph:check-circle-fill"
                     color="white"
@@ -108,7 +108,7 @@ const TablePremission = () => {
               <td className="text-[#A332C3]">18 August 2023</td>
               <td className="text-[#A332C3]">20 August 2023</td>
               <td className="flex  gap-x-1 mt-4">
-                <button className="bg-[#57C125] w-[31px] h-[31px] flex justify-center items-center rounded-lg text-center mb-4">
+                <button className="bg-green w-[31px] h-[31px] flex justify-center items-center rounded-lg text-center mb-4">
                   <Icon
                     icon="ph:check-circle-fill"
                     color="white"

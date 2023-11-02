@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import { useEditUser } from "../../../../features/user/useEditUser";
+import { useEditUser } from "../../../../api/user-crud/useEditUser";
 import { Spinner } from "@chakra-ui/react";
 
 const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
@@ -13,20 +13,21 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
         address: user.address,
         numberphone: user.numberphone,
     });
-    console.log(userData);
 
+    //handleCloseEditUserPopUp
     const handleClosePopUp = () => {
         editUserPopUp(false)
     }
-
-
-
+    //memanggil useMutation(editUser)
     const { mutate, isPending } = useEditUser({
+        //passing userId
         userId: user._id,
+        //handle success
         onSuccess: () => {
             refetchDataUser();
             editUserPopUp(false);
         },
+        //handle error
         onError: (error) => {
             const validate = validateInput();
             if (validate) {
@@ -36,15 +37,17 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
         },
     })
 
+    //handle form
     const handleInputChange = (e) => {
         setUserData((prevState) => ({
             ...prevState,
             [e.target.id]: e.target.value,
         }));
     };
-
+    //handle submit
     const handleSubmit = () => {
         const { email, name, address, numberphone, position, divisi } = userData
+        //body useMutation
         mutate(
             {
                 email,
@@ -81,12 +84,12 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
                     <div className="mt-2 flex">
                         <label
                             htmlFor="email"
-                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
+                            className="mb-2 text-sm font-medium text-gray-900 absolute">
                         </label>
                         <input
                             type="email"
                             id="email"
-                            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg"
                             placeholder="name@gmail.com"
                             value={userData.email}
                             onChange={handleInputChange}
@@ -95,12 +98,12 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
                     <div className="mt-2 flex">
                         <label
                             htmlFor="address"
-                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
+                            className="mb-2 text-sm font-medium text-gray-900 absolute">
                         </label>
                         <input
                             type="text"
                             id="address"
-                            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg"
                             placeholder="Adress Here"
                             value={userData.address}
                             onChange={handleInputChange}
@@ -109,7 +112,7 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
                     <div className="mt-2 flex w-full">
                         <label
                             htmlFor="phone"
-                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+                            className="mb-2 text-sm font-medium text-gray-900 absolute"
                         ></label>
                         <input
                             type="number"
@@ -123,12 +126,12 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
                     <div className="mt-2 flex">
                         <label
                             htmlFor="name"
-                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+                            className="mb-2 text-sm font-medium text-gray-900 absolute"
                         ></label>
                         <input
                             type="text"
                             id="name"
-                            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg"
                             placeholder="User"
                             value={userData.name}
                             onChange={handleInputChange}
@@ -137,12 +140,12 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
                     <div className="mt-2 flex">
                         <label
                             htmlFor="position"
-                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+                            className="mb-2 text-sm font-medium text-gray-900 absolute"
                         ></label>
                         <input
                             type="text"
                             id="position"
-                            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg"
                             placeholder="Position"
                             value={userData.position}
                             onChange={handleInputChange}
@@ -151,12 +154,12 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
                     <div className="mt-2 flex">
                         <label
                             htmlFor="divisi"
-                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+                            className="mb-2 text-sm font-medium text-gray-900 absolute"
                         ></label>
                         <input
                             type="text"
                             id="divisi"
-                            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg"
                             placeholder="Divisi"
                             value={userData.divisi}
                             onChange={handleInputChange}
@@ -172,7 +175,7 @@ const EditUser = ({ user, editUserPopUp, refetchDataUser }) => {
                         <button
                             onClick={handleSubmit}
                             type="button"
-                            className="flex items-center justify-center bg-purple w-[155px] h-[46px] rounded-lg text-white font-semibold">
+                            className="flex items-center justify-center bg-purple w-[155px] h-[46px] rounded-lg text-white font-semibold hover:bg-purple/50">
                             {isPending ? <Spinner size={20} color="white" /> : "Add User"}
                         </button>
                     </div>

@@ -1,15 +1,18 @@
 import { Spinner } from "@chakra-ui/react";
-import { useDeleteUser } from "../../../../features/user/useDeleteUser";
+import { useDeleteUser } from "../../../../api/user-crud/useDeleteUser";
 
 const DeleteUser = ({ userid, deleteuser, refetchDataUser }) => {
 
+  //memanggil useMutation(deleteUser)
   const { mutate, isPending } = useDeleteUser({
+    //handle useMutation(deleteUser) success
     onSuccess: () => {
       refetchDataUser();
       deleteuser(false);
     },
   })
 
+  //handle delete submit
   const deleteItem = () => {
     mutate(userid)
   }
@@ -19,8 +22,8 @@ const DeleteUser = ({ userid, deleteuser, refetchDataUser }) => {
       <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[430px] h-[200px] rounded-lg flex flex-col">
         <h1 className="text-center text-black font-semibold">Apakah Anda Yakin Untuk Menghapus Akun?</h1>
         <div className="flex mt-20 px-10 gap-x-20 items-center justify-center">
-          <button onClick={() => deleteuser(false)} className="bg-[#D91A1A] w-[100px] h-[40px] text-center text-white font-semibold">No</button>
-          <button onClick={deleteItem} className="flex items-center justify-center bg-[#57C125] w-[100px] h-[40px] text-center text-white font-semibold">{isPending ? <Spinner size={10}/> : "Yes"}</button>
+          <button onClick={() => deleteuser(false)} className="bg-red w-[100px] h-[40px] text-center text-white font-semibold hover:bg-red/50">No</button>
+          <button onClick={deleteItem} className="flex items-center justify-center bg-green w-[100px] h-[40px] text-center text-white font-semibold hover:bg-green/50">{isPending ? <Spinner size={10}/> : "Yes"}</button>
         </div>
       </div>
     </div>

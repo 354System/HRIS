@@ -1,31 +1,34 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useInfoToken } from '../features/authToken/useInfoToken';
-import { useGetDataUser } from '../features/authToken/useGetDataUser';
+import { useFetchCurrentUser } from '../api/authToken/useFetchCurrentUser';
 
-const UserContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [userData, setUserData] = useState([]);
-    const [validToken, setValidToken] = useState(false);
-
-    const { data: userId, refetch: refetchInfoToken } = useInfoToken()
-
-    const { data: dataUser, isLoading} = useGetDataUser({ userId })
-    console.log(userData);
+    const [userData, setUserData] = useState('');
+    const [validToken, setValidToken] = useState(true);
+    
+    //info token user
+    const { data: userId, refetch: refetchInfoToken, isError: errorToken } = useInfoToken()
+    //saat pertama dirender isi dari dataUser merupakan userId lalu diproses dalam getDataUser dan dataUser menjadi data baru
+    const { data: dataUser } = useFetchCurrentUser({ userId })
 
     useEffect(() => {
+        if (errorToken) {
+            return setValidToken(false)
+        }
         setUserData(dataUser)
-    }, [dataUser])
+    }, [dataUser, userId, errorToken])
 
     return (
-        <UserContext.Provider value={{ userData, setUserData, validToken, setValidToken, refetchInfoToken, isLoading }}>
+        <AuthContext.Provider value={{ userData, setUserData, validToken, setValidToken, refetchInfoToken }}>
             {children}
-        </UserContext.Provider>
+        </AuthContext.Provider>
     );
 };
 
 export const useAuthInfo = () => {
-    const context = useContext(UserContext);
+    const context = useContext(AuthContext);
     if (!context) {
         console.error('useAuthInfo must be used within a AuthProvider');
     }
