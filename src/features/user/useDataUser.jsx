@@ -1,15 +1,12 @@
 import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query"
-export const useDataUser = ({ searchUser }) => {
+
+//mengambil data user dari api menggunakan react query(useQuery) dan axios
+export const useDataUser = () => {
     const { data, isLoading, refetch } = useQuery({
         queryFn: async () => {
-            const userDataResponse = await axiosInstance.get('/user/all',
-                {
-                    params: {
-                        search: searchUser
-                    }
-                }
-            )
+            const userDataResponse = await axiosInstance.get('/user/all')
+
             return userDataResponse.data
         },
     })

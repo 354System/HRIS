@@ -1,21 +1,25 @@
-// import { Navigate } from 'react-router-dom';
-// import { useUserInfo } from '../use context/user-info';
+import { Navigate } from 'react-router-dom';
+import { useAuthInfo } from '../use context/useAuthInfo';
 
-// function PrivateRoute({ element, requiredRoles }) {
-//   const { userInfo } = useUserInfo();
+function PrivateRoute({ element, requiredRoles }) {
+  const { userData, isLoading } = useAuthInfo();
 
-//   if (!userInfo || !userInfo.role) {
-//     // Tidak ada informasi pengguna atau peran, mungkin perlu log masuk
-//     return <Navigate to="/login" />;
-//   }
+  if (isLoading) {
+    return null
+  }
 
-//   if (requiredRoles.includes(userInfo.role)) {
-//     // Pengguna memiliki peran yang sesuai
-//     return element;
-//   } else {
-//     // Pengguna tidak memiliki izin
-//     return <Navigate to="/unauthorized" />;
-//   }
-// }
+  if (!userData.role) {
+    // Tidak ada informasi pengguna atau peran, mungkin perlu log masuk
+    return <Navigate to="/login" />;
+  }
 
-// export default PrivateRoute;
+  if (requiredRoles.includes(userData.role)) {
+    // Pengguna memiliki peran yang sesuai
+    return element;
+  } else {
+    // Pengguna tidak memiliki izin
+    return <Navigate to="/unauthorized" />;
+  }
+}
+
+export default PrivateRoute;

@@ -1,11 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import { AiFillExclamationCircle } from 'react-icons/ai'
+import { useAuthInfo } from '../use context/useAuthInfo'
+import { useLogin } from '../features/authToken/useLogin'
+import { Spinner } from '@chakra-ui/react'
 const Login = () => {
 
     const navigate = useNavigate()
-
     const [errorMsg, setErrorMsg] = useState('')
+    const { refetchInfoToken } = useAuthInfo()
 
     const [user, setUser] = useState({
         email: '',
@@ -19,47 +22,27 @@ const Login = () => {
         }));
     };
 
-    const handleLoginSubmit = async (e) => {
-        e.preventDefault();
-
-        const email = user.email;
-        const password = user.password;
-
-        try {
-            const response = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/user/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email, password: password }),
-            });
-            if (response.ok) {
-                const userResponse = await response.json();
-                const token = userResponse.token;
-                localStorage.setItem('authToken', token);
-                navigate('/dashboard')
-            } else {
-                const error = await response.json();
-
-                if (error.message === 'Invalid Email') {
-                    setErrorMsg("Invalid Email");
-                } else if (error.message === 'Invalid Password') {
-                    setErrorMsg('Invalid Password');
-                }
-                else if (error.message[0] === 'password must be longer than or equal to 6 characters') {
-                    setErrorMsg('Password harus lebih dari 6 karakter!');
-                } else {
-                    // Tangani kesalahan umum di sini
-                    console.error('Terjadi kesalahan saat login:', error.message);
-                    setErrorMsg('Terjadi kesalahan saat login.');
-                }
-            }
-            
-        } catch (error) {
-            console.error(error);
-            console.log('Terjadi kesalahan saat login ');
+    const { mutate, isPending } = useLogin({
+        onSuccess: (data) => {
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('role', data.role)
+            refetchInfoToken();
+            navigate('/dashboard')
+            setErrorMsg('');
+        },
+        onError: (error) => {
+            const errorMessage = error.response.data.message;
+            setErrorMsg(errorMessage);
         }
-    }
+    });
+
+    const handleLoginSubmit = () => {
+        const { email, password } = user
+        mutate({
+            email,
+            password,
+        });
+    };
 
     return (
         <div className={`w-full min-h-screen bg-quarternary font-sans '}`}>
@@ -99,7 +82,7 @@ const Login = () => {
                             <span className="text-xs text-tertiary underline">Forgot My Password</span>
                         </div>
                         <div className="mb-4">
-                            <button type="submit" className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">Sign In</button>
+                            <button type="submit" className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">{isPending ? <Spinner size="sm" /> : "Sign In"}</button>
                         </div>
                     </form>
                 </div>

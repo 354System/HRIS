@@ -1,9 +1,9 @@
 import DashboardAdmin from "./admin/Dashboard";
 import DashboardUser from "./user/dashboard";
-import { useUserInfo } from "../use context/user-info";
+import { useAuthInfo } from "../use context/useAuthInfo";
 
 const Dashboard = () => {
-    const { userInfo } = useUserInfo();
+    const { userInfo } = useAuthInfo();
     const role = userInfo.role;
     return(
         <>

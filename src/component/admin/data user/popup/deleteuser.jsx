@@ -1,5 +1,5 @@
 import { Spinner } from "@chakra-ui/react";
-import { useDeleteUser } from "../../../features/user/useDeleteUser";
+import { useDeleteUser } from "../../../../features/user/useDeleteUser";
 
 const DeleteUser = ({ userid, deleteuser, refetchDataUser }) => {
 

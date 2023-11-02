@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { DataAbsensi } from "../../../mockdata/DataAbsensi";
 import { DataKaryawan } from "../../../mockdata/DataKaryawan";
 import AOTableHeader from "./AOTableHeader";
-import Pagination from "./component fitur/pagination";
+import Pagination from "./features/pagination";
 const AOtable = () => {
-
     //data yang sudah dicombine
     const [absensi, setAbsensi] = useState([]);
     //data yang sudah diubah dari data yang terbaru

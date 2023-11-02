@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Spinner } from "@chakra-ui/react";
-import { useCreateUser } from "../../../features/user/useCreateUser";
+import { useCreateUser } from "../../../../features/user/useCreateUser";
 
 const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
-
+  const [errorMsg, setErrorMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
     name: "",
-    role: "",
-    department: "",
+    position: "",
+    divisi: "",
     password: "",
     address: "",
     phone: "",
@@ -32,6 +32,47 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
     }));
   };
 
+  const validateInput = () => {
+    const { email, password, name, phone, position, divisi } = userData;
+
+    if (!email || !password || !name || !phone) {
+      setErrorMsg("all fields must be filled in!");
+      return;
+    }
+    if (!name) {
+      setErrorMsg("Username is required!");
+      return;
+    }
+    if (!email) {
+      setErrorMsg("Email is required!");
+      return;
+    }
+    if (!phone) {
+      setErrorMsg("Phone Number is required!");
+      return;
+    }
+    if (!position) {
+      setErrorMsg("Phone Number is required!");
+      return;
+    }
+    if (!divisi) {
+      setErrorMsg("Phone Number is required!");
+      return;
+    }
+    if (!password) {
+      setErrorMsg("Password is required!");
+      return;
+    }
+    if (!password.length < 6) {
+      setErrorMsg("Password must be at least 6 characters!");
+      return;
+    }
+    if (phone.length < 10) {
+      setErrorMsg("Phone Number must be at least 10 number!");
+      return;
+    }
+  }
+
   //membuat user
   const { mutate, isPending } = useCreateUser({
     onSuccess: () => {
@@ -39,27 +80,34 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
       addUserPopUp(false);
       userData.email = "";
       userData.name = "";
-      userData.role = "";
-      userData.department = "";
+      userData.position = "";
+      userData.divisi = "";
       userData.password = "";
       userData.address = "";
       userData.phone = "";
     },
+    onError: (error) => {
+      const validate = validateInput();
+      if (validate) {
+        const errorMessage = error.response.data.message;
+        setErrorMsg(errorMessage);
+      }
+    }
   })
 
   //handle submit
   const handleSubmit = () => {
-    const { email, name, role, department, password, address, phone, countryCode } = userData;
+    const { email, name, position, divisi, password, address, phone, countryCode } = userData;
     const numberphone = countryCode + phone;
     mutate(
       {
         email,
         name,
-        divisi: department,
-        position: role,
+        divisi,
+        position,
         password,
         address,
-        numberphone: numberphone,
+        numberphone,
       }
     );
   };
@@ -83,13 +131,12 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
           </div>
         </div>
         <form>
+          {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
           <div className="mt-2 flex">
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
-              </label>
-            </div>
+            <label
+              htmlFor="email"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
+            </label>
             <input
               type="email"
               id="email"
@@ -100,12 +147,10 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
             />
           </div>
           <div className="mt-2 flex">
-            <div>
-              <label
-                htmlFor="address"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
-              </label>
-            </div>
+            <label
+              htmlFor="address"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
+            </label>
             <input
               type="text"
               id="address"
@@ -160,12 +205,10 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
             </div>
           </div>
           <div className="mt-2 flex">
-            <div>
-              <label
-                htmlFor="name"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-              ></label>
-            </div>
+            <label
+              htmlFor="name"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+            ></label>
             <input
               type="text"
               id="name"
@@ -176,34 +219,30 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
             />
           </div>
           <div className="mt-2 flex">
-            <div>
-              <label
-                htmlFor="role"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-              ></label>
-            </div>
+            <label
+              htmlFor="position"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+            ></label>
             <input
               type="text"
-              id="role"
+              id="position"
               className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Role"
-              value={userData.role}
+              placeholder="Position"
+              value={userData.position}
               onChange={handleInputChange}
             />
           </div>
           <div className="mt-2 flex">
-            <div>
-              <label
-                htmlFor="department"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-              ></label>
-            </div>
+            <label
+              htmlFor="divisi"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+            ></label>
             <input
               type="text"
-              id="department"
+              id="divisi"
               className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Department"
-              value={userData.department}
+              placeholder="Divisi"
+              value={userData.divisi}
               onChange={handleInputChange}
             />
           </div>
@@ -240,7 +279,7 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
               onClick={handleSubmit}
               type="button"
               className="flex items-center justify-center bg-purple w-[155px] h-[46px] rounded-lg text-white font-semibold">
-              {isPending ? <Spinner size={10} color="white" /> : "Add User"}
+              {isPending ? <Spinner size={20} color="white" /> : "Add User"}
             </button>
           </div>
         </form>
