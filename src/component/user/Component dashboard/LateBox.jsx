@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 const LateBox =() => {
     return (
-        <div className="w-60 h-full flex flex-col justify-between bg-white rounded p-5">
+        <div className="w-60 2xl:w-80 h-full flex flex-col justify-between bg-white rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
                     <span>2</span>

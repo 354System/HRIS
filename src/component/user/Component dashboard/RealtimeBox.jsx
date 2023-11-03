@@ -57,7 +57,7 @@ const RealtimeInsightBox = ({checkInPopUp}) => {
         <div>
           <button
             onClick={handlePopup}
-            className="w-[198px] h-[37px] flex items-center rounded p-3 bg-purple"
+            className="w-[198px] h-[37px] flex items-center rounded p-3 bg-purple hover:bg-fuchsia-700"
           >
             <Icon
               icon="streamline:interface-logout-circle-arrow-enter-right-logout-point-circle"

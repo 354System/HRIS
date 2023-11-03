@@ -34,8 +34,13 @@ const SignIn = () => {
             })
             if (response.ok) {
                 const responseData = await response.json();
-                console.log(responseData);
-                
+                const token = responseData.token; // Mengambil token dari respons JSON
+
+                // Simpan token ke dalam localStorage
+                localStorage.setItem("token", token);
+
+                console.log("Login berhasil. Token disimpan di localStorage.");
+
                 if (responseData.role === 'Admin') {
                     // Jika rolenya admin, arahkan ke halaman admin
                     navigate('/admin/dashboard')
@@ -47,7 +52,7 @@ const SignIn = () => {
                 }
             } else {
                 const errorData = await response.json();
-            
+
                 if (errorData.message === 'Invalid Email') {
                     setErrorMsg("Invalid Email");
                 } else if (errorData.message === 'Invalid Password') {
@@ -60,7 +65,7 @@ const SignIn = () => {
                     setErrorMsg('Terjadi kesalahan saat login.');
                 }
             }
-            
+
         } catch (error) {
             console.error(error);
             console.log('Terjadi kesalahan saat login ');

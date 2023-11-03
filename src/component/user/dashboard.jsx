@@ -23,12 +23,12 @@ const DashboardUser = () => {
           <div className="w-full  flex h-72 gap-6">
             <RealtimeInsightBox />
             <div className="w-full flex flex-col gap-8">
-              <div className="flex h-1/2 gap-8">
+              <div className="flex h-1/2 gap-10">
                 <OnTimeBox />
                 <AbsenBox />
                 <LeaveBox />
               </div>
-              <div className="flex h-1/2 items-end gap-8">
+              <div className="flex h-1/2 items-end gap-10">
                 <LateBox />
                 <WorkingDayThismonthBox />
                 <PremisionBox />
@@ -37,7 +37,7 @@ const DashboardUser = () => {
           </div>
         </div>
         <div className="">
-          <h1 className="font-bold text-[#252C58] px-2">Attendance ryryy</h1>
+          <h1 className="font-bold text-[#252C58] px-2">Attendance History</h1>
           <Histori />
         </div>
       </div>

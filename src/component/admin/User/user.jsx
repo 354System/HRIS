@@ -141,10 +141,10 @@ const User = () => {
           <tbody>
             {users.map((user) => (
               <tr key={user._id} className="border-b-2">
-                <td className="text-black p-4">{user._id}</td>
-                <td className="text-[#252C58]">{user.name}</td>
-                <td className="text-grey">{user.position}</td>
-                <td className="text-grey">{user.divisi}</td>
+                <td className="text-black p-4 w-[290px] ">{user._id}</td>
+                <td className="text-[#252C58] w-[290px]">{user.name}</td>
+                <td className="text-grey w-[290px]">{user.position}</td>
+                <td className="text-grey ">{user.divisi}</td>
                 <td className="flex  gap-x-4 mt-4">
                   <Icon icon="solar:pen-bold" width="20" className="cursor-pointer" onClick={()=>handleedit(user)}
                   />

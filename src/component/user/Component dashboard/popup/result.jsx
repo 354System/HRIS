@@ -44,7 +44,7 @@ const Result = ({ datas, checkInPopUp }) => {
           </div>
         </div>
         <div>
-          <button onClick={handleCloseCamera} className="bg-[#A332C3] mt-10 w-full h-[50px] text-white font-semibold rounded-lg">
+          <button onClick={handleCloseCamera} className="bg-[#A332C3] mt-10 w-full h-[50px] text-white font-semibold rounded-lg hover:bg-fuchsia-700">
             Close
           </button>
         </div>
