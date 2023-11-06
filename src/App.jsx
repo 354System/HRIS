@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/admin/dashboard" element={<DashboardAdmin />} />
         <Route path="/userhistori" element={<Attendance/>} />
-        <Route path="/user/dashboard" element={<DashboardUser />} />
+        <Route path="/dashboard" element={<DashboardUser />} />
         <Route path="/attendance-overview" element={<AttendanceOverview />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/admin/user" element={<DataUser />} />

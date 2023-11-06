@@ -169,7 +169,22 @@ const Permision = (props) => {
               id="file_input"
               className="hidden"
               ref={fileinput}
-              onChange={(e) => setSelectedFileName(e.target.files[0].name)}
+              onChange={(e) => {
+                const selectedFile = e.target.files[0];
+                if (selectedFile) {
+                  const allowedExtensions = ["jpg", "png", "pdf"];
+                  const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+
+                  if (allowedExtensions.includes(fileExtension)) {
+                    setSelectedFileName(selectedFile.name);
+                  } else {
+                    // File tidak valid, munculkan pesan error
+                    alert("Hanya file dengan ekstensi .jpg, .png, dan .pdf yang diizinkan.");
+                    // Reset input file
+                    e.target.value = "";
+                  }
+                }
+              }}
             />
             <div className="bg-[#ACACAC]/50 w-full h-[50px] flex items-center px-2">
               {selectedFileName && <p className="">{selectedFileName}</p>}

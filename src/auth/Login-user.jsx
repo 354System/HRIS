@@ -33,7 +33,7 @@ const LoginUser = () => {
             required
           ></input>
         </div>
-        <Link to={'/user/dashboard'}>
+        <Link to={'/dashboard'}>
         <button
           type="button"
           className="inline-flex items-center px-6 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg "

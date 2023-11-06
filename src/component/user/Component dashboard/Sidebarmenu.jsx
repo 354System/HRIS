@@ -13,8 +13,8 @@ const SidebarmenuUser = () => {
                 <img src="/src/assets/Thinkspedia Main Logo 1.png" alt="" className="w-8 h-8" />
             </div>
             <div className='w-full flex flex-col justify-center items-center'>
-                <Link to={'/user/dashboard'}>
-                <PiSquaresFourFill size={23} className={`cursor-pointer mb-5 w-full  ${location.pathname === '/user/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link to={'/dashboard'}>
+                <PiSquaresFourFill size={23} className={`cursor-pointer mb-5 w-full  ${location.pathname === '/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link to={'/userhistori'}>
                 <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/userhistori' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />

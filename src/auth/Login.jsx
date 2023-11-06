@@ -46,7 +46,7 @@ const SignIn = () => {
                     navigate('/admin/dashboard')
                 } else if (responseData.role === 'Public') {
                     // Jika rolenya user, arahkan ke halaman user
-                    navigate('/user/dashboard')
+                    navigate('/dashboard')
                 } else {
                     // Tangani peran lain jika diperlukan
                 }
