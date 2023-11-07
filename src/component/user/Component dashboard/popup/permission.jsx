@@ -64,10 +64,9 @@ const Permision = (props) => {
         return response.json();
       })
       .then((data) => {
-        const token = data.token; // Mengambil token dari respons JSON
         console.log(data); // Handle respons dari backend
         // Redirect atau lakukan tindakan lain setelah menerima token
-        // window.location.href = "/user/dashboard";
+        window.location.href = "/dashboard";
       })
       .catch((error) => {
         console.error(error);

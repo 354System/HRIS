@@ -5,22 +5,22 @@ const UserHistori = () => {
   return (
     <div>
       <div className="">
-        <div className="flex justify-between">
-          <div>
-            <h1 className="px-2 font-bold">Attendance Histori</h1>
-          </div>
-          <button className="bg-[#D5D9DD] w-[114px] h-[40px] rounded-lg text-grey flex items-center px-8">
-            Status
-            <Icon
-              icon="bxs:up-arrow"
-              color="#20285a"
-              width="5.88"
-              rotate={2}
-              className="ml-1"
-            />
-          </button>
-        </div>
         <div className="bg-white">
+          <div className="flex justify-between">
+            <div className="mt-8">
+              <h1 className="ml-4 font-bold text-xl">Attendance Histori</h1>
+            </div>
+            <button className="bg-[#D5D9DD] w-[114px] h-[40px] rounded-lg text-grey flex items-center justify-center mt-6 mr-6">
+              Status
+              <Icon
+                icon="bxs:up-arrow"
+                color="#20285a"
+                width="5.88"
+                rotate={2}
+                className="ml-1"
+              />
+            </button>
+          </div>
           <div className=" w-full text-left flex mt-6">
             <table className="w-full table-auto">
               <thead>
