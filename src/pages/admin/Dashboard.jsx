@@ -28,7 +28,7 @@ function DashboardAdmin() {
               <RealtimeInsightBox />
             </div>
             <div className="flex flex-col gap-8">
-              <div className="flex h-1/2 gap-10">
+              <div className="flex h-1/2 gap-10 w-full">
                 <TotalEmployedBox />
                 <OnTimeBox />
                 <AbsentBox />

@@ -13,7 +13,7 @@ const OnTimeBox = () => {
             <div>
                 <span className="text-base text-primary font-bold">On Time</span>
                 <div className='flex items-center gap-1'>
-                    <div className='w-4 h-4 bg-[#97CE71] flex items-center justify-center rounded-full'>
+                    <div className='w-4 h-4 bg-[#e4ffd0a7] flex items-center justify-center rounded-full'>
                         <p className='text-xs text-[#43900C]'>+</p>
                     </div>
                     <div>

@@ -1,49 +1,151 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Icon } from '@iconify/react';
+import { AiFillExclamationCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+
 
 const LoginUser = () => {
-  return (
-    <div className="flex content-center justify-center h-[595px] items-center bg-[#A332C3]/70">
-      <form className="border-4 p-16 border-[#93B1A6] bg-[#5C8374]">
-        <h1 className="mb-10 font-bold text-3xl text-center">LOGIN</h1>
-        <div className="mb-6">
-          <label htmlFor="username" className="text-xl">
-            Your Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[350px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-semibold"
-            placeholder="email"
-            required
-          ></input>
-        </div>
-        <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Your Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[350px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-semibold"
-            placeholder="password"
-            required
-          ></input>
-        </div>
-        <Link to={'/dashboard'}>
-        <button
-          type="button"
-          className="inline-flex items-center px-6 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg "
-        >
-          Log in
-        </button>
-        </Link>
-      </form>
-    </div>
-  );
-};
 
-export default LoginUser;
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('')
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const [user, setUser] = useState({
+        email: '',
+        password: '',
+    });
+
+    const handleChangeText = (e) => {
+        setUser((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value,
+        }));
+    };
+
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault();
+
+        const email = user.email;
+        const password = user.password;
+        try {
+            const response = await fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email, password: password }),
+            })
+            if (response.ok) {
+                const responseData = await response.json();
+                const token = responseData.token; // Mengambil token dari respons JSON
+
+                // Simpan token ke dalam localStorage
+                localStorage.setItem("token", token);
+
+                console.log("Login berhasil. Token disimpan di localStorage.");
+
+                if (responseData.role === 'Admin') {
+                    // Jika rolenya admin, arahkan ke halaman admin
+                    window.location.href = "/admin/dashboard"
+                } else if (responseData.role === 'Public') {
+                    // Jika rolenya user, arahkan ke halaman user
+                    window.location.href = "/dashboard";
+                } else {
+                    // Tangani peran lain jika diperlukan
+                }
+            } else {
+                const errorData = await response.json();
+
+                if (errorData.message === 'Invalid Email') {
+                    setErrorMsg("Invalid Email");
+                } else if (errorData.message === 'Invalid Password') {
+                    setErrorMsg('Invalid Password');
+                } else if (errorData.message[0] === 'password must be longer than or equal to 6 characters') {
+                    setErrorMsg('Password harus lebih dari 6 karakter!');
+                } else {
+                    // Tangani kesalahan umum di sini
+                    console.error('Terjadi kesalahan saat login:', errorData.message);
+                    setErrorMsg('Terjadi kesalahan saat login.');
+                }
+            }
+
+        } catch (error) {
+            console.error(error);
+            console.log('Terjadi kesalahan saat login ');
+        }
+    }
+
+    return (
+        <div>
+            <div className="relative">
+                <div className="absolute top-0 right-0 bg-[#A332C3] w-[527px] h-[739px] flex flex-col text-center">
+                    <p className="text-2xl font-semibold text-white mt-60">Login Here</p>
+                    <form onSubmit={handleLoginSubmit}>
+                        <div className="mt-4 relative">
+                            <div>
+                                <label
+                                    htmlFor="email"
+                                    className="mb-2 text-sm font-medium text-gray-900 dark:text-gray absolute"
+                                ></label>
+                            </div>
+                            <input
+                                type="Email"
+                                id="email"
+                                value={user.email}
+                                onChange={handleChangeText}
+                                className="bg-[#ACACAC]/50 border w-[242px] h-[36px] text-gray-900 text-sm pl-6 pr-4 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Please Input Your email"
+                            />
+                            <Icon
+                                icon="solar:user-outline" width={16} height={16}
+                                className="absolute left-36 top-1/2 transform -translate-y-1/2 text-white text-bold"
+                            />
+                        </div>
+                        <div className="mt-2 flex">
+                            <div className="relative ml-36 mt-4">
+                                <label
+                                    htmlFor="password"
+                                    className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+                                ></label>
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    className="bg-[#ACACAC]/50 border border-gray-300 w-[242px] h-[36px] text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                                    placeholder="•••••••••••••"
+                                    value={user.password}
+                                    onChange={handleChangeText}
+                                />
+                                <Icon
+                                    onClick={togglePasswordVisibility}
+                                    icon={showPassword ? "ph:eye-slash" : "ph:eye"}
+                                    width={20}
+                                    className="cursor-pointer absolute top-1/2 transform -translate-y-1/2 right-2"
+                                />
+                            </div>
+                        </div>
+                        <div className="w-80 px-8 mt-2 flex items-center justify-center left-5">
+                            {errorMsg && <span className="flex items-center gap-1 bg-red-200 rounded-xl p-1 text-xs mb-2 text-red-600"><AiFillExclamationCircle size={15} />{errorMsg}</span>}
+                        </div>
+                        <div className=" flex justify-center gap-x-8 mt-20">
+                            <button
+                                className="bg-[#F9BE2A] w-[155px] h-[46px] rounded-lg text-white font-semibold"
+                                type="submit"
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+        </div>
+    )
+}
+
+export default LoginUser

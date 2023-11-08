@@ -13,7 +13,7 @@ const WorkingDayThismonthBox = () => {
             <div className='mt-2'>
                 <span className="text-base text-primary font-bold">Working Day This month</span>
                 <div className='flex items-center gap-1'>
-                    <div className='w-4 h-4 bg-[#97CE71] flex items-center justify-center rounded-full'>
+                    <div className='w-4 h-4 bg-[#e4ffd0a7] flex items-center justify-center rounded-full'>
                         <img src="/src/assets/Vector1.svg" alt="" className='text-[#43900C]'/>
                     </div>
                     <div>

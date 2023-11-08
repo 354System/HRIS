@@ -9,11 +9,11 @@ const LeaveApplications = (props) => {
   };
 
   const [cuti, setCuti] = useState({
-    p: "", // Ini harus diganti dengan properti yang sesuai, misalnya "type"
     fromdate: "",
     untildate: "",
     description: "",
   });
+  console.log(cuti);
 
   const [selectedFileName, setSelectedFileName] = useState("");
 
@@ -37,20 +37,19 @@ const LeaveApplications = (props) => {
   const handleSubmit = () => {
     // Kirim data pengguna ke backend
     const token = localStorage.getItem("token");
-    const {fromdate, untildate, description, p} = cuti
+    const {fromdate, untildate, description, } = cuti
 
     fetch("https://fzsxpv5p-3000.asse.devtunnels.ms/cuti/create", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         // Tambahkan token ke header permintaan
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        p,
-        fromdate,
-        untildate,
-        description,
+        izin: "",
+        fromdate: fromdate,
+        untildate: untildate,
+        description: description,
       }),
     })
       .then((response) => {

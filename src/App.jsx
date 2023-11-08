@@ -7,6 +7,7 @@ import DashboardUser from './component/user/dashboard'
 import Attendance from './component/user/User-histori'
 import SignIn from './auth/Login'
 import DataUser from './pages/admin/Datauser'
+import LoginUser from './auth/Login-user'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/attendance-overview" element={<AttendanceOverview />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/admin/user" element={<DataUser />} />
+        <Route path="/login/user" element={<LoginUser />} />
       </Routes>
     </Router>
     </>
