@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Icon } from '@iconify/react';
 import { AiFillExclamationCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-
 
 const LoginUser = () => {
 
@@ -127,8 +125,15 @@ const LoginUser = () => {
                                 />
                             </div>
                         </div>
-                        <div className="w-80 px-8 mt-2 flex items-center justify-center left-5">
-                            {errorMsg && <span className="flex items-center gap-1 bg-red-200 rounded-xl p-1 text-xs mb-2 text-red-600"><AiFillExclamationCircle size={15} />{errorMsg}</span>}
+                        <div className="px-28">
+                        <div className="w-[242px] mt-4 left-36 px-6">
+                            {errorMsg && (
+                                <span className="flex items-center gap-1 bg-red-200 rounded-xl p-1 text-xs text-red-600">
+                                    <AiFillExclamationCircle size={15} />
+                                    {errorMsg}
+                                </span>
+                            )}
+                        </div>
                         </div>
                         <div className=" flex justify-center gap-x-8 mt-20">
                             <button
@@ -141,9 +146,6 @@ const LoginUser = () => {
                     </form>
                 </div>
             </div>
-
-
-
         </div>
     )
 }

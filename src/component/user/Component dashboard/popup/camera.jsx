@@ -20,7 +20,6 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
 
   const capturePhoto = useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot();
-
     const base64ToBlob = (base64) => {
       const byteCharacters = atob(base64.split(",")[1]);
       const byteNumbers = new Array(byteCharacters.length);
@@ -54,14 +53,24 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
       status: status,
     });
 
-    // const response = fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/create' {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({absen: status, checkin: date, checkout:})
-    // });
-    // const res = response.json()
+    if (file) {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/file', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('File uploaded successfully:', data);
+        })
+        .catch(error => {
+          console.error('Error uploading file:', error);
+        });
+    } else {
+      console.error('No file selected');
+    }
 
     setSuccess(true);
   });
@@ -150,13 +159,15 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
                 mirrored={true}
               />
               <button
-                onClick={capturePhoto}
+                onClick={() => {
+                  capturePhoto();
+                }}
                 className="bg-[#A332C3] absolute bottom-0 left-[250px] m-2 p-2 rounded-full"
               >
                 <Icon icon="system-uicons:camera" width="28.5" color="white" />
               </button>
               {success && (
-                <Result datas={datas} checkInPopUp={checkInPopUp} />
+                <Result datas={datas} checkInPopUp={checkInPopUp}  />
               )}
             </div>
           ))}

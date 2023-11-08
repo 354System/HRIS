@@ -3,6 +3,10 @@ import { Icon } from "@iconify/react";
 
 const Permision = (props) => {
   const { popUp } = props;
+  const [file, setFile] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState(null);
+
+
   const [permission, setPermission] = useState({
     izin: "",
     fromdate: "",
@@ -10,7 +14,6 @@ const Permision = (props) => {
     deskripsi: "",
   });
 
-  const [selectedFileName, setSelectedFileName] = useState("");
 
   const fileinput = useRef(null)
 
@@ -73,6 +76,26 @@ const Permision = (props) => {
       });
   };
 
+  const handleUpload = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/file', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('File uploaded successfully:', data);
+        })
+        .catch(error => {
+          console.error('Error uploading file:', error);
+        });
+    } else {
+      console.error('No file selected');
+    }
+  };
 
   const handleClose = () => {
     popUp(false);
@@ -176,15 +199,15 @@ const Permision = (props) => {
 
                   if (allowedExtensions.includes(fileExtension)) {
                     setSelectedFileName(selectedFile.name);
+                    setFile(selectedFile); // Tambahkan ini untuk mengatur nilai file
                   } else {
-                    // File tidak valid, munculkan pesan error
                     alert("Hanya file dengan ekstensi .jpg, .png, dan .pdf yang diizinkan.");
-                    // Reset input file
                     e.target.value = "";
                   }
                 }
               }}
             />
+
             <div className="bg-[#ACACAC]/50 w-full h-[50px] flex items-center px-2">
               {selectedFileName && <p className="">{selectedFileName}</p>}
             </div>
@@ -206,7 +229,8 @@ const Permision = (props) => {
         </div>
         <div className="text-end flex justify-end gap-x-8 mt-20">
           <h1 onClick={handleClose} className="mt-[11px] font-semibold cursor-pointer">Cancel</h1>
-          <button onClick={handlepremission} className="bg-[#A332C3] w-[155px] h-[46px] rounded-lg text-white font-semibold hover:bg-fuchsia-700">
+          <button onClick={() => { handlepremission(); handleUpload(); }}
+            className="bg-[#A332C3] w-[155px] h-[46px] rounded-lg text-white font-semibold hover:bg-fuchsia-700">
             Send Permission
           </button>
         </div>

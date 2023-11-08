@@ -5,9 +5,9 @@ import AttendanceOverview from './pages/admin/AttendanceOverview'
 import DashboardAdmin from './pages/admin/Dashboard'
 import DashboardUser from './component/user/dashboard'
 import Attendance from './component/user/User-histori'
-import SignIn from './auth/Login'
 import DataUser from './pages/admin/Datauser'
 import LoginUser from './auth/Login-user'
+import OverviewAdmin from './component/user/Overview'
 
 function App() {
 
@@ -19,9 +19,9 @@ function App() {
         <Route path="/userhistori" element={<Attendance/>} />
         <Route path="/dashboard" element={<DashboardUser />} />
         <Route path="/attendance-overview" element={<AttendanceOverview />} />
-        <Route path="/login" element={<SignIn />} />
+        <Route path="/login" element={<LoginUser />} />
         <Route path="/admin/user" element={<DataUser />} />
-        <Route path="/login/user" element={<LoginUser />} />
+        <Route path="/overview" element={<OverviewAdmin />} />
       </Routes>
     </Router>
     </>
