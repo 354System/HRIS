@@ -22,12 +22,7 @@ const TableDataUser = () => {
 
   //get data user dari useDataUser
   const { data: users, isLoading, refetch: refetchDataUser } = useFetchAllUsers();
-  //popup tidak bisa discroll
-  if (addUserPopUp || deleteUserPopUp || editUserPopUp) {
-    document.body.classList.add('overflow-hidden');
-  } else {
-    document.body.classList.remove('overflow-hidden');
-  }
+
   //handle edit
   const handleActionEdit = (user) => {
     setEditUserPopUp(true);
@@ -41,33 +36,32 @@ const TableDataUser = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg p-10">
-      <HeaderDataUser searchUser={searchUser} setSearchUser={setSearchUser} addUserPopUp={setAddUserPopUp} />
-      <div className="w-full flex-col">
-        <table className="w-full text-left table-auto ">
+    <div className="bg-white w-full rounded-lg">
+      <HeaderDataUser searchUser={searchUser} dataUsers={users} setSearchUser={setSearchUser} addUserPopUp={setAddUserPopUp} />
+      <div className="w-full">
+        <table className="w-full ">
           <thead>
             <tr className="border-b-2 border-t-2 text-primary">
-              <th className="p-4">ID</th>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Divisi</th>
-              <th>Action</th>
+              <th className="p-4 text-left">ID</th>
+              <th className="text-left">Name</th>
+              <th className="text-center">Position</th>
+              <th className="text-center">Divisi</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
             {users && users.map((user, index) => (
               <tr key={index} className="border-b-2 text-primary">
-                <td className="p-4 max-w-1">{user._id}</td>
-                <td className="">{user.name}</td>
-                <td>{user.position}</td>
-                <td>{user.divisi}</td>
-                <td className="flex gap-x-4 mt-4">
-                  <Icon icon="solar:pen-bold" width="20" className="cursor-pointer" onClick={() => handleActionEdit(user)} />
+                <td className="p-4">{user._id}</td>
+                <td className="pr-10">{user.name}</td>
+                <td className="text-center">{user.position}</td>
+                <td className="text-center">{user.divisi}</td>
+                <td className="flex w-full h-14 justify-center items-center gap-2">
+                  <Icon icon="solar:pen-bold" width="20" className="cursor-pointer hover:text-[#4e5dbb]" onClick={() => handleActionEdit(user)} />
                   <Icon
                     icon="solar:trash-bin-trash-bold"
-                    color="red"
                     width="18.18"
-                    className="cursor-pointer"
+                    className="cursor-pointer text-red hover:text-[#793232]"
                     onClick={() => handleActionDelete(user._id)}
                   />
                 </td>
@@ -77,7 +71,7 @@ const TableDataUser = () => {
         </table>
         {editUserPopUp && <EditUser user={userDataById} refetchDataUser={refetchDataUser} editUserPopUp={setEditUserPopUp} />}
         {addUserPopUp && <AddUserAdmin refetchDataUser={refetchDataUser} addUserPopUp={setAddUserPopUp} />}
-        {deleteUserPopUp && <DeleteUser userid={userId} refetchDataUser={refetchDataUser} deleteuser={setDelete} />}
+        {deleteUserPopUp && <DeleteUser userid={userId} refetchDataUser={refetchDataUser} deleteuser={setDeleteUserPopUp} />}
         {isLoading && <div className="w-full mt-5 flex items-center justify-center"><Spinner color="purple" speed="1s" /></div>}
       </div>
     </div>

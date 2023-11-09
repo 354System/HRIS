@@ -1,6 +1,6 @@
-import AOtable from "../../component/admin/attandance overview/AOtable"
-import { Navbar } from "../../component/Navbar"
-import { Sidebarmenu } from "../../component/Sidebarmenu"
+import AOtable from "../../component/admin/attandance overview/table/AOtable"
+import { Sidebarmenu } from "../../component/bar/Sidebarmenu"
+import { Navbar } from "../../component/bar/Navbar"
 const AttendanceOverview = () => {
     return (
         <div className="w-full min-h-full absolute bg-darkwhite">
@@ -12,4 +12,4 @@ const AttendanceOverview = () => {
         </div>
     )
 }
-export default AttendanceOverview
+export default AttendanceOverview;

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Spinner } from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
 import { useCreateUser } from "../../../../api/user-crud/useCreateUser";
 
 const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
@@ -17,14 +19,6 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
     phone: "",
     countryCode: '+62',
   });
-
-  const handleExit = () => {
-    addUserPopUp(false);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const handleInputChange = (e) => {
     setUserData((prevState) => ({
@@ -113,13 +107,35 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
     );
   };
 
+  const countryCodes = [
+    { value: '+62', label: 'ID (+62)' },
+    { value: '+60', label: 'MY (+60)' },
+    { value: '+65', label: 'SG (+65)' },
+    { value: '+66', label: 'TH (+66)' },
+    { value: '+84', label: 'VN (+84)' },
+    { value: '+63', label: 'PH (+63)' },
+    { value: '+673', label: 'BN (+673)' },
+    { value: '+855', label: 'KH (+855)' },
+    { value: '+856', label: 'LA (+856)' },
+    { value: '+95', label: 'MM (+95)' },
+    { value: '+670', label: 'TL (+670)' },
+  ];
+
+  const handleCountrySelect = (value) => {
+    setUserData((prevState) => ({
+      ...prevState,
+      countryCode: value,
+    }))
+    setShowDropdown(false);
+  };
+
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  flex items-center justify-center z-20 bg-black/5 w-full h-full">
-      <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[590px] rounded-lg flex flex-col ">
-        <div className="flex justify-end">
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/5 w-full h-full">
+      <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-4 w-1/2 h-4/5 rounded-lg flex flex-col justify-between">
+        <div className="absolute top-0 right-0 ">
           <button
-            onClick={handleExit}
-            className="bg-black w-[41.64px] h-[41.64px] rounded-full flex flex-col items-center justify-center">
+            onClick={() => addUserPopUp(false)}
+            className="bg-black hover:bg-black/80 w-10 h-10 rounded-full flex flex-col items-center justify-center">
             <Icon icon="ion:close" color="white" width="17.44" />
           </button>
         </div>
@@ -161,40 +177,28 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="mt-2 flex w-full">
-            <label
-              htmlFor="phone"
-              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-            ></label>
+          <div className="mt-2 flex w-full relative">
             <div className="flex gap-2 w-full">
-              <select
-                id="countryCode"
-                value={userData.countryCode}
-                className="bg-[#ACACAC]/50 border w-3/12 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={handleInputChange}
-                required
-              >
-                <option value="+62">ID (+62)</option>
-                <option value="+86">CN (+86)</option>
-                <option value="+84">VN (+84)</option>
-                <option value="+61">AU (+61)</option>
-                <option value="+65">SG (+65)</option>
-                <option value="+60">MY (+60)</option>
-                <option value="+84">VN (+84)</option>
-                <option value="+44">JP (+81)</option>
-                <option value="+82">KR (+82)</option>
-                <option value="+66">TH (+66)</option>
-                <option value="+63">PH (+63)</option>
-                <option value="+92">PK (+92)</option>
-                <option value="+880">BD (+880)</option>
-                <option value="+977">NP (+977)</option>
-                <option value="+975">BT (+975)</option>
-                <option value="+960">MV (+960)</option>
-                <option value="+966">SA (+966)</option>
-                <option value="+971">AE (+971)</option>
-                <option value="+965">KW (+965)</option>
-                <option value="+974">QA (+974)</option>
-              </select>
+              <h1 className="w-1/4 h-11 flex items-center justify-center gap-2 font-semibold text-base bg-[#ACACAC]/50 border border-gray-300 text-black rounded-lg cursor-pointer" onClick={() => setShowDropdown(!showDropdown)}>
+                <span>{countryCodes.find((country) => country.value === userData.countryCode).label}</span>
+                {showDropdown ? <Icon icon="majesticons:chevron-up-circle" className="mt-1" fontSize={20} /> : <Icon icon="majesticons:chevron-down-circle" fontSize={20} className="mt-1" />}
+              </h1>
+              {showDropdown && (
+                <div className="absolute z-10 mt-12 bg-grey-200 border border-gray-300 max-h-40 overflow-y-auto rounded-lg w-32 shadow-md">
+                  <ul>
+                    {countryCodes.map((country) => (
+                      <li
+                        key={country.value}
+                        value={country.value}
+                        onClick={() => handleCountrySelect(country.value)}
+                        className={`cursor-pointer p-2 bg-gray-300 hover:bg-gray-400 hover:delay-75 ${showDropdown ? 'animate-dropdown' : ''}`}
+                      >
+                        {country.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <input
                 type="number"
                 id="phone"
@@ -248,7 +252,7 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
             />
           </div>
           <div className="mt-2 flex">
-            <div className="relative w-full">
+            <div className="relative w-full mb-5">
               <label
                 htmlFor="password"
                 className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
@@ -262,24 +266,24 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
                 onChange={handleInputChange}
               />
               <Icon
-                onClick={togglePasswordVisibility}
+                onClick={() => setShowPassword(!showPassword)}
                 icon={showPassword ? "ph:eye-slash" : "ph:eye"}
                 width={20}
                 className="cursor-pointer absolute top-1/2 transform -translate-y-1/2 right-4"
               />
             </div>
           </div>
-          <div className="text-end flex justify-end gap-x-8 mt-20">
+          <div className="text-end flex justify-end items-center gap-x-8 ">
             <h1
-              onClick={handleExit}
-              className="mt-[11px] font-semibold cursor-pointer"
+              onClick={() => addUserPopUp(false)}
+              className="flex items-center font-semibold cursor-pointer"
             >
               Cancel
             </h1>
             <button
               onClick={handleSubmit}
               type="button"
-              className="flex items-center justify-center bg-purple w-[155px] h-[46px] rounded-lg text-white font-semibold hover:bg-purple/50">
+              className="flex items-center justify-center bg-purple w-1/4 h-10 rounded-lg text-white font-semibold hover:bg-[#7e3293]">
               {isPending ? <Spinner size={20} color="white" /> : "Add User"}
             </button>
           </div>

@@ -1,18 +1,14 @@
-import { Sidebarmenu } from "../../component/Sidebarmenu";
-import { Navbar } from "../../component/Navbar";
-import TableDataUser from "../../component/admin/data user/TableDataUser";
+import { Sidebarmenu } from "../../component/bar/Sidebarmenu";
+import { Navbar } from "../../component/bar/Navbar";
+import TableDataUser from "../../component/admin/data user/table/TableDataUser";
 
 const DataUser = () => {
-    return(
-        <div className="bg-gray-200 min-h-screen w-full">
-            <div>
-                <Sidebarmenu/>
-            </div>
-            <div>
-                <Navbar/>
-            </div>
-            <div className="p-10 mt-20 ml-20">
-                <TableDataUser/>
+    return (
+        <div className="absolute bg-gray-200 min-h-screen w-full">
+            <Sidebarmenu />
+            <Navbar />
+            <div className="p-4 mt-28 pl-28 w-full mb-14">
+                <TableDataUser />
             </div>
         </div>
     )

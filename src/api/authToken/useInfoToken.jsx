@@ -3,8 +3,9 @@ import { axiosInstance } from "../../lib/axios"
 
 export const useInfoToken = () => {
     const token = localStorage.getItem('authToken')
-    const { data, refetch, isSuccess, isError } = useQuery({
+    const { data, refetch, isSuccess, error, isError } = useQuery({
         queryKey: ['infoToken'],
+        enabled: !!token,
         queryFn: async () => {
             const tokenResponse = await axiosInstance.get('/user/user-info', {
                 headers: {
@@ -13,12 +14,12 @@ export const useInfoToken = () => {
             });
             return tokenResponse.data.user_info.id
         },
-        enabled: !!token
     })
     return {
         data,
         refetch,
         isError,
+        error,
         isSuccess
     }
 }

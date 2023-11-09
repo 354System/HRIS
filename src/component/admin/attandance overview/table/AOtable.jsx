@@ -67,7 +67,7 @@ const AOtable = () => {
 
         return absensiSebelumHariIni;
     }
-    
+
     useEffect(() => {
         // Memperbarui sortData ketika absensiSebelumHariIni berubah
         const sortedData = sortAndFilterAbsensi(absensi);
@@ -112,6 +112,7 @@ const AOtable = () => {
             return 'text-purple';
         }
     }
+    
     function checkInCondition(item) {
         if (item.status === 'Sick') {
             return '';

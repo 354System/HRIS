@@ -1,8 +1,8 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { Icon } from "@iconify/react";
+import ExportDataUser from "../actions/exportDataUser";
 
-const HeaderDataUser = ({ addUserPopUp, searchUser, setSearchUser }) => {
-
+const HeaderDataUser = ({ addUserPopUp, searchUser, setSearchUser, dataUsers }) => {
     const handleAddUserPopUp = () => {
         addUserPopUp(true);
     }
@@ -24,34 +24,11 @@ const HeaderDataUser = ({ addUserPopUp, searchUser, setSearchUser }) => {
                     required
                 />
             </div>
-            <div className="ml-4">
-                <button className="bg-[#D5D9DD] w-[133px] h-[40px] rounded-lg flex items-center justify-center  gap-x-2">
-                    <p className="text-sm text-grey">Role</p>
-                    <Icon
-                        icon="bxs:up-arrow"
-                        color="#20285a"
-                        width="5.88"
-                        rotate={2}
-                        className=""
-                    />
-                </button>
-            </div>
-            <div className="ml-4">
-                <button className="bg-[#D5D9DD] w-[133px] h-[40px] rounded-lg flex items-center justify-center gap-x-2">
-                    <p className="text-sm text-grey">Departement</p>
-                    <Icon
-                        icon="bxs:up-arrow"
-                        color="#20285a"
-                        width="5.88"
-                        rotate={2}
-                        className=""
-                    />
-                </button>
-            </div>
+            <ExportDataUser dataUsers={dataUsers}/>
             <div className="ml-4">
                 <button
                     onClick={handleAddUserPopUp}
-                    className="bg-[purple] w-[168px] h-[40px] rounded-lg flex items-center justify-center"
+                    className="bg-purple hover:bg-[#532160] transition duration-300 w-[168px] h-[40px] rounded-lg flex items-center justify-center"
                 >
                     <Icon
                         icon="zondicons:add-solid"

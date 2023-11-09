@@ -17,6 +17,7 @@
     "@tremor/react": "^3.9.2",
     "axios": "^1.6.0",
     "chart.js": "^4.4.0",
+    "date-fns": "^2.30.0",
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -25,7 +26,8 @@
     "react-router-dom": "^6.16.0",
     "react-spinners": "^0.13.8",
     "react-webcam": "^7.2.0",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",

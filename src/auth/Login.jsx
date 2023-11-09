@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import { AiFillExclamationCircle } from 'react-icons/ai'
 import { useAuthInfo } from '../use context/useAuthInfo'
-import { useLogin } from '../features/authToken/useLogin'
+import { useLogin } from '../api/authToken/useLogin'
 import { Spinner } from '@chakra-ui/react'
+import { LoadingScreen } from '../component/loading screen/loadingScreen'
 const Login = () => {
 
     const navigate = useNavigate()
     const [errorMsg, setErrorMsg] = useState('')
-    const { refetchInfoToken } = useAuthInfo()
 
     const [user, setUser] = useState({
         email: '',
@@ -22,25 +22,26 @@ const Login = () => {
         }));
     };
 
-    const { mutate, isPending } = useLogin({
-        onSuccess: (data) => {
+    const { mutate, isSuccess } = useLogin({
+        onSuccess: async (data) => {
             localStorage.setItem('authToken', data.token);
-            refetchInfoToken();
-            setErrorMsg('');
+            window.location.href = '/dashboard'
         },
         onError: (error) => {
             const errorMessage = error.response.data.message;
+            console.log(error);
             setErrorMsg(errorMessage);
         }
     });
 
     const handleLoginSubmit = () => {
-        const { email, password } = user
+        const { email, password } = user;
         mutate({
             email,
             password,
         });
     };
+
 
     return (
         <div className={`w-full min-h-screen bg-quarternary font-sans '}`}>
@@ -50,7 +51,7 @@ const Login = () => {
                     <span className="text-tertiary text-xs text-center">We will help you get ready today</span>
                 </div>
                 <div className="flex flex-col w-[450px] h-full rounded-xl">
-                    <form className={`p-10 mb-10 rounded-xl bg-primary`}>
+                    <form className={`p-10 mb-10 rounded-xl bg-primary`} >
                         <div className="mb-4">
                             <label htmlFor="email" className="block font-bold text-quarternary text-sm">Email Address</label>
                             <input
@@ -80,7 +81,7 @@ const Login = () => {
                             <span className="text-xs text-tertiary underline">Forgot My Password</span>
                         </div>
                         <div className="mb-4">
-                            <button type="button" onClick={handleLoginSubmit} className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">{isPending ? <Spinner size="sm" /> : "Sign In"}</button>
+                            <button type="button" onClick={handleLoginSubmit} className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">kontol</button>
                         </div>
                     </form>
                 </div>
