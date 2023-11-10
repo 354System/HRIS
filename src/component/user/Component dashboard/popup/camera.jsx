@@ -7,6 +7,7 @@ import Webcam from "react-webcam";
 const Camera = ({ WFO, checkInPopUp, status }) => {
 
   const [success, setSuccess] = useState(false);
+  const token = localStorage.getItem("token");
   const [devices, setDevices] = useState([]);
   const [waktu, setWaktu] = useState("");
   const [tanggal, setTanggal] = useState("");
@@ -17,7 +18,6 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
     date: "",
     status: "",
   });
-
   const capturePhoto = useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const base64ToBlob = (base64) => {
@@ -44,6 +44,7 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
     const getMinutes = date.getMinutes().toString().padStart(2, "0");;
     const times = `${getHours}:${getMinutes}`;
 
+
     // Sekarang, 'file' adalah objek File yang dapat Anda gunakan atau unggah
     console.log("File:", file);
     setDatas({
@@ -53,10 +54,30 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
       status: status,
     });
 
+
     if (file) {
       const formData = new FormData();
       formData.append('image', file);
 
+      fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/create', {
+        method: 'POST',
+        headers: {
+          // Tambahkan token ke header permintaan
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json', // Pastikan menambahkan header ini
+        },
+        body: JSON.stringify({
+          absen: String(status),
+          checkin: new Date().toISOString(), // Konversi ke format string
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Absen Berhasil:', data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
       fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/file', {
         method: 'POST',
         body: formData,
@@ -74,6 +95,7 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
 
     setSuccess(true);
   });
+
 
   const handleClose = () => {
     WFO(false);
@@ -167,7 +189,7 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
                 <Icon icon="system-uicons:camera" width="28.5" color="white" />
               </button>
               {success && (
-                <Result datas={datas} checkInPopUp={checkInPopUp}  />
+                <Result datas={datas}  capturePhoto={capturePhoto} checkInPopUp={checkInPopUp} />
               )}
             </div>
           ))}

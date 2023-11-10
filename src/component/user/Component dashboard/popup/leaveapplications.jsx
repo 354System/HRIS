@@ -13,7 +13,6 @@ const LeaveApplications = (props) => {
     untildate: "",
     description: "",
   });
-  console.log(cuti);
 
   const [selectedFileName, setSelectedFileName] = useState("");
 
@@ -37,16 +36,16 @@ const LeaveApplications = (props) => {
   const handleSubmit = () => {
     // Kirim data pengguna ke backend
     const token = localStorage.getItem("token");
-    const {fromdate, untildate, description, } = cuti
+    const { fromdate, untildate, description, } = cuti
 
     fetch("https://fzsxpv5p-3000.asse.devtunnels.ms/cuti/create", {
       method: "POST",
       headers: {
-        // Tambahkan token ke header permintaan
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json", // tambahkan header Content-Type
       },
       body: JSON.stringify({
-        izin: "",
+        cuti: "",
         fromdate: fromdate,
         untildate: untildate,
         description: description,
@@ -54,21 +53,29 @@ const LeaveApplications = (props) => {
     })
       .then((response) => {
         if (response.ok) {
-          console.log(response.json());
-        } else (error) => {
-          console.error(error);
+          // Respons berhasil, tetapi kita perlu mengonsumsi data JSON dengan .json()
+          return response.json();
+        } else {
+          // Tangani kesalahan HTTP di sini
+          throw new Error("Network response was not ok");
         }
-        })
+      })
+      .then((data) => {
+        // Proses data setelah berhasil
+        console.log("Cuti Berhasil:", data);
+        window.location.href = "/dashboard";
+      })
       .catch((error) => {
-        console.error("error",error.message);
+        // Tangani kesalahan yang terjadi selama permintaan
+        console.error("Error:", error.message);
       });
-  };
 
 
+  }
   return (
     <div>
       <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-full">
-        <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[600px] rounded-lg flex flex-col">
+        <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[700px] rounded-lg flex flex-col">
           <div className="flex justify-end">
             <button
               onClick={handleLeave}
@@ -89,28 +96,28 @@ const LeaveApplications = (props) => {
             <div>
               <label
                 htmlFor="fromdate"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-              ></label>
+                className="mb-2  text-sm font-medium text-gray-900 dark:text-white absolute"
+              >silahkan input fromdate</label>
             </div>
             <input
               type="date"
               id="fromdate"
               value={cuti.fromdate}
               onChange={handleInputChange}
-              className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Start Date"
+              className=" mt-6 bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Start Date"
             />
           </div>
           <div className="mt-4 flex justify-end">
             <div>
               <label
                 htmlFor="untildate"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-              ></label>
+                className=" text-sm font-medium text-gray-900 dark:text-white absolute"
+              > Silahkan input untildate</label>
             </div>
             <input
               type="date"
               id="untildate"
-              className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className=" mt-6 bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="End Date"
               value={cuti.untildate}
               onChange={handleInputChange}
@@ -145,15 +152,23 @@ const LeaveApplications = (props) => {
                 }}
               />
               <div className="bg-[#ACACAC]/50 w-full h-[50px] flex items-center px-2">
-                {selectedFileName && <p className="">{selectedFileName}</p>}
+                {selectedFileName ? (
+                  <p className="text-white" placeholder="Unggah File">{selectedFileName}</p>
+                ) : (
+                  <p className="text-gray-400" placeholder="Unggah File">Belum ada file dipilih</p>
+                )}
               </div>
+
             </div>
           </div>
-          <div className="flex mt-8 h-[135px]">
+          <div className=" mt-8 h-[135px]">
             <label
-              htmlFor="large-input"
+              htmlFor="description"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            ></label>
+            >
+              Masukkan Keterangan Cuti Anda
+            </label>
+
             <input
               type="text"
               id="description"

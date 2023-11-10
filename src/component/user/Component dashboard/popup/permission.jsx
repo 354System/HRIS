@@ -69,7 +69,7 @@ const Permision = (props) => {
       .then((data) => {
         console.log(data); // Handle respons dari backend
         // Redirect atau lakukan tindakan lain setelah menerima token
-        window.location.href = "/dashboard";
+        // window.location.href = "/dashboard";
       })
       .catch((error) => {
         console.error(error);

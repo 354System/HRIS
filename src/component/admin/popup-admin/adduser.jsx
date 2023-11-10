@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 const AddUserAdmin = (props) => {
   const { AddUser } = props;
 
-  
+
   const [userData, setUserData] = useState({
     email: "",
     username: "",
@@ -53,7 +53,7 @@ const AddUserAdmin = (props) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Handle respons dari backend
-        // window.location.href = "/admin/user";
+        window.location.href = "/admin/user";
       })
       .catch((error) => {
         console.error(error);
@@ -82,54 +82,6 @@ const AddUserAdmin = (props) => {
         <div className="mt-2 flex">
           <div>
             <label
-              htmlFor="email"
-              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-            ></label>
-          </div>
-          <input
-            type="email"
-            id="email"
-            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="name@gmail.com"
-            value={userData.email}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mt-2 flex">
-          <div>
-            <label
-              htmlFor="address"
-              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-            ></label>
-          </div>
-          <input
-            type="email"
-            id="address"
-            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Adress Here"
-            value={userData.address}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mt-2 flex">
-          <div>
-            <label
-              htmlFor="phone"
-              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-            ></label>
-          </div>
-          <input
-            type="email"
-            id="phone"
-            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Number Phone"
-            value={userData.phone}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mt-2 flex">
-          <div>
-            <label
               htmlFor="username"
               className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
             ></label>
@@ -138,7 +90,7 @@ const AddUserAdmin = (props) => {
             type="text"
             id="username"
             className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="User"
+            placeholder="Name"
             value={userData.username}
             onChange={handleInputChange}
           />
@@ -151,10 +103,10 @@ const AddUserAdmin = (props) => {
             ></label>
           </div>
           <input
-            type="text"
+            type="department"
             id="department"
-            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="department"
+            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Department"
             value={userData.department}
             onChange={handleInputChange}
           />
@@ -169,9 +121,57 @@ const AddUserAdmin = (props) => {
           <input
             type="text"
             id="role"
-            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Department"
+            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Role"
             value={userData.role}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mt-2 flex">
+          <div>
+            <label
+              htmlFor="address"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+            ></label>
+          </div>
+          <input
+            type="text"
+            id="address"
+            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Address"
+            value={userData.address}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mt-2 flex">
+          <div>
+            <label
+              htmlFor="department"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+            ></label>
+          </div>
+          <input
+            type="text"
+            id="phone"
+            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="number phone "
+            value={userData.phone}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mt-2 flex">
+          <div>
+            <label
+              htmlFor="email"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+            ></label>
+          </div>
+          <input
+            type="gmail"
+            id="email"
+            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Email"
+            value={userData.email}
             onChange={handleInputChange}
           />
         </div>
