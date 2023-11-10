@@ -139,19 +139,19 @@ const Permision = (props) => {
             </option>
           </select>
         </div>
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4  justify-end">
           <div>
             <label
               htmlFor="fromdate"
               className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-            ></label>
+            >silahkan input fromdate</label>
           </div>
           <input
             type="date"
             id="fromdate"
             value={permission.fromdate}
             onChange={handleInputChange}
-            className="bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Start Date"
+            className="mt-6 bg-[#ACACAC]/50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Start Date"
           />
           {/* <Icon
             icon="solar:calendar-date-bold"
@@ -160,19 +160,19 @@ const Permision = (props) => {
             onClick={() => document.getElementById("default-input").click()}
           />  */}
         </div>
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4  justify-end">
           <div>
             <label
               htmlFor="untildate"
               className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-            ></label>
+            >Silahkan input untildate</label>
           </div>
           <input
             type="date"
             id="untildate"
             value={permission.untildate}
             onChange={handleInputChange}
-            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="End Date"
+            className=" mt-6 bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="End Date"
           />
           {/* <Icon
             icon="solar:calendar-date-bold"
@@ -180,7 +180,7 @@ const Permision = (props) => {
             className="absolute mt-2 mr-2"
           /> */}
         </div>
-        <div className="flex mt-2 gap-x-6 ">
+        <div className=" mt-2 gap-x-6 ">
           <div className="mt-4 flex  gap-3 w-full relative items-center">
             <div className="bg-[#ACACAC]/50 w-[70px] h-[50px] rounded-lg flex items-center justify-center">
               <Icon icon="eva:folder-add-fill" width="21.95" onClick={() => fileinput.current.click()} className="cursor-pointer" />
@@ -209,16 +209,20 @@ const Permision = (props) => {
             />
 
             <div className="bg-[#ACACAC]/50 w-full h-[50px] flex items-center px-2">
-              {selectedFileName && <p className="">{selectedFileName}</p>}
+              {selectedFileName ? (
+                <p className="text-white" placeholder="Unggah File">{selectedFileName}</p>
+              ) : (
+                <p className="text-gray-400" placeholder="Unggah File">Belum ada file dipilih</p>
+              )}
             </div>
           </div>
         </div>
-        <div className="flex mt-8 h-[135px]">
+        <div className=" mt-8 h-[135px]">
           <label
             htmlFor="large-input"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-          </label>
+            Masukkan Keterangan Cuti Anda</label>
           <input
             type="text"
             id="deskripsi"
