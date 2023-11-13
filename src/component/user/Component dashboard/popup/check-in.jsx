@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import Camera from "./camera";
+import Wfo from "./Wfo";
 
 const CheckIn = ({checkInPopUp}) => {
 
   const [WFO, setWFO] = useState(false)
+  const [WFH, setWFH] = useState(false)
   const [status, setStatus] = useState('')
 
   const handleCheckinWFO = () => {
     setWFO(true);
     setStatus('Work From Office')
   };
+
+  const handleCheckinWFH = () => {
+    setWFH(true);
+    setStatus('Work From Home')
+  }
+
  
   const handleClose = () => {
     checkInPopUp(false)
@@ -41,9 +49,10 @@ const CheckIn = ({checkInPopUp}) => {
             </h1>
           </div>
           <div>
-            <button className="flex justify-center items-center bg-[#DBDBDB] w-[123px] h-[123px] rounded-full">
+            <button onClick={handleCheckinWFH} className="flex justify-center items-center bg-[#DBDBDB] w-[123px] h-[123px] rounded-full">
               <Icon icon="solar:home-linear" color="white" width="42.17" />
             </button>
+            {WFH ? <Wfo WFO={setWFH} status={status} checkInPopUp={checkInPopUp}/> : null}
             <h1 className="text-center text-[#252C58] font-bold">
               Work From Home
             </h1>
