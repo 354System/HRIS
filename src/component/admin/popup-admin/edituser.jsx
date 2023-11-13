@@ -8,6 +8,12 @@ const EditUser = ({ user, edituser }) => {
         edituser(false)
     }
 
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const [userData, setUserData] = useState({
         email: user.email,
         username: user.name,
@@ -15,6 +21,7 @@ const EditUser = ({ user, edituser }) => {
         department: user.position,
         address: "",
         phone: user.numberphone,
+        password: "",
     });
 
     const handleInputChange = (e) => {
@@ -26,7 +33,7 @@ const EditUser = ({ user, edituser }) => {
 
 
     const handleEditUser = () => {
-        const {email, username, role, department, address, phone} = userData
+        const { email, username, role, department, address, phone, password } = userData
 
         fetch(`https://fzsxpv5p-3000.asse.devtunnels.ms/user/update/${user._id}`, {
             method: 'PATCH',
@@ -40,7 +47,7 @@ const EditUser = ({ user, edituser }) => {
                 position: department,
                 numberphone: phone,
                 address: "",
-                password: "",
+                password: password,
             }),
         })
             .then((response) => response.json())
@@ -79,6 +86,30 @@ const EditUser = ({ user, edituser }) => {
                         onChange={handleInputChange}
                     />
                 </div>
+                <div className="mt-2 relative">
+                    <label
+                        htmlFor="password"
+                        className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                    </label>
+                    <div className="relative">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            id="password"
+                            className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="password"
+                            value={userData.password}
+                            onChange={handleInputChange}
+                        />
+                        <Icon
+                            onClick={togglePasswordVisibility}
+                            icon={showPassword ? "ph:eye-slash" : "ph:eye"}
+                            width={20}
+                            className="cursor-pointer absolute top-1/2 transform -translate-y-1/2 right-4"
+                        />
+                    </div>
+                </div>
+
                 <div className="mt-2 flex">
                     <div>
                         <label

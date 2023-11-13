@@ -128,7 +128,7 @@ const LeaveApplications = (props) => {
               <div className="bg-[#ACACAC]/50 w-[70px] h-[50px] rounded-lg flex items-center justify-center">
                 <Icon icon="eva:folder-add-fill" width="21.95" onClick={() => fileInput.current.click()} className="cursor-pointer" />
               </div>
-              <Icon icon="ri:add-circle-fill" width="21.44" className="absolute left-0 top-0 mt-8 ml-12 cursor-pointer" onClick={() => fileinput.current.click()} />
+              <Icon icon="ri:add-circle-fill" width="21.44" className="absolute left-0 top-0 mt-8 ml-12 cursor-pointer" onClick={() => fileInput.current.click()} />
               <input
                 type="file"
                 id="file_input"
