@@ -132,10 +132,10 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
   return (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/5 w-full h-full">
       <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-4 w-1/2 h-4/5 rounded-lg flex flex-col justify-between">
-        <div className="absolute top-0 right-0 ">
+        <div className="absolute top-0 right-0 -mr-2 -mt-2">
           <button
             onClick={() => addUserPopUp(false)}
-            className="bg-black hover:bg-black/80 w-10 h-10 rounded-full flex flex-col items-center justify-center">
+            className="bg-black w-10 h-10 rounded-full flex flex-col items-center justify-center transition-transform transform hover:scale-105 hover:bg-gray-900 hover:shadow-lg">
             <Icon icon="ion:close" color="white" width="17.44" />
           </button>
         </div>
@@ -149,66 +149,7 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
         </div>
         <form>
           {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
-          <div className="mt-2 flex">
-            <label
-              htmlFor="email"
-              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="name@gmail.com"
-              value={userData.email}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mt-2 flex">
-            <label
-              htmlFor="address"
-              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
-            </label>
-            <input
-              type="text"
-              id="address"
-              className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Adress Here"
-              value={userData.address}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mt-2 flex w-full relative">
-            <div className="flex gap-2 w-full">
-              <h1 className="w-1/4 h-11 flex items-center justify-center gap-2 font-semibold text-base bg-[#ACACAC]/50 border border-gray-300 text-black rounded-lg cursor-pointer" onClick={() => setShowDropdown(!showDropdown)}>
-                <span>{countryCodes.find((country) => country.value === userData.countryCode).label}</span>
-                {showDropdown ? <Icon icon="majesticons:chevron-up-circle" className="mt-1" fontSize={20} /> : <Icon icon="majesticons:chevron-down-circle" fontSize={20} className="mt-1" />}
-              </h1>
-              {showDropdown && (
-                <div className="absolute z-10 mt-12 bg-grey-200 border border-gray-300 max-h-40 overflow-y-auto rounded-lg w-32 shadow-md">
-                  <ul>
-                    {countryCodes.map((country) => (
-                      <li
-                        key={country.value}
-                        value={country.value}
-                        onClick={() => handleCountrySelect(country.value)}
-                        className={`cursor-pointer p-2 bg-gray-300 hover:bg-gray-400 hover:delay-75 ${showDropdown ? 'animate-dropdown' : ''}`}
-                      >
-                        {country.label}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <input
-                type="number"
-                id="phone"
-                className="bg-[#ACACAC]/50 border w-full p-3 border-gray-300 text-black text-sm rounded-lg"
-                placeholder="Number Phone"
-                value={userData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
+
           <div className="mt-2 flex">
             <label
               htmlFor="name"
@@ -218,7 +159,7 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
               type="text"
               id="name"
               className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="User"
+              placeholder="Name"
               value={userData.name}
               onChange={handleInputChange}
             />
@@ -252,6 +193,66 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
             />
           </div>
           <div className="mt-2 flex">
+            <label
+              htmlFor="address"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
+            </label>
+            <input
+              type="text"
+              id="address"
+              className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Adress Here"
+              value={userData.address}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mt-2 flex w-full relative">
+            <div className="flex gap-2 w-full items-center max-h-10">
+              <h1 className="w-1/4 h-10 flex items-center justify-center gap-2 font-semibold text-base bg-[#ACACAC]/50 border border-gray-300 text-black rounded-lg cursor-pointer" onClick={() => setShowDropdown(!showDropdown)}>
+                <span>{countryCodes.find((country) => country.value === userData.countryCode).label}</span>
+                {showDropdown ? <Icon icon="majesticons:chevron-up-circle" className="mt-1" fontSize={20} /> : <Icon icon="majesticons:chevron-down-circle" fontSize={20} className="mt-1" />}
+              </h1>
+              {showDropdown && (
+                <div className="absolute z-10 mt-12 bg-grey-200 border border-gray-300 overflow-y-auto rounded-lg w-32 shadow-md">
+                  <ul>
+                    {countryCodes.map((country) => (
+                      <li
+                        key={country.value}
+                        value={country.value}
+                        onClick={() => handleCountrySelect(country.value)}
+                        className={`cursor-pointer p-2 bg-gray-300 hover:bg-gray-400 hover:delay-75 ${showDropdown ? 'animate-dropdown' : ''}`}
+                      >
+                        {country.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <input
+                type="number"
+                id="phone"
+                className="bg-[#ACACAC]/50 border w-full h-10 p-3 border-gray-300 text-black text-sm rounded-lg"
+                placeholder="Number Phone"
+                value={userData.phone}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="mt-2 flex">
+            <label
+              htmlFor="email"
+              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute">
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="name@gmail.com"
+              value={userData.email}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mt-2 flex">
             <div className="relative w-full mb-5">
               <label
                 htmlFor="password"
@@ -274,16 +275,17 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
             </div>
           </div>
           <div className="text-end flex justify-end items-center gap-x-8 ">
-            <h1
+            <span
               onClick={() => addUserPopUp(false)}
-              className="flex items-center font-semibold cursor-pointer"
+              className="flex items-center font-semibold cursor-pointer text-gray-700 hover:underline underline-offset-2 hover:text-gray-800 transition duration-300"
             >
               Cancel
-            </h1>
+            </span>
+
             <button
               onClick={handleSubmit}
               type="button"
-              className="flex items-center justify-center bg-purple w-1/4 h-10 rounded-lg text-white font-semibold hover:bg-[#7e3293]">
+              className="bg-purple hover:bg-[#5c215c] transition-colors duration-300 text-white font-semibold p-3 rounded-lg">
               {isPending ? <Spinner size={20} color="white" /> : "Add User"}
             </button>
           </div>

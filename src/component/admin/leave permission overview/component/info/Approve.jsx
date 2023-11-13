@@ -1,13 +1,14 @@
 import { FiUsers } from "react-icons/fi";
-const ApprovePaidLeaveAdmin = () => {
+const ApprovePaidLeaveAdmin = ({ paidLeaveData }) => {
+  const data = paidLeaveData?.filter((data) => data.approval === "Approved");
   return (
     <div className="w-64 h-full flex flex-col bg-white justify-between rounded p-5">
       <div className="flex justify-between items-center">
         <div className="text-3xl font-bold text-primary">
-          <span>452</span>
+          <span>{data?.length}</span>
         </div>
         <div className="rounded-full bg-[#E6EAF5] w-10 h-10 flex items-center justify-center">
-        <FiUsers size={20} color='purple' />
+          <FiUsers size={20} color='purple' />
         </div>
       </div>
       <div>

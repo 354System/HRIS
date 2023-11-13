@@ -1,8 +1,7 @@
 import { format } from "date-fns";
-import { usePresenceCurrentUser } from "../../../../api/fetchDataCurrentUser/useFetchPresence"
+import { useEffect } from "react";
 
-const PresenceTableUser = () => {
-    const { data: Presence } = usePresenceCurrentUser()
+const PresenceTableUser = ({ Presence }) => {
 
     Presence?.forEach(presenceData => {
         const checkIn = new Date(presenceData.checkin);
@@ -17,9 +16,6 @@ const PresenceTableUser = () => {
         // Menambahkan properti workHours ke objek Presence yang ada
         presenceData.workHours = workHours;
     });
-
-    // Presence sekarang berisi properti workHours
-    console.log(Presence);
 
     function checkInStyle(data) {
         if (data.absen === 'Absent') {
@@ -47,33 +43,29 @@ const PresenceTableUser = () => {
         <table className="w-full text-center">
             <thead>
                 <tr className="border-b-4 border-t-2 text-grey">
+                    <th className="p-4">No</th>
                     <th className="p-4">Date</th>
-                    <th className="text-center">
-                        Status
-                    </th>
-                    <th className="">
-                        Check-In
-                    </th>
-                    <th className="">
-                        Check-Out
-                    </th>
-                    <th className="">
-                        Work hours
-                    </th>
+                    <th className="text-center">Status</th>
+                    <th className="">Check-In</th>
+                    <th className="">Check-Out</th>
+                    <th className="">Work hours</th>
                 </tr>
             </thead>
             <tbody>
-                {Presence && Presence?.map((data, index) => (
+                {Presence ? Presence?.map((data, index) => (
                     <tr key={index} className="border-b font-semibold">
+                        <td>{index + 1}</td>
                         <td className=" p-4 max-w-[90px]">{format(new Date(data.date), 'dd-MM-yyyy')}</td>
                         <td>
                             <span className={`${statusStyle(data)} p-2`}>{data.absen}</span>
                         </td>
                         <td className={`${checkInStyle(data)}`}>{format(new Date(data.checkin), 'HH:mm')}</td>
-                        <td className="text-[#A332C3] text-lg">{format(new Date(data.checkout), 'HH:mm')}</td>
-                        <td className="text-[#252C58]">{data.workHours}</td>
+                        <td className="text-purple text-lg">
+                            {data.checkout ? format(new Date(data.checkout), 'HH:mm') : '-:-:-'}
+                        </td>
+                        <td className="text-primary">{data.workHours}</td>
                     </tr>
-                ))}
+                )) : null}
             </tbody>
         </table>
     )

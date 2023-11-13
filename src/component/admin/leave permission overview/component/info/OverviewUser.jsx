@@ -51,21 +51,21 @@ const OverView = () => {
             </thead>
             <tbody>
               <tr className="border-b">
-                <td className="text-[#252C58] p-4">2341421</td>
-                <td className="text-[#252C58]">Ahmed Rashdan</td>
+                <td className="text-primary p-4">2341421</td>
+                <td className="text-primary">Ahmed Rashdan</td>
                 <td className="text-grey">Help Desk Executive</td>
                 <td className="text-grey">IT Department</td>
                 <td className="text-grey">29 July 2023</td>
                 <td className="bg-[#E6EFFC] text-purple ">Work from office</td>
                 <td className="text-purple">09:00</td>
                 <td className="text-purple">18:00</td>
-                <td className="text-[#252C58]">10h 2m</td>
+                <td className="text-primary">10h 2m</td>
               </tr>
             </tbody>
             <tbody>
               <tr className="border-b">
-                <td className="text-[#252C58] p-4">2341421</td>
-                <td className="text-[#252C58]">Ahmed Rashdan</td>
+                <td className="text-primary p-4">2341421</td>
+                <td className="text-primary">Ahmed Rashdan</td>
                 <td className="text-grey">Help Desk Executive</td>
                 <td className="text-grey">IT Department</td>
                 <td className="text-grey">29 July 2023</td>
@@ -77,15 +77,15 @@ const OverView = () => {
             </tbody>
             <tbody>
               <tr className="border-b">
-                <td className="text-[#252C58] p-4">2341421</td>
-                <td className="text-[#252C58]">Ahmed Rashdan</td>
+                <td className="text-primary p-4">2341421</td>
+                <td className="text-primary">Ahmed Rashdan</td>
                 <td className="text-grey">Help Desk Executive</td>
                 <td className="text-grey">IT Department</td>
                 <td className="text-grey">29 July 2023</td>
                 <td className="bg-[#FFF8E7] text-[#D5B500] font-medium">Late arrival</td>
                 <td className="text-[#D5B500]">10:30</td>
-                <td className="text-[#A332C3]">18:00</td>
-                <td className="text-[#252C58]">8h 30m</td>
+                <td className="text-purple">18:00</td>
+                <td className="text-primary">8h 30m</td>
               </tr>
             </tbody>
           </table>

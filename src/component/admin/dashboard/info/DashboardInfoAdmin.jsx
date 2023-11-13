@@ -8,7 +8,7 @@ import TotalEmployedBox from "./component/box/TotalEmployeBox"
 
 const DashboardInfoAdmin = () => {
     return (
-        <div className="w-full h-full flex bg-gray-200 gap-8">
+        <div className="w-full h-full flex gap-8">
             <div className="h-full">
                 <RealtimeBoxAdmin />
             </div>

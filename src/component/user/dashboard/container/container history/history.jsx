@@ -76,11 +76,11 @@ const HistoryDashboard = () => {
           </thead>
           <tbody>
             <tr className="border-b">
-              <td className="text-[#252C58] p-4">29 July 2023</td>
-              <td className="bg-white"><span className="text-[#A332C3] bg-[#E6EFFC] p-1">Work from office</span></td>
-              <td className="text-[#A332C3] ml-4">09:00</td>
-              <td className="text-[#A332C3]">18:00</td>
-              <td className="text-[#252C58]">10h 2m</td>
+              <td className="text-primary p-4">29 July 2023</td>
+              <td className="bg-white"><span className="text-purple bg-[#E6EFFC] p-1">Work from office</span></td>
+              <td className="text-purple ml-4">09:00</td>
+              <td className="text-purple">18:00</td>
+              <td className="text-primary">10h 2m</td>
             </tr>
           </tbody>
         </table>

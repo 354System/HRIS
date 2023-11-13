@@ -7,20 +7,20 @@ import Permission from "./component/info/Permission"
 import RejectPaidLeaveAdmin from "./component/info/Reject"
 import RejectPermission from "./component/info/Reject permission"
 
-const LeavePermissionInfo = () => {
+const LeavePermissionInfo = ({ permissionData, paidLeaveData }) => {
     return (
         <div className="w-full h-full flex flex-col gap-8">
             <div className="flex h-1/2 gap-8">
-                <PaidLeave />
-                <ApprovePaidLeaveAdmin />
-                <PendingPaidLeaveAdmin />
-                <RejectPaidLeaveAdmin />
+                <PaidLeave paidLeaveData={paidLeaveData}/>
+                <ApprovePaidLeaveAdmin paidLeaveData={paidLeaveData}/>
+                <PendingPaidLeaveAdmin paidLeaveData={paidLeaveData}/>
+                <RejectPaidLeaveAdmin paidLeaveData={paidLeaveData}/>
             </div>
             <div className="flex h-1/2 gap-8">
-                <Permission />
+                <Permission permissionData={permissionData}/>
                 <ApprovePermission />
                 <PendingPermission />
-               <RejectPermission />
+                <RejectPermission />
             </div>
         </div>
     )

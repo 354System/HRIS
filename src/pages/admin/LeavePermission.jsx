@@ -1,19 +1,23 @@
+import { useFetchAllPaidLeave } from "../../api/fetchData/useFetchAllPaidLeave";
+import { useFetchAllPermission } from "../../api/fetchData/useFetchAllPermission";
 import LeavePermissionBody from "../../component/admin/leave permission overview/LeavePermissionBody";
 import LeavePermissionInfo from "../../component/admin/leave permission overview/LeavePermissionInfo";
 import { Navbar } from "../../component/bar/Navbar";
 import { Sidebarmenu } from "../../component/bar/Sidebarmenu";
 
 const LeavePermissionOverviewAdmin = () => {
+    const { data: paidLeaveData, refetch: refetchDataPaidLeave } = useFetchAllPaidLeave();
+    const { data: permissionData, refetch: refetchDataPermission } = useFetchAllPermission();
     return (
-        <div className="w-full min-h-screen flex bg-gray-300">
+        <div className="absolute bg-gray-300 min-h-screen w-full">
             <Sidebarmenu />
             <Navbar />
-            <div className="relative w-full flex flex-col mt-28 p-6 ml-20 pl-8"> {/* Tambahkan class 'pl-24' untuk memberikan margin kiri sesuai lebar sidebar */}
-                <div className="mb-12">
-                    <LeavePermissionInfo />
+            <div className="p-7 mt-28 pl-28 w-full ">
+                <div className="mb-10">
+                    <LeavePermissionInfo paidLeaveData={paidLeaveData} permissionData={permissionData} />
                 </div>
                 <div className="w-full">
-                    <LeavePermissionBody />
+                    <LeavePermissionBody paidLeaveData={paidLeaveData} permissionData={permissionData} refetchDataPaidLeave={refetchDataPaidLeave} refetchDataPermission={refetchDataPermission} />
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 
-export const useApproveLeave = ({ onSuccess, onError, id }) => {
+export const useDisApproveLeave = ({ onSuccess, id }) => {
     return useMutation({
         mutationFn: async (body) => {
             const approveResponse = await axiosInstance.patch(`/cuti/approved/${id}`, body)
@@ -9,7 +9,7 @@ export const useApproveLeave = ({ onSuccess, onError, id }) => {
             return approveResponse
         },
         onSuccess,
-        onError : (error) => {
+        onError: (error) => {
             console.log(error)
         },
     });

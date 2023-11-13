@@ -3,13 +3,13 @@ import { Sidebarmenu } from "../../component/bar/Sidebarmenu"
 import { Navbar } from "../../component/bar/Navbar"
 const AttendanceOverview = () => {
     return (
-        <div className="w-full min-h-full absolute bg-darkwhite">
+        <div className="absolute bg-gray-300 min-h-screen w-full">
             <Sidebarmenu />
             <Navbar />
-            <div className="flex-col p-3 bg-white ml-28 mt-36">
+            <div className="p-7 mt-28 pl-28 w-full mb-10 ">
                 <AOtable />
             </div>
-        </div>
+        </div> 
     )
 }
 export default AttendanceOverview;

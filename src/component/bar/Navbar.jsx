@@ -5,6 +5,7 @@ export function Navbar() {
     const pageTitles = {
         '/dashboard': 'Dashboard',
         '/attendance-overview': 'Attendance Overview',
+        '/permission-and-leave': 'Attendance Permission & Leave',
         '/employee-data': 'Employee',
         '/attendance-history': 'History',
     };
@@ -13,7 +14,7 @@ export function Navbar() {
     const currentPageTitle = pageTitles[location.pathname] || '';
     const { userData } = useAuthInfo()
     return (
-        <nav className="fixed z-10 top-6 right-4 w-[90%] h-[75px] flex items-center justify-between bg-[#FFFFFF] p-6 shadow-lg rounded-lg ">
+        <nav className="fixed z-10 top-6 right-7 w-[89%] h-[75px] flex items-center justify-between bg-white p-6 shadow-lg rounded-lg ">
             <div>
                 <span className="navtitle text-xl font-semibold text-primary">{currentPageTitle}</span>
             </div>

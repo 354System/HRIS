@@ -6,11 +6,11 @@ import HistoryDashboardAdmin from "../../component/admin/dashboard/attendance hi
 
 function DashboardAdmin() {
   return (
-    <div className="min-h-screen flex bg-gray-200">
+    <div className="absolute bg-gray-300 min-h-screen w-full">
       <Sidebarmenu />
       <Navbar />
-      <div className="relative w-full flex flex-col mt-28 p-6 ml-24"> {/* Tambahkan class 'pl-24' untuk memberikan margin kiri sesuai lebar sidebar */}
-        <div className="w-full mb-10">
+      <div className="p-7 mt-28 pl-28 w-full ">
+        <div className="w-full h-72 mb-10">
           <DashboardInfoAdmin />
         </div>
         <div className="flex w-full h-80 mb-10">

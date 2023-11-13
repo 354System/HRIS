@@ -11,13 +11,13 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
   const [checkInPopUp, setCheckInPopUp] = useState(false)
   const [checkOutPopUp, setCheckOutPopUp] = useState(false)
   const [checkInOut, setCheckInOut] = useState({
-    checkin: '',
-    checkout: ''
+    checkin: '-:-:-',
+    checkout: '-:-:-'
   })
   const [presentDataToday, setPresentDataToday] = useState()
   const [id, setId] = useState('')
 
-  const { data: Presence, refetch: pepek } = usePresenceCurrentUser();
+  const { data: Presence, refetch: refetchPresenceToday } = usePresenceCurrentUser();
 
   const today = new Date().toLocaleDateString(); // Ambil tanggal hari ini dalam format yang sesuai dengan data Anda (pastikan formatnya sama)
 
@@ -31,29 +31,31 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
   }, [Presence])
 
   useEffect(() => {
-    if (presentDataToday && presentDataToday?.[0].checkin) {
+    if (presentDataToday && presentDataToday.length > 0) {
       const id = presentDataToday[0]._id;
-      const getCheckin = new Date(presentDataToday?.[0].checkin)
-      // console.log(getCheckout);
-      const checkIn = format(getCheckin, "HH:mm");
-      setCheckInOut({
-        checkin: checkIn,
-      });
-      setId(id);
-    } if (presentDataToday?.[0].checkout) {
-      const getCheckout = new Date(presentDataToday?.[0].checkout)
-      const checkout = format(getCheckout, "HH:mm");
-      console.log(checkout);
-      setCheckInOut((prev) => ({
-        ...prev,
-        checkout: checkout
-      }))
+
+      if (presentDataToday[0].checkin) {
+        const getCheckin = new Date(presentDataToday[0].checkin);
+        const checkIn = format(getCheckin, "HH:mm");
+        setCheckInOut({
+          checkin: checkIn,
+        });
+        setId(id);
+      }
+      if (presentDataToday[0].checkout) {
+        const getCheckout = new Date(presentDataToday[0].checkout);
+        const checkout = format(getCheckout, "HH:mm");
+        setCheckInOut((prev) => ({
+          ...prev,
+          checkout: checkout,
+        }));
+      }
     }
   }, [presentDataToday]);
 
   const updateRealtime = () => {
     const time = new Date();
-    const timeFormatted = format(time, "HH:mm:ss");
+    const timeFormatted = format(time, "HH:mm:ss a");
     setRealtime(timeFormatted);
 
     const dateFormatted = format(time, "dd MMMM yyyy");
@@ -71,7 +73,7 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
       <div className="flex gap-4 w-full items-center">
         <BsSun size={50} className="text-purple" />
         <div className="flex flex-col w-full">
-          <span className="font-black text-2xl text-primary ">{realtime}</span>
+          <span className="font-black text-2xl text-primary tracking-wides">{realtime}</span>
           <span className="text-xs font-medium text-primary">
             Realtime Insight
           </span>
@@ -123,8 +125,8 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
               ) : null}
             </>
           )}
-          {checkOutPopUp ? <Checkout CheckOutPopUp={setCheckOutPopUp} refetch={pepek()} id={id} /> : null}
-          {checkInPopUp ? <CheckIn refetch={pepek()} CheckInPopUp={setCheckInPopUp} /> : null}
+          {checkOutPopUp ? <Checkout CheckOutPopUp={setCheckOutPopUp} refetch={refetchPresenceToday()} id={id} /> : null}
+          {checkInPopUp ? <CheckIn refetch={refetchPresenceToday()} CheckInPopUp={setCheckInPopUp} /> : null}
         </div>
       </div>
     </div>

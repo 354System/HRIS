@@ -146,10 +146,10 @@ const AOtable = () => {
     }
 
     return (
-        <div className="bg-white h-full">
+        <div className="bg-white w-full h-full p-5 rounded-lg">
             <AOTableHeader searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
-            <div className="h-4/5">
-                <table className="w-full bg-white">
+            <div className="h-4/5 ">
+                <table className="w-full bg-white ">
                     <thead>
                         <tr className=" border-b-4 border-t-2 text-primary">
                             <th className="text-start p-5">ID</th>
@@ -167,7 +167,7 @@ const AOtable = () => {
                         {displayedAbsensiData &&
                             displayedAbsensiData.map((item, index) => (
                                 <tr key={index} className="border-b">
-                                    <td className="p-8 text-primary">{item.id}</td>
+                                    <td className="p-5 text-primary">{item.id}</td>
                                     <td className="text-primary">{item.employe}</td>
                                     <td className="text-primary">{item.divisi}</td>
                                     <td className=" text-primary">{item.departement}</td>

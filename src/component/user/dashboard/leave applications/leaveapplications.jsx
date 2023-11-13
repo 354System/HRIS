@@ -5,6 +5,7 @@ import { Spinner } from "@chakra-ui/react";
 
 const LeaveApplications = ({ leave }) => {
   const [LeaveApplication, setLeaveApplication] = useState({
+    cuti: "",
     fromdate: Date,
     untildate: Date,
     description: "",
@@ -31,7 +32,7 @@ const LeaveApplications = ({ leave }) => {
       if (allowedExtensions.includes(fileExtension)) {
         setSelectedFileName(selectedFile.name);
       } else {
-        alert("Hanya file dengan ekstensi .jpg, .png, dan .pdf yang diizinkan.");
+        alert("Hanya file dengan ekstensi .jpg, .png, dan .pdf yang dicutikan.");
         e.target.value = "";
       }
     }
@@ -40,7 +41,7 @@ const LeaveApplications = ({ leave }) => {
   const { mutate, isPending } = useLeaveApplication({
     onSuccess: (data) => {
       setSuccesMsg(data.message);
-      console.log(data);
+      leave(false);
     },
     onError: (error) => {
       console.log(error);
@@ -61,11 +62,11 @@ const LeaveApplications = ({ leave }) => {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-full">
-      <div className="absolute gap-4 p-6 top-1/2 transform -translate-y-1/2 bg-white w-[550px] h-[500px] rounded-lg flex flex-col">
+      <div className="absolute gap-4 p-6 top-1/2 transform -translate-y-1/2 bg-white w-[550px] h-[550px] rounded-lg flex flex-col">
         <div className="absolute right-2 top-2">
           <button
             onClick={() => leave(false)}
-            className="bg-black w-[41.64px] h-[41.64px] rounded-full flex flex-col items-center justify-center">
+            className="bg-black w-10 h-10 rounded-full flex flex-col items-center justify-center transition-transform transform hover:scale-105 hover:bg-gray-900 hover:shadow-lg">
             <Icon icon="ion:close" color="white" width="17.44" />
           </button>
         </div>
@@ -76,6 +77,37 @@ const LeaveApplications = ({ leave }) => {
           <div>
             <p className=" font-semibold">Leave Applications</p>
           </div>
+        </div>
+        <div className="flex-col flex ">
+          {succesMsg && <p className="text-green">{succesMsg}</p>}
+          {errorMsg && <p className="text-red">{errorMsg}</p>}
+          <select
+            id="cuti"
+            value={LeaveApplication.cuti}
+            onChange={handleInputChange}
+            className="bg-[#ACACAC]/50 p-3 cursor-pointer border border-gray-300 text-black text-sm rounded-lg font-semibold h-12"
+          >
+            <option value="Sick" className="font-semibold">
+              Sick
+            </option>
+            <option value="Holiday" className="font-semibold">
+              Holiday
+            </option>
+            <option value="Family event" className="font-semibold">
+              Family Events
+            </option>
+            <option value="Other">Other</option> {/* Tambahkan opsi "Other" */}
+          </select>
+          {LeaveApplication.cuti === 'Other' && ( // Tampilkan input teks hanya jika "Other" dipilih
+            <input
+              id="otherReason"
+              type="text"
+              value={LeaveApplication.cuti}
+              onChange={handleInputChange}
+              placeholder="Enter Other Reason"
+              className="mt-4 p-3 cursor-pointer bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg font-semibold h-10"
+            />
+          )}
         </div>
         <div className="flex justify-end">
           <label
@@ -134,13 +166,15 @@ const LeaveApplications = ({ leave }) => {
           ></input>
         </div>
         <div className=" flex justify-end gap-8">
-          <h1 onClick={() => leave(false)} className="mt-[11px] font-semibold cursor-pointer">Cancel</h1>
-          <button onClick={handleSubmit} className="bg-[#A332C3] w-[155px] h-11 rounded-lg text-white font-semibold text-xs">
-            {isPending ? <Spinner size={"sm"} /> : "Send Leave Application"}
+          <span onClick={() => leave(false)} className="flex items-center font-semibold cursor-pointer text-gray-700 hover:underline underline-offset-2 hover:text-gray-800 transition duration-300">
+            Cancel
+          </span>
+          <button onClick={handleSubmit} className="w-24 bg-purple hover:bg-[#5c215c] transition-colors duration-300 text-white font-semibold p-3 rounded-lg">
+            {isPending ? <Spinner size={"sm"} /> : "Submit"}
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

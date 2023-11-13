@@ -10,6 +10,7 @@ import PrivateRoute from './privat-router/privatRoute'
 import AttendanceHistoryUser from './pages/user/AttendanceHistory'
 import { useAuthInfo } from './use context/useAuthInfo'
 import LeavePermissionOverviewAdmin from './pages/admin/LeavePermission'
+import PathNotFound from './pages/path not found/PathNotFound'
 function App() {
   const { userData } = useAuthInfo()
   const role = userData?.role
@@ -26,6 +27,8 @@ function App() {
           <Route path="/permission-and-leave" element={<PrivateRoute requiredRoles={["Admin"]} element={<LeavePermissionOverviewAdmin />} />} />
           {/* path user */}
           <Route path="/attendance-history" element={<PrivateRoute requiredRoles={"Public"} element={<AttendanceHistoryUser />} />} />
+          {/* path not found */}
+          <Route path="*" element={<PathNotFound />} />
         </Routes>
       </Router>
     </>

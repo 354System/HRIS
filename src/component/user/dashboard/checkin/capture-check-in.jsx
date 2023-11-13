@@ -172,8 +172,7 @@ const Camera = ({ checkInPopUp, status, refetch }) => {
       <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-8 w-[650px] h-[600px] rounded-lg">
         <div onClick={() => checkInPopUp(false)} className="flex justify-end">
           <button
-            className="absolute top-0 right-0 -mr-3 -mt-3 bg-black w-[41.64px] h-[41.64px] rounded-full flex items-center justify-center"
-          >
+            className="absolute top-0 right-0 -mr-3 -mt-3 bg-black w-[41.64px] h-[41.64px] rounded-full flex items-center justify-center">
             <Icon icon="ion:close" color="white" width="17.44" />
           </button>
         </div>
@@ -202,7 +201,7 @@ const Camera = ({ checkInPopUp, status, refetch }) => {
               />
               <button
                 onClick={handleSubmit}
-                className="bg-[#A332C3] mb-2 absolute bottom-0 left-1/2 transform -translate-x-1/2 p-2 rounded-full"
+                className="bg-purple mb-2 absolute bottom-0 left-1/2 transform -translate-x-1/2 p-2 rounded-full"
               >
                 {isPending ? <Spinner /> : <Icon icon="system-uicons:camera" width="28.5" color="white" />}
               </button>

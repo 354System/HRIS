@@ -5,17 +5,17 @@ import DashboardInfoUser from "../../component/user/dashboard/container/containe
 
 const DashboardUser = () => {
   return (
-    <div className="w-full min-h-full flex bg-gray-200">
+    <div className="absolute bg-gray-300 min-h-screen w-full">
       <Sidebarmenu />
       <Navbar />
-      <div className="w-full mb-10 mt-28 p-4 pl-28">
+      <div className="p-7 mt-28 pl-28 w-full ">
         <div className="h-72">
           <DashboardInfoUser />
         </div>
         <div className="">
           <HistoryDashboard />
         </div>
-      </div>
+      </div> 
     </div>
   );
 };

@@ -35,14 +35,24 @@ const TableDataUser = () => {
     setUserid(userId);
   };
 
+  let usersFiltered = users;
+
+  if (searchUser.trim() !== '') {
+    usersFiltered = users.filter((item) => {
+      return Object.values(item).some(value =>
+        typeof value === 'string' && value.toLowerCase().includes(searchUser.toLowerCase())
+      );
+    });
+  }
+
   return (
-    <div className="bg-white w-full rounded-lg">
+    <div className="bg-white w-full rounded-lg p-5 mb-10">
       <HeaderDataUser searchUser={searchUser} dataUsers={users} setSearchUser={setSearchUser} addUserPopUp={setAddUserPopUp} />
       <div className="w-full">
         <table className="w-full ">
           <thead>
             <tr className="border-b-2 border-t-2 text-primary">
-              <th className="p-4 text-left">ID</th>
+              <th className="p-5 text-left">ID</th>
               <th className="text-left">Name</th>
               <th className="text-center">Position</th>
               <th className="text-center">Divisi</th>
@@ -50,9 +60,9 @@ const TableDataUser = () => {
             </tr>
           </thead>
           <tbody>
-            {users && users.map((user, index) => (
+            {usersFiltered && usersFiltered.map((user, index) => (
               <tr key={index} className="border-b-2 text-primary">
-                <td className="p-4">{user._id}</td>
+                <td className="p-5">{user._id}</td>
                 <td className="pr-10">{user.name}</td>
                 <td className="text-center">{user.position}</td>
                 <td className="text-center">{user.divisi}</td>

@@ -13,8 +13,7 @@ const Result = ({ datas, checkInPopUp }) => {
         <div className="flex justify-end">
           <button
             onClick={handleClose}
-            className="bg-black w-[41.64px] h-[41.64px] rounded-full flex flex-col items-center justify-center"
-          >
+            className="bg-black w-10 h-10 rounded-full flex flex-col items-center justify-center transition-transform transform hover:scale-105 hover:bg-gray-900 hover:shadow-lg">
             <Icon icon="ion:close" color="white" width="17.44" />
           </button>
         </div>
@@ -30,21 +29,21 @@ const Result = ({ datas, checkInPopUp }) => {
           {datas && <img src={URL.createObjectURL(datas.filePhoto)} alt="Screenshot" className="rounded-lg" />}
         </div>
         <div className="flex mt-6 gap-x-24">
-          <div className="text-[#252C58]">
+          <div className="text-primary">
             <h1>Time Attendance:</h1>
             <h1 className="font-semibold">{datas.times}</h1>
           </div>
-          <div className="text-[#252C58]">
+          <div className="text-primary">
             <h1>Date:</h1>
             <span className="font-semibold">{datas.date}</span>
           </div>
-          <div className="text-[#252C58]">
+          <div className="text-primary">
             <h1>Type:</h1>
             <h1 className="font-semibold">{datas.status}</h1>
           </div>
         </div>
         <div>
-          <button onClick={handleClose} className="bg-[#A332C3] mt-10 w-full h-[50px] text-white font-semibold rounded-lg">
+          <button onClick={handleClose} className="bg-purple mt-10 w-full h-[50px] text-white font-semibold rounded-lg">
             Close
           </button>
         </div>

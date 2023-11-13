@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const LoginUser = () => {
   return (
-    <div className="flex content-center justify-center h-[595px] items-center bg-[#A332C3]/70">
+    <div className="flex content-center justify-center h-[595px] items-center bg-purple/70">
       <form className="border-4 p-16 border-[#93B1A6] bg-[#5C8374]">
         <h1 className="mb-10 font-bold text-3xl text-center">LOGIN</h1>
         <div className="mb-6">

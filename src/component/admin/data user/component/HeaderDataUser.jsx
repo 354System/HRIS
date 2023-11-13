@@ -19,7 +19,7 @@ const HeaderDataUser = ({ addUserPopUp, searchUser, setSearchUser, dataUsers }) 
                     value={searchUser}
                     onChange={(e) => setSearchUser(e.target.value)}
                     id="base-input"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 pl-10 pr-4 py-2 block w-[470px] h-[40px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="w-96 h-10 pl-10 bg-white border-2 border-[#D5D9DD] text-sm placeholder:text-grey rounded"
                     placeholder="Quick Search..."
                     required
                 />
@@ -33,10 +33,9 @@ const HeaderDataUser = ({ addUserPopUp, searchUser, setSearchUser, dataUsers }) 
                     <Icon
                         icon="zondicons:add-solid"
                         width="24"
-                        className="mr-2 text-[#FFFFFF]"
+                        className="mr-2 text-white"
                     />
                     <span className="text-sm  text-white font-bold">Add User</span>
-
                 </button>
             </div>
         </div>

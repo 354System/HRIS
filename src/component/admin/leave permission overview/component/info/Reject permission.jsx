@@ -18,7 +18,7 @@ const RejectPermission = () => {
             <img
               src="src/assets/Vector2.svg"
               alt=""
-              className="text-[#A332C3]"
+              className="text-purple"
             />
           </div>
           <div>

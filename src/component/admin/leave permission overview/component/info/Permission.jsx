@@ -1,10 +1,10 @@
 import { Icon } from "@iconify/react";
-const Permission = () => {
+const Permission = ({ permissionData }) => {
   return (
-    <div className="w-64 h-full flex flex-col justify-between bg-[#F9BE2A] rounded p-5">
+    <div className="w-64 h-full flex flex-col justify-between bg-yellow rounded p-5">
       <div className="flex justify-between items-center">
         <div className="text-3xl font-bold text-white">
-          <span>42</span>
+          <span>{permissionData?.length}</span>
         </div>
         <div className="rounded-full bg-grey w-10 h-10 flex items-center justify-center">
           <Icon icon="fluent-mdl2:date-time-2" color="white" width="20" />

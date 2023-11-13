@@ -6,7 +6,7 @@ const Button = () => {
     <div className="">
       <div className="flex gap-x-4">
         <div>
-          <button className="bg-[#A332C3] text-white w-[119px] h-[40px] rounded-lg font-bold">
+          <button className="bg-purple text-white w-[119px] h-[40px] rounded-lg font-bold">
             Paid Leave
           </button>
         </div>

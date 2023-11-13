@@ -10,7 +10,7 @@ import WorkingDayThismonthBoxUser from "../../component/info/WorkingDayThismonth
 const DashboardInfoUser = () => {
     const { data: presence } = usePresenceCurrentUser();
     return (
-        <div className="w-full h-full flex bg-gray-200">
+        <div className="w-full h-full flex">
             <div className="w-72 h-full">
                 <RealtimeInsightBoxUser />
             </div>

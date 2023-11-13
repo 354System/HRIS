@@ -42,7 +42,6 @@ const Login = () => {
         });
     };
 
-
     return (
         <div className={`w-full min-h-screen bg-quarternary font-sans '}`}>
             <div className="flex flex-col justify-center items-center mt-16 gap-5">
@@ -81,7 +80,7 @@ const Login = () => {
                             <span className="text-xs text-tertiary underline">Forgot My Password</span>
                         </div>
                         <div className="mb-4">
-                            <button type="button" onClick={handleLoginSubmit} className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">kontol</button>
+                            <button type="button" onClick={handleLoginSubmit} className="block bg-white shadow shadow-black w-full h-[45px] text-black text-xs font-semibold rounded-[25px] hover:bg-black transition duration-150 delay-100 hover:delay-100">Login</button>
                         </div>
                     </form>
                 </div>

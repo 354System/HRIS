@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
-import { useFetchAllPermission } from "../../../../api/fetchData/useFetchAllPermission";
+import React from "react";
 import { format, intervalToDuration } from "date-fns";
 
-const TablePermissionAdmin = () => {
-  const { data: permissionData, isLoading, refetch: refetchDataPermission } = useFetchAllPermission();
+const TablePermissionAdmin = ({ permissionData, refetchDataPermission }) => {
 
   permissionData?.forEach(permissionData => {
     const fromDate = new Date(permissionData?.fromdate);
@@ -32,6 +30,7 @@ const TablePermissionAdmin = () => {
           <th className="text-left w-48 p-6">Employee</th>
           <th>Role</th>
           <th>Department</th>
+          <th>Date</th>
           <th>Start Date</th>
           <th>End Date</th>
           <th>Total Days</th>
@@ -40,11 +39,12 @@ const TablePermissionAdmin = () => {
       <tbody>
         {permissionData ? permissionData.map((data, index) => (
           <tr className="border-b text-center" key={index}>
-            <td className="text-[#252C58] text-left p-6 w-48">{data.user.name}</td>
+            <td className="text-primary text-left p-6">{data.user.name}</td>
             <td className="text-grey">{data.user.position}</td>
             <td className="text-grey">{data.user.divisi}</td>
-            <td className="text-[#A332C3]">{format(new Date(data.fromdate), 'dd-MM-yyyy')}</td>
-            <td className="text-[#A332C3]">{format(new Date(data.untildate), 'dd-MM-yyyy')}</td>
+            <td className="text-purple">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
+            <td className="text-purple">{format(new Date(data.fromdate), 'dd-MM-yyyy')}</td>
+            <td className="text-purple">{format(new Date(data.untildate), 'dd-MM-yyyy')}</td>
             <td className="text-grey">{data.totalDays}</td>
           </tr>
         )) : null}

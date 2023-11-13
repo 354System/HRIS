@@ -23,10 +23,10 @@ export function Sidebarmenu() {
                 <Link className='w-full' to={'/dashboard'}>
                     <PiSquaresFourFill size={23} className={`cursor-pointer mb-6 w-full  ${location.pathname === '/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey border-r-2 border-white hover:text-primary'}`} />
                 </Link>
-                <Link className='w-full' to={userData?.role === 'Admin' ? '/employee-data' : '/attendance-history'} >
-                    <BiUser size={23} className={`cursor-pointer mb-6 w-full ${location.pathname === '/employee-data' || location.pathname === '/attendance-history' ? 'text-purple border-r-2 border-purple' : 'text-grey border-r-2 border-white hover:text-primary'}`} />
+                <Link className='w-full' to={userData?.role === 'Admin' ? '/employee-data' : ''} >
+                    <BiUser size={23} className={`cursor-pointer mb-6 w-full ${location.pathname === '/employee-data' || location.pathname === '' ? 'text-purple border-r-2 border-purple' : 'text-grey border-r-2 border-white hover:text-primary'}`} />
                 </Link>
-                <Link className='w-full' to={'/attendance-overview'}>
+                <Link className='w-full' to={userData?.role === 'Admin' ? '/attendance-overview' : '/attendance-history'}>
                     <MdShowChart size={25} className={`cursor-pointer mb-6 w-full ${location.pathname === '/attendance-history' || location.pathname === '/attendance-overview' ? 'text-purple border-r-2 border-purple' : 'text-grey border-r-2 border-white hover:text-primary'}`} />
                 </Link>
                 <Link className='w-full' to={userData?.role === 'Admin' ? '/permission-and-leave' : ''}>

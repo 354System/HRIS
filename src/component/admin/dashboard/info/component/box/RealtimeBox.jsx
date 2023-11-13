@@ -1,25 +1,18 @@
 import { RiSettings3Fill } from 'react-icons/ri'
 import { BsSun } from 'react-icons/bs'
 import { useState, useEffect } from "react"
+import { format } from 'date-fns';
 const RealtimeBoxAdmin = () => {
 
     const [realtime, setRealtime] = useState('');
     const [date, setDate] = useState('');
 
     const updateRealtime = () => {
-        const time = new Date();
-        let hours = time.getHours();
-        const minutes = time.getMinutes().toString().padStart(2, '0');
-        const second = time.getSeconds().toString().padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12;
-        const timeFormatted = `${hours}:${minutes}:${second} ${ampm}`;
+        const now = new Date();
+        const timeFormatted = format(now, 'HH:mm:ss a');
         setRealtime(timeFormatted);
 
-        const year = time.getFullYear();
-        const month = time.toLocaleString('default', { month: 'long' });
-        const day = time.getDate().toString().padStart(2, '0');
-        const dateFormatted = `${day} ${month} ${year}`;
+        const dateFormatted = format(now, 'dd MMMM yyyy');
         setDate(dateFormatted);
     }
     useEffect(() => {
@@ -29,12 +22,14 @@ const RealtimeBoxAdmin = () => {
     }, []);
 
     return (
-        <div className="w-64 h-full bg-white rounded flex flex-col justify-between items-center p-5">
+        <div className="w-64 h-full bg-white rounded flex flex-col justify-between items-center p-4">
             <div className="flex gap-4 w-full items-center">
-                <BsSun size={50} className='text-purple' />
+                <BsSun size={50} className="text-purple" />
                 <div className="flex flex-col w-full">
-                    <span className="font-black text-2xl text-primary tracking-wider">{realtime}</span>
-                    <span className="text-xs font-medium text-primary">Realtime Insight</span>
+                    <span className="font-black text-2xl text-primary ">{realtime}</span>
+                    <span className="text-xs font-medium text-primary">
+                        Realtime Insight
+                    </span>
                 </div>
             </div>
             <div>
