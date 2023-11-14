@@ -78,70 +78,62 @@ const LoginUser = () => {
     }
 
     return (
-        <div>
-            <div className="relative">
-                <div className="absolute top-0 right-0 bg-[#A332C3] w-[527px] h-[739px] flex flex-col text-center">
-                    <p className="text-2xl font-semibold text-white mt-60">Login Here</p>
+        <div className="flex w-full h-screen">
+            <div className="flex w-[70%] h-full bg-[#A332C3]">
+            </div>
+            <div className="flex flex-col w-[30%] h-full items-center">
+                <div className="w-full flex justify-center h-12">
+                    <img src="src/assets/Thinkspedia Main Logo 1.png" alt="" />
+                </div>
+                <div className="flex flex-col text-xl mt-48 gap-y-6">
+                    <h1 className="font-semibold">Nice to see you again</h1>
                     <form onSubmit={handleLoginSubmit}>
-                        <div className="mt-4 relative">
-                            <div>
-                                <label
-                                    htmlFor="email"
-                                    className="mb-2 text-sm font-medium text-gray-900 dark:text-gray absolute"
-                                ></label>
-                            </div>
-                            <input
-                                type="Email"
-                                id="email"
-                                value={user.email}
-                                onChange={handleChangeText}
-                                className="bg-[#ACACAC]/50 border w-[242px] h-[36px] text-gray-900 text-sm pl-6 pr-4 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Please Input Your email"
-                            />
-                            <Icon
-                                icon="solar:user-outline" width={16} height={16}
-                                className="absolute left-36 top-1/2 transform -translate-y-1/2 text-white text-bold"
-                            />
-                        </div>
-                        <div className="mt-2 flex">
-                            <div className="relative ml-36 mt-4">
-                                <label
-                                    htmlFor="password"
-                                    className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-                                ></label>
+                        <div className="flex flex-col gap-6">
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="email" className="text-lg">Login</label>
                                 <input
-                                    type={showPassword ? "text" : "password"}
-                                    id="password"
-                                    className="bg-[#ACACAC]/50 border border-gray-300 w-[242px] h-[36px] text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
-                                    placeholder="•••••••••••••"
-                                    value={user.password}
+                                    type="email"
+                                    id="email"
+                                    placeholder="Enter your email"
+                                    value={user.email}
                                     onChange={handleChangeText}
-                                />
-                                <Icon
-                                    onClick={togglePasswordVisibility}
-                                    icon={showPassword ? "ph:eye-slash" : "ph:eye"}
-                                    width={20}
-                                    className="cursor-pointer absolute top-1/2 transform -translate-y-1/2 right-2"
+                                    className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[360px] h-[48px]"
                                 />
                             </div>
-                        </div>
-                        <div className="px-28">
-                        <div className="w-[242px] mt-4 left-36 px-6">
-                            {errorMsg && (
-                                <span className="flex items-center gap-1 bg-red-200 rounded-xl p-1 text-xs text-red-600">
-                                    <AiFillExclamationCircle size={15} />
-                                    {errorMsg}
-                                </span>
-                            )}
-                        </div>
-                        </div>
-                        <div className=" flex justify-center gap-x-8 mt-20">
-                            <button
-                                className="bg-[#F9BE2A] w-[155px] h-[46px] rounded-lg text-white font-semibold"
-                                type="submit"
-                            >
-                                Login
-                            </button>
+                            <div className="mt-2 flex flex-col">
+                                <label htmlFor="password" className="text-lg">Password</label>
+                                <div className="relative w-full">
+                                    <label
+                                        htmlFor="password"
+                                        className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
+                                    ></label>
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        id="password"
+                                        className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                                        placeholder="•••••••••••••"
+                                        value={user.password}
+                                        onChange={handleChangeText}
+                                    />
+                                    <Icon
+                                        onClick={togglePasswordVisibility}
+                                        icon={showPassword ? "ph:eye-slash" : "ph:eye"}
+                                        width={20}
+                                        className="cursor-pointer absolute top-1/2 transform -translate-y-1/2 right-4"
+                                    />
+                                </div>
+                            </div>
+                            <div >
+                                <h1 className="text-[#A332C3] text-xs text-end">Forgot Your Password?</h1>
+                            </div>
+                            <div>
+                                <button className="bg-[#A332C3] w-[360px] h-[40px] rounded-lg text-white text-sm font-semibold">
+                                    sign in
+                                </button>
+                            </div>
+                            <div >
+                                <h1 className="text-[#666666] text-xs mt-28">© Thinkspedia 2023</h1>
+                            </div>
                         </div>
                     </form>
                 </div>

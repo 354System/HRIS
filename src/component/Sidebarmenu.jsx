@@ -15,8 +15,8 @@ export function Sidebarmenu() {
                 <Link className='w-full' to={'/admin/dashboard'}>
                     <PiSquaresFourFill size={23} className={`cursor-pointer mb-5 w-full  ${location.pathname === '/admin/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
-                <Link className='w-full' to={'/Use'}>
-                    <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/Use' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link className='w-full' to={'/admin/user'}>
+                    <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/admin/user' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link>
                     <MdShowChart size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/report' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
@@ -24,8 +24,8 @@ export function Sidebarmenu() {
                 <Link>
                     <AiOutlineCalendar size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/calendar' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
-                <Link to={'/admin/user'}>
-                    <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/admin/user' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link to={'/use'}>
+                    <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/use' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link>
                     <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/add' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />

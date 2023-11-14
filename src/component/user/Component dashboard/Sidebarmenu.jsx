@@ -20,8 +20,10 @@ const SidebarmenuUser = () => {
                 <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/userhistori' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <MdShowChart size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/report' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
-                <AiOutlineCalendar size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/calendar' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
-                <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/admin/user' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <AiOutlineCalendar  size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/calendar' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link to={'/Document'}>
+                <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/Document' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                </Link>
                 <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/add' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 <AiOutlineSetting size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/setting' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 <BiShieldQuarter size={23} className={`cursor-pointer w-full ${location.pathname === '/security' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />

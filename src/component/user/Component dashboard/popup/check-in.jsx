@@ -19,7 +19,7 @@ const CheckIn = ({checkInPopUp}) => {
     setStatus('Work From Home')
   }
 
-q 
+ 
   const handleClose = () => {
     checkInPopUp(false)
   }

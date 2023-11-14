@@ -4,9 +4,6 @@ import { Icon } from "@iconify/react";
 const Histori = () => {
   return (
     <div className="w-full bg-white">
-      <div className="">
-        
-      </div>
       <div className="mt-2">
         <table className="w-full">
           <thead className="">

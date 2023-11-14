@@ -7,7 +7,6 @@ const ResultWfo = ({ data, checkInPopUp }) => {
         checkInPopUp(false);
     };
 
-    console.log(data);
 
     return (
         <div className="absolute w-full h-full inset-0 flex items-center justify-center z-20 bg-black/60">

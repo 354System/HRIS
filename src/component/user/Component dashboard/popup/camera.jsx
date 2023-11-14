@@ -78,6 +78,8 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
         .catch(error => {
           console.error('Error:', error);
         });
+
+      
       fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/file', {
         method: 'POST',
         body: formData,

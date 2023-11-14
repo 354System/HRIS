@@ -8,6 +8,7 @@ import Attendance from './component/user/User-histori'
 import DataUser from './pages/admin/Datauser'
 import LoginUser from './auth/Login-user'
 import OverviewAdmin from './component/user/Overview'
+import WikiDokumen from './component/user/Component wikidokumen/wikidokumen'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<LoginUser />} />
         <Route path="/admin/user" element={<DataUser />} />
         <Route path="/overview" element={<OverviewAdmin />} />
+        <Route path="/Document" element={<WikiDokumen />} />
       </Routes>
     </Router>
     </>

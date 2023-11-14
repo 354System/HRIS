@@ -1,4 +1,3 @@
-import Navbar from "./Component dashboard/Navbar";
 import RealtimeInsightBox from "./Component dashboard/RealtimeBox";
 import OnTimeBox from "./Component dashboard/OneTimeBox";
 import AbsenBox from "./Component dashboard/AbsenBox";

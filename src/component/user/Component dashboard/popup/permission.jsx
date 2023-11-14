@@ -212,7 +212,7 @@ const Permision = (props) => {
               {selectedFileName ? (
                 <p className="text-white" placeholder="Unggah File">{selectedFileName}</p>
               ) : (
-                <p className="text-gray-400" placeholder="Unggah File">Belum ada file dipilih</p>
+                <p className="text-gray-400" placeholder="Unggah File">Enter the selected file</p>
               )}
             </div>
           </div>
