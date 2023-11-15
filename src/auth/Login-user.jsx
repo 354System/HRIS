@@ -79,13 +79,27 @@ const LoginUser = () => {
 
     return (
         <div className="flex w-full h-screen">
-            <div className="flex w-[70%] h-full bg-[#A332C3]">
+            <div className="flex w-[70%] h-full bg-[#A332C3] items-center justify-center relative">
+                <div className="absolute w-full h-screen bg-repeat">
+                    <img src="src/assets/ssss 1.png" alt="" className="h-full" />
+                </div>
+                <div className="flex bg-white/50 p-16 w-[70%] h-[80%] relative rounded-lg border-4 border-white/40">
+                    <div className="font-bold text-6xl text-white w-[80%] h-[40%] leading-tight">
+                        <div>Very Good.</div>
+                        <div>Works Are Waiting</div>
+                        <div>For You</div>
+                    </div>
+                    <img src="src/assets/01 2.png" alt="" className="absolute w-[60%] right-20 bottom-0" />
+                    <div className="absolute bottom-12 left-12">
+                        <h1 className="text-white text-3xl font-semibold">Login Now</h1>
+                    </div>
+                </div>
             </div>
-            <div className="flex flex-col w-[30%] h-full items-center">
-                <div className="w-full flex justify-center h-12">
+            <div className=" justify-evenly  p-10 flex flex-col w-[30%] h-full items-center">
+                <div className="w-38 flex justify-center h-12">
                     <img src="src/assets/Thinkspedia Main Logo 1.png" alt="" />
                 </div>
-                <div className="flex flex-col text-xl mt-48 gap-y-6">
+                <div className="flex flex-col text-xl  gap-y-6">
                     <h1 className="font-semibold">Nice to see you again</h1>
                     <form onSubmit={handleLoginSubmit}>
                         <div className="flex flex-col gap-6">
@@ -124,18 +138,18 @@ const LoginUser = () => {
                                 </div>
                             </div>
                             <div >
-                                <h1 className="text-[#A332C3] text-xs text-end">Forgot Your Password?</h1>
+                                <h1 className="text-[#A332C3] text-xs text-end cursor-pointer">Forgot Your Password?</h1>
                             </div>
                             <div>
                                 <button className="bg-[#A332C3] w-[360px] h-[40px] rounded-lg text-white text-sm font-semibold">
                                     sign in
                                 </button>
                             </div>
-                            <div >
-                                <h1 className="text-[#666666] text-xs mt-28">© Thinkspedia 2023</h1>
-                            </div>
                         </div>
                     </form>
+                    <div className="mt-20">
+                        <h1 className="text-[#666666] text-xs">© Thinkspedia 2023</h1>
+                    </div>
                 </div>
             </div>
         </div>
