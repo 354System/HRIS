@@ -10,7 +10,7 @@ const SidebarmenuUser = () => {
     return (
         <div className="flex flex-col justify-between items-center w-16 h-full  bg-white py-4 shadow-lg rounded-lg">
             <div className='p-2'>
-                <img src="/src/assets/Thinkspedia Main Logo 1.png" alt="" className="w-8 h-8" />
+                <img src="src/assets/logo.png" alt="" className="w-8 h-8" />
             </div>
             <div className='w-full flex flex-col justify-center items-center'>
                 <Link to={'/dashboard'}>
@@ -29,7 +29,9 @@ const SidebarmenuUser = () => {
                 <BiShieldQuarter size={23} className={`cursor-pointer w-full ${location.pathname === '/security' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
             </div>
             <div className='p-2'>
+                <a href="/login">
                 <BsBoxArrowRight size={23} className='cursor-pointer text-grey hover:text-primary' />
+                </a>
             </div>
         </div>
     )

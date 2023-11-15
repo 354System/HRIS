@@ -81,7 +81,7 @@ const LoginUser = () => {
         <div className="flex w-full h-screen">
             <div className="flex w-[70%] h-full bg-[#A332C3] items-center justify-center relative">
                 <div className="absolute w-full h-screen bg-repeat">
-                    <img src="src/assets/ssss 1.png" alt="" className="h-full" />
+                    <img src="src/assets/ssss 1.png" alt="" className="h-full"/>
                 </div>
                 <div className="flex bg-white/50 p-16 w-[70%] h-[80%] relative rounded-lg border-4 border-white/40">
                     <div className="font-bold text-6xl text-white w-[80%] h-[40%] leading-tight">
@@ -95,9 +95,9 @@ const LoginUser = () => {
                     </div>
                 </div>
             </div>
-            <div className=" justify-evenly  p-10 flex flex-col w-[30%] h-full items-center">
-                <div className="w-38 flex justify-center h-12">
-                    <img src="src/assets/Thinkspedia Main Logo 1.png" alt="" />
+            <div className=" justify-evenly  p-8 flex flex-col w-[30%] h-full items-center">
+                <div className=" w-[70%] flex justify-center h-12">
+                    <img src="src/assets/logo terbaru.png" alt="" className=" mr-32"/>
                 </div>
                 <div className="flex flex-col text-xl  gap-y-6">
                     <h1 className="font-semibold">Nice to see you again</h1>
@@ -125,7 +125,7 @@ const LoginUser = () => {
                                         type={showPassword ? "text" : "password"}
                                         id="password"
                                         className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
-                                        placeholder="•••••••••••••"
+                                        placeholder="Enter Password"
                                         value={user.password}
                                         onChange={handleChangeText}
                                     />
@@ -141,7 +141,7 @@ const LoginUser = () => {
                                 <h1 className="text-[#A332C3] text-xs text-end cursor-pointer">Forgot Your Password?</h1>
                             </div>
                             <div>
-                                <button className="bg-[#A332C3] w-[360px] h-[40px] rounded-lg text-white text-sm font-semibold">
+                                <button className="bg-[#A332C3] hover:bg-fuchsia-700 w-[360px] h-[40px] rounded-lg text-white text-sm font-semibold">
                                     sign in
                                 </button>
                             </div>
