@@ -9,6 +9,7 @@ import DataUser from './pages/admin/Datauser'
 import LoginUser from './auth/Login-user'
 import OverviewAdmin from './component/user/Overview'
 import WikiDokumen from './component/user/Component wikidokumen/wikidokumen'
+import Viewdokumen from './component/user/Component wikidokumen/viewdokumen '
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/admin/user" element={<DataUser />} />
         <Route path="/overview" element={<OverviewAdmin />} />
         <Route path="/Document" element={<WikiDokumen />} />
+        <Route path="/dc" element={<Viewdokumen />} />
       </Routes>
     </Router>
     </>
