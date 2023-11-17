@@ -9,6 +9,7 @@ import WaitingDeviceBox from "./component/waiting-device";
 import WaitingItemBox from "./component/waiting-barang";
 import RejectDeviceBox from "./component/reject-device";
 import RejectItemBox from "./component/reject-barang";
+import TableRepair from "./component/tableRepair";
 
 const Repair = () => {
     return (
@@ -34,6 +35,9 @@ const Repair = () => {
                                 <RejectItemBox/>
                             </div>
                         </div>
+                    </div>
+                    <div className="mt-10">
+                        <TableRepair/>
                     </div>
                 </div>
             </div>
