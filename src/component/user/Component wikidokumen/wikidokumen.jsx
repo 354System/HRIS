@@ -4,6 +4,7 @@ import DataDokumen from "./component/dataDokumen";
 
 
 const WikiDokumen = () => {
+    
     return (
         <div className="w-full min-h-screen flex absolute bg-gray-200">
             <div className="p-8">

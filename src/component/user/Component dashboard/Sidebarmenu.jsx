@@ -24,7 +24,9 @@ const SidebarmenuUser = () => {
                 <Link to={'/Document'}>
                 <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/Document' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
-                <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/add' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link to={'/Repair/Device'}>
+                <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/Repair/Device' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                </Link>
                 <AiOutlineSetting size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/setting' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 <BiShieldQuarter size={23} className={`cursor-pointer w-full ${location.pathname === '/security' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
             </div>
