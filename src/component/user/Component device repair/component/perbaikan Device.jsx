@@ -1,12 +1,13 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import DeviceRepair from '../popup/device repair';
+import React from 'react';
+
 const RepairDeviceBox = () => {
 
-    const [repair, SetRepair] = useState(false);
-
+const [repair, setRepair] = useState(false)
     const handleAdd = () => {
-        SetRepair(true);
+        setRepair(true);
     }
 
 
@@ -21,7 +22,7 @@ const RepairDeviceBox = () => {
                 <span className="text-base text-white font-semibold">Create a Form</span>
                 <span className=" text-white font-semibold text-xs">Bantuan Perbaikan Device Kerja </span>
             </div>
-            {repair ? <DeviceRepair SetRepair={SetRepair} /> : null}
+            {repair ? <DeviceRepair repair={setRepair} /> : null}
         </div>
 
     )

@@ -1,21 +1,13 @@
-import { React } from "react";
+import { React} from "react";
 import { Icon } from '@iconify/react';
 
 
-const DeviceRepair = ({ repair }) => {
-
-    console.log(repair);
-
-    const handleDevice = () => {
-        repair(false)
-    }
-
+const PurchaseOfGoods = () => {
     return (
         <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-[818px]">
             <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[660px] rounded-lg flex flex-col gap-y-4">
-                <div className="flex justify-end" >
+                <div className="flex justify-end">
                     <button
-                        onClick={handleDevice}
                         className="bg-black w-[41.64px] h-[41.64px] rounded-full flex flex-col items-center justify-center"
                     >
                         <Icon icon="ion:close" color="white" width="17.44" />
@@ -26,7 +18,7 @@ const DeviceRepair = ({ repair }) => {
                         <Icon icon="solar:widget-add-bold" />
                     </div>
                     <div className="flex flex-col px-2">
-                        <span className="font-semibold">Form User</span>
+                        <span className="font-semibold">Form Pembalian Barang Penunjang Kerja</span>
                     </div>
                 </div>
                 <div className="mt-2 flex relative">
@@ -112,7 +104,7 @@ const DeviceRepair = ({ repair }) => {
                     />
                 </div>
                 <div className="text-end flex justify-end gap-x-8 mt-20">
-                    <h1 className="mt-[11px] font-semibold cursor-pointer" onClick={handleDevice}>
+                    <h1 className="mt-[11px] font-semibold cursor-pointer" >
                         Cancel
                     </h1>
                     <button
@@ -126,4 +118,4 @@ const DeviceRepair = ({ repair }) => {
     )
 }
 
-export default DeviceRepair;
+export default PurchaseOfGoods;
