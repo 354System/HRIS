@@ -4,6 +4,7 @@ export function Navbar() {
     const pageTitles = {
         '/admin/dashboard': 'Dashboard',
         '/attendance-overview': 'Attendance Overview',
+        '/approve-repair': 'Device Repair',
       };
       
       // Mengambil judul berdasarkan lokasi saat ini

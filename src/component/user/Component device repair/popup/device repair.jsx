@@ -52,7 +52,7 @@ const DeviceRepair = ({ category }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data); // Handle respons dari backend
-                // window.location.href = "/admin/user";
+                window.location.href = "/Repair/Device";
             })
             .catch((error) => {
                 console.error(error);
@@ -60,26 +60,26 @@ const DeviceRepair = ({ category }) => {
 
     };
 
-    const handleUpload = () => {
-        if (file) {
-            const formData = new FormData();
-            formData.append('image', file);
+    // const handleUpload = () => {
+    //     if (file) {
+    //         const formData = new FormData();
+    //         formData.append('image', file);
 
-            fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/form/file', {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('File uploaded successfully:', data);
-                })
-                .catch(error => {
-                    console.error('Error uploading file:', error);
-                });
-        } else {
-            console.error('No file selected');
-        }
-    };
+    //         fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/form/file', {
+    //             method: 'POST',
+    //             body: formData,
+    //         })
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 console.log('File uploaded successfully:', data);
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error uploading file:', error);
+    //             });
+    //     } else {
+    //         console.error('No file selected');
+    //     }
+    // };
 
 
     return (
@@ -235,7 +235,7 @@ const DeviceRepair = ({ category }) => {
                     </h1>
                     <button
                         className="bg-[#A332C3] w-[155px] h-[46px] rounded-lg text-white font-semibold"
-                        onClick={() => { handleAddDevice(); handleUpload(); }}
+                        onClick={handleAddDevice}
                     >
                         Send Permission
                     </button>
