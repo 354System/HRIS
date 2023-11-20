@@ -9,7 +9,7 @@ import WaitingDeviceBox from "./component/waiting-device";
 import WaitingItemBox from "./component/waiting-barang";
 import RejectDeviceBox from "./component/reject-device";
 import RejectItemBox from "./component/reject-barang";
-import TableRepair from "./component/tableRepair";
+import TableRepair from "./component/table/tableRepair";
 
 const Repair = () => {
     return (

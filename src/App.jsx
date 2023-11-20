@@ -12,6 +12,7 @@ import WikiDokumen from './component/user/Component wikidokumen/wikidokumen'
 import Viewdokumen from './component/user/Component wikidokumen/viewdokumen '
 import Repair from './component/user/Component device repair/Repair'
 import SubmissionOfImprovements from './component/admin/create form/pengajuan perbaikan'
+import TableItem from './component/user/Component device repair/component/table/tableItem'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/Repair/Device" element={<Repair />} />
         <Route path="/dc" element={<Viewdokumen />} />
         <Route path="/approve-repair" element={<SubmissionOfImprovements/>} />
+        <Route path="/tableitem" element={<TableItem/>} />
       </Routes>
     </Router>
     </>

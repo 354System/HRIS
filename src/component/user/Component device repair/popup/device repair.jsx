@@ -83,7 +83,7 @@ const DeviceRepair = ({ category }) => {
 
 
     return (
-        <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-[818px]">
+        <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-[870px]">
             <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[680px] rounded-lg flex flex-col gap-y-2">
                 <div className="flex justify-end" >
                     <button

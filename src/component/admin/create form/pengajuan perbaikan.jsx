@@ -21,7 +21,7 @@ const SubmissionOfImprovements = () => {
                 <Navbar title="Device Approve"/>
                 <div className="w-full mb-10 mt-32">
                     <div className="w-full  flex  gap-6">
-                        <div className="w-full flex flex-col gap-8">
+                        <div className="w-full flex flex-col gap-8 px-4">
                             <div className="flex h-1/2 gap-4">
                                 <ApproveRepair />
                                 <ApproveRepairBox />
