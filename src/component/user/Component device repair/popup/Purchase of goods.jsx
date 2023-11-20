@@ -1,8 +1,58 @@
-import { React} from "react";
+import { React } from "react";
 import { Icon } from '@iconify/react';
+import { useState } from "react";
 
 
-const PurchaseOfGoods = () => {
+
+const PurchaseOfGoods = ({ category }) => {
+
+    const [device, setDevice] = useState({
+        category: category,
+        title: "",
+        date: "",
+        chronology: "",
+        damage: "",
+        cost: "",
+        upload: "",
+    });
+    console.log(category);
+
+
+    const handleInputChange = (e) => {
+        setDevice((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value,
+        }));
+    };
+
+    const handleAddDevice = () => {
+        // Kirim data pengguna ke backend
+        fetch("https://fzsxpv5p-3000.asse.devtunnels.ms/form/create/repair", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                category: device.category,
+                title: device.title,
+                date: device.date,
+                chronology: device.chronology,
+                damage: device.damage,
+                cost: device.cost,
+                uploadfile: device.upload,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data); // Handle respons dari backend
+                // window.location.href = "/admin/user";
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    };
+
     return (
         <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-[818px]">
             <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[660px] rounded-lg flex flex-col gap-y-4">
@@ -27,15 +77,17 @@ const PurchaseOfGoods = () => {
                     </div>
                     <div>
                         <label
-                            htmlFor="judul"
+                            htmlFor="title"
                             className="ml-2 text-sm font-medium text-gray-900 dark:text-white absolute"
                         ></label>
                     </div>
                     <input
                         type="text"
-                        id="judul"
+                        id="title"
                         className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Judul"
+                        onChange={handleInputChange}
+                        value={device.title}
                     />
                 </div>
                 <div className="mt-2 flex ">
@@ -50,6 +102,8 @@ const PurchaseOfGoods = () => {
                         id="date"
                         className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Judul"
+                        value={device.date}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="mt-2 flex relative">
@@ -58,15 +112,17 @@ const PurchaseOfGoods = () => {
                     </div>
                     <div>
                         <label
-                            htmlFor="judul"
+                            htmlFor="chronology"
                             className="ml-2 text-sm font-medium text-gray-900 dark:text-white absolute"
                         ></label>
                     </div>
                     <input
                         type="text"
-                        id="judul"
+                        id="chronology"
                         className=" h-[93px] bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Kronologi Kerusakan"
+                        placeholder="Alasan Pembelian"
+                        value={device.chronology}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="mt-2 flex relative">
@@ -75,15 +131,17 @@ const PurchaseOfGoods = () => {
                     </div>
                     <div>
                         <label
-                            htmlFor="judul"
+                            htmlFor="damage"
                             className="ml-2 text-sm font-medium text-gray-900 dark:text-white absolute"
                         ></label>
                     </div>
                     <input
                         type="text"
-                        id="judul"
+                        id="damage"
                         className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Kerusakan Barang"
+                        value={device.damage}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="mt-2 flex relative">
@@ -92,15 +150,17 @@ const PurchaseOfGoods = () => {
                     </div>
                     <div>
                         <label
-                            htmlFor="judul"
+                            htmlFor="cost"
                             className="ml-2 text-sm font-medium text-gray-900 dark:text-white absolute"
                         ></label>
                     </div>
                     <input
                         type="text"
-                        id="judul"
+                        id="cost"
                         className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Estimasi Biaya"
+                        value={device.cost}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="text-end flex justify-end gap-x-8 mt-20">
@@ -108,9 +168,11 @@ const PurchaseOfGoods = () => {
                         Cancel
                     </h1>
                     <button
+                        type="submit"
                         className="bg-[#A332C3] w-[155px] h-[46px] rounded-lg text-white font-semibold"
+                        onClick={handleAddDevice}
                     >
-                        Add User
+                        Send Permission
                     </button>
                 </div>
             </div>

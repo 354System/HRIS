@@ -5,11 +5,13 @@ import React from 'react';
 
 const RepairDeviceBox = () => {
 
-const [repair, setRepair] = useState(false)
+    const [repair, setRepair] = useState(false)
+    const [category, setCategory] = useState("")
+
     const handleAdd = () => {
         setRepair(true);
+        setCategory("Repair")
     }
-
 
     return (
         <div className=" 2xl:w-80 w-[250px] h-[134px] flex flex-col bg-[#A332C3] justify-justify-start rounded p-5 cursor-pointer" onClick={handleAdd}>
@@ -22,7 +24,7 @@ const [repair, setRepair] = useState(false)
                 <span className="text-base text-white font-semibold">Create a Form</span>
                 <span className=" text-white font-semibold text-xs">Bantuan Perbaikan Device Kerja </span>
             </div>
-            {repair ? <DeviceRepair repair={setRepair} /> : null}
+            {repair ? <DeviceRepair Repair={setRepair} category={category} /> : null}
         </div>
 
     )
