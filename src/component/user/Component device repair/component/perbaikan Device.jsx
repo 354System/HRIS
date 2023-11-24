@@ -14,6 +14,7 @@ const RepairDeviceBox = () => {
     }
 
     return (
+    <>
         <div className=" 2xl:w-80 w-[250px] h-[134px] flex flex-col bg-[#A332C3] justify-justify-start rounded p-5 cursor-pointer" onClick={handleAdd}>
             <div className="flex justify-justify-start items-center">
                 <div className='rounded-full bg-[#E6EAF5]/40 w-10 h-10 flex items-center justify-center'>
@@ -24,8 +25,9 @@ const RepairDeviceBox = () => {
                 <span className="text-base text-white font-semibold">Create a Form</span>
                 <span className=" text-white font-semibold text-xs">Bantuan Perbaikan Device Kerja </span>
             </div>
-            {repair ? <DeviceRepair Repair={setRepair} category={category} /> : null}
         </div>
+        {repair ? <DeviceRepair Repair={setRepair} category={category} /> : null}
+    </>
 
     )
 }

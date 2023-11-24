@@ -13,6 +13,7 @@ import Viewdokumen from './component/user/Component wikidokumen/viewdokumen '
 import Repair from './component/user/Component device repair/Repair'
 import SubmissionOfImprovements from './component/admin/create form/pengajuan perbaikan'
 import TableItem from './component/user/Component device repair/component/table/tableItem'
+import InputFile from './component/admin/input file/input file'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/dc" element={<Viewdokumen />} />
         <Route path="/approve-repair" element={<SubmissionOfImprovements/>} />
         <Route path="/tableitem" element={<TableItem/>} />
+        <Route path="/addfile" element={<InputFile/>} />
       </Routes>
     </Router>
     </>

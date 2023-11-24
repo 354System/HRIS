@@ -59,7 +59,6 @@ const TablePremission = () => {
                     width="17.36"
                   />
                 </button>
-
                 <button className="bg-[#FF0000] w-[31px] h-[31px] flex justify-center items-center rounded-lg text-center mb-4">
                   <Icon
                     icon="solar:close-circle-bold"

@@ -24,8 +24,8 @@ export function Sidebarmenu() {
                 <Link>
                     <AiOutlineCalendar size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/calendar' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
-                <Link to={'/use'}>
-                    <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/use' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <Link to={'/addfile'}>
+                    <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/addfile' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link to={'/approve-repair'}>
                     <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/approve-repair' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />

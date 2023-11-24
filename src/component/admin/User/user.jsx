@@ -47,9 +47,6 @@ const User = () => {
 
   }
 
-
-
-
   return (
     <div className="bg-white ">
       <div className="p-5 ">

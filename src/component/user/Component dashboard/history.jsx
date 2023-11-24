@@ -2,6 +2,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 
 const Histori = () => {
+  
   return (
     <div className="w-full bg-white">
       <div className="mt-2">

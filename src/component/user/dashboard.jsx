@@ -37,7 +37,7 @@ const DashboardUser = () => {
         </div>
         <div className="">
           <h1 className="font-bold text-[#252C58] px-2">Attendance History</h1>
-          <Histori />
+          <Histori  />
         </div>
       </div>
     </div>

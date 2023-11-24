@@ -5,10 +5,11 @@ export function Navbar() {
         '/admin/dashboard': 'Dashboard',
         '/attendance-overview': 'Attendance Overview',
         '/approve-repair': 'Device Repair',
+        '/addfile' : 'Wiki Document',
       };
-      
-      // Mengambil judul berdasarkan lokasi saat ini
-      const currentPageTitle = pageTitles[location.pathname] || 'User';
+
+    // Mengambil judul berdasarkan lokasi saat ini
+    const currentPageTitle = pageTitles[location.pathname] || 'User';
     return (
         <nav className="fixed z-10 top-6 left-28 w-[90%] h-[75px] flex items-center justify-between bg-[#FFFFFF] p-6 shadow-lg rounded-lg ">
             <div>

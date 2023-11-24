@@ -2,11 +2,14 @@ import { React, useState, useRef } from "react";
 import { Icon } from '@iconify/react';
 
 
-const DeviceRepair = ({ category }) => {
+const DeviceRepair = ({ category, Repair }) => {
+
+
 
     const [file, setFile] = useState(null);
     const [selectedFileName, setSelectedFileName] = useState(null);
     const fileinput = useRef(null)
+
 
     const [device, setDevice] = useState({
         category: category,
@@ -18,6 +21,11 @@ const DeviceRepair = ({ category }) => {
         upload: "",
     });
 
+    const handleExit = () => {
+        Repair(false)
+    }
+
+
 
     const handleInputChange = (e) => {
         setDevice((prevState) => ({
@@ -25,6 +33,8 @@ const DeviceRepair = ({ category }) => {
             [e.target.id]: e.target.value,
         }));
     };
+
+
 
     const token = localStorage.getItem("token");
 
@@ -60,26 +70,26 @@ const DeviceRepair = ({ category }) => {
 
     };
 
-    // const handleUpload = () => {
-    //     if (file) {
-    //         const formData = new FormData();
-    //         formData.append('image', file);
+    const handleUpload = () => {
+        if (file) {
+            const formData = new FormData();
+            formData.append('image', file);
 
-    //         fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/form/file', {
-    //             method: 'POST',
-    //             body: formData,
-    //         })
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 console.log('File uploaded successfully:', data);
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error uploading file:', error);
-    //             });
-    //     } else {
-    //         console.error('No file selected');
-    //     }
-    // };
+            fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/form/file', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('File uploaded successfully:', data);
+                })
+                .catch(error => {
+                    console.error('Error uploading file:', error);
+                });
+        } else {
+            console.error('No file selected');
+        }
+    };
 
 
     return (
@@ -87,6 +97,7 @@ const DeviceRepair = ({ category }) => {
             <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[680px] rounded-lg flex flex-col gap-y-2">
                 <div className="flex justify-end" >
                     <button
+                        onClick={handleExit}
                         className="bg-black w-[41.64px] h-[41.64px] rounded-full flex flex-col items-center justify-center"
                     >
                         <Icon icon="ion:close" color="white" width="17.44" />
@@ -195,7 +206,7 @@ const DeviceRepair = ({ category }) => {
                 <div className=" mt-2 gap-x-6 ">
                     <div className="mt-4 flex  gap-3 w-full relative items-center">
                         <div className="bg-[#ACACAC]/50 w-[70px] h-[50px] rounded-lg flex items-center justify-center">
-                            <Icon  icon="solar:bill-check-linear" width="21.95" onClick={() => fileinput.current.click()} className="cursor-pointer" />
+                            <Icon icon="solar:bill-check-linear" width="21.95" onClick={() => fileinput.current.click()} className="cursor-pointer" />
                         </div>
                         <Icon icon="ri:add-circle-fill" width="21.44" className="absolute left-0 top-0 mt-8 ml-12 cursor-pointer" onClick={() => fileinput.current.click()} />
                         <input
@@ -230,12 +241,12 @@ const DeviceRepair = ({ category }) => {
                     </div>
                 </div>
                 <div className="text-end flex justify-end gap-x-8 mt-20">
-                    <h1 className="mt-[11px] font-semibold cursor-pointer">
+                    <h1 className="mt-[11px] font-semibold cursor-pointer" onClick={handleExit}>
                         Cancel
                     </h1>
                     <button
                         className="bg-[#A332C3] w-[155px] h-[46px] rounded-lg text-white font-semibold"
-                        onClick={handleAddDevice}
+                        onClick={() => { handleAddDevice(); handleUpload(); }}
                     >
                         Send Permission
                     </button>

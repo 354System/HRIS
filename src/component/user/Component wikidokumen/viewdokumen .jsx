@@ -41,7 +41,6 @@ const ViewDokumen = () => {
                 <input type="file" onChange={handlePdfChange} />
                 <button className="bg-green-400/40 cursor-pointer" type="submit">Tampilkan PDF</button>
             </form>
-
             <div className="mt-40">
                 <h2 className="font-semibold">Tampilkan PDF</h2>
                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">

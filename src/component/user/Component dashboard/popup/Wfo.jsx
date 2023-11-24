@@ -1,10 +1,10 @@
-import {useRef, React, useState, useCallback, useEffect} from "react";
+import { useRef, React, useState, useCallback, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import Webcam from "react-webcam";
 import ResultWfo from "./result_wfo";
 
 
-const Wfo = ({WFO, checkInPopUp, status}) => {
+const Wfo = ({ WFO, checkInPopUp, status }) => {
 
 
     const [success, setSuccess] = useState(false);
@@ -79,6 +79,8 @@ const Wfo = ({WFO, checkInPopUp, status}) => {
                 .catch(error => {
                     console.error('Error:', error);
                 });
+
+                
             fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/file', {
                 method: 'POST',
                 body: formData,
