@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 
 export const useFetchAllPaidLeave = () => {
-    const auth = localStorage.getItem("authToken")
+    const authToken = localStorage.getItem("authToken")
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['allPaidLeave'],
         queryFn: async () => {
             const leaveDataResponse = await axiosInstance.get('/cuti/all', {
                 headers: {
-                    'Authorization': `Bearer ${auth}`
+                    'Authorization': `Bearer ${authToken}`
                 }
             })
             return leaveDataResponse.data

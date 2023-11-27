@@ -8,28 +8,20 @@ import EditUser from "../actions/edituser";
 import DeleteUser from "../actions/deleteuser";
 
 const TableDataUser = () => {
-  //add user popup
   const [addUserPopUp, setAddUserPopUp] = useState(false);
-  //delete user popup
   const [deleteUserPopUp, setDeleteUserPopUp] = useState(false);
-  //edit user popup dan passing data user sesuai id ke action edit user
   const [editUserPopUp, setEditUserPopUp] = useState(false);
   const [userDataById, setUserDataById] = useState([]);
-  //user id
   const [userId, setUserid] = useState("");
-  //search user
   const [searchUser, setSearchUser] = useState("");
 
-  //get data user dari useDataUser
   const { data: users, isLoading, refetch: refetchDataUser } = useFetchAllUsers();
 
-  //handle edit
   const handleActionEdit = (user) => {
     setEditUserPopUp(true);
     setUserDataById(user);
   };
 
-  //handle delete
   const handleActionDelete = (userId) => {
     setDeleteUserPopUp(true);
     setUserid(userId);
@@ -63,7 +55,7 @@ const TableDataUser = () => {
             {usersFiltered && usersFiltered.map((user, index) => (
               <tr key={index} className="border-b-2 text-primary">
                 <td className="p-5">{user._id}</td>
-                <td className="pr-10">{user.name}</td>
+                <td className="pr-10 w-52">{user.name}</td>
                 <td className="text-center">{user.position}</td>
                 <td className="text-center">{user.divisi}</td>
                 <td className="flex w-full h-14 justify-center items-center gap-2">

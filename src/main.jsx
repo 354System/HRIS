@@ -5,6 +5,7 @@ import './index.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './use context/useAuthInfo.jsx'
+// import { DataCurrentUserProvider } from './use context/useAllDataCurrentUser.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
         <AuthProvider>
-          <App />
+          {/* <DataCurrentUserProvider> */}
+            <App />
+          {/* </DataCurrentUserProvider> */}
         </AuthProvider>
       </ChakraProvider>
     </QueryClientProvider>

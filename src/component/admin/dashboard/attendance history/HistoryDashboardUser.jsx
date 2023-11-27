@@ -1,11 +1,11 @@
 import AOTableDashboard from "./component/table/AOtable"
 import AOtableHeaderDashboard from "./component/table/AOtableHeader"
 
-const HistoryDashboardAdmin = () => {
+const HistoryDashboardAdmin = ({ data }) => {
     return (
         <div className="w-full bg-white p-5 rounded-lg">
-            <AOtableHeaderDashboard />
-            <AOTableDashboard />
+            <AOtableHeaderDashboard/>
+            <AOTableDashboard data={data}/>
         </div>
     )
 }

@@ -58,7 +58,7 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
       setErrorMsg("Password is required!");
       return;
     }
-    if (!password.length < 6) {
+    if (!password.length < 7) {
       setErrorMsg("Password must be at least 6 characters!");
       return;
     }
@@ -149,7 +149,6 @@ const AddUserAdmin = ({ addUserPopUp, refetchDataUser }) => {
         </div>
         <form>
           {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
-
           <div className="mt-2 flex">
             <label
               htmlFor="name"

@@ -4,13 +4,11 @@ import { Sidebarmenu } from "../../component/bar/Sidebarmenu";
 import TableAttendanceHistory from "../../component/user/Attendance-History/history";
 const AttendanceHistoryUser = () => {
   return (
-    <div className="w-full min-h-screen flex bg-gray-200">
-      <div className="p-8">
-        <Sidebarmenu />
-      </div>
-      <div className="w-full p-8">
-        <Navbar title="Attendance  Histori"/>
-        <TableAttendanceHistory/>
+    <div className="absolute bg-gray-300 min-h-screen w-full">
+      <Navbar />
+      <Sidebarmenu />
+      <div className="p-7 mt-28 pl-28 w-full">
+        <TableAttendanceHistory />
       </div>
     </div>
   );

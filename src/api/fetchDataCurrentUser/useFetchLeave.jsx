@@ -5,7 +5,7 @@ import { axiosInstance } from "../../lib/axios";
 export const useLeaveCurrentUser = () => {
     const { userData } = useAuthInfo();
     const userId = userData?._id
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch, isError, error } = useQuery({
         queryKey: ['leave current user'],
         enabled: !!userId,
         queryFn: async () => {
@@ -16,6 +16,9 @@ export const useLeaveCurrentUser = () => {
     });
     return {
         data,
-        isLoading
+        isLoading,
+        isError,
+        error,
+        refetch
     }
 }

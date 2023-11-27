@@ -12,7 +12,7 @@ const ApprovePaidLeaveAdmin = ({ paidLeaveData }) => {
         </div>
       </div>
       <div>
-        <span className="text-base text-primary font-bold">Approve</span>
+        <span className="text-base text-primary font-bold">Approved</span>
         <div className="flex items-center gap-1">
           <div className="w-4 h-4 bg-[#97CE71] flex items-center justify-center rounded-full">
             <p className="text-xs text-[#43900C]">+</p>

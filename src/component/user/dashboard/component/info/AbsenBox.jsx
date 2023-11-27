@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react';
-const AbsenBoxUser = () =>  {
+const AbsenBoxUser = ({ data }) => {
+    const absentData = data?.filter((item) => item.type === "absent");
     return (
         <div className="w-64 h-full flex flex-col justify-between bg-white rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary '>
-                    <span>2</span>
+                    <span>{absentData?.length}</span>
                 </div>
                 <div className='rounded-full bg-[#E6EAF5] w-10 h-10 flex items-center justify-center'>
                     <Icon icon="material-symbols:avg-time-outline-sharp" fontSize={25} className='text-purple' />

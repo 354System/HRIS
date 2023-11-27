@@ -1,87 +1,81 @@
 import React from "react";
-import { Icon } from "@iconify/react";
-import {FiSearch} from 'react-icons/fi'
+import { Spinner } from "@chakra-ui/react";
+import { format } from "date-fns";
 
-const HistoryDashboard = () => {
+const HistoryDashboard = ({ presence }) => {
+
+  presence?.forEach(presenceData => {
+    const checkIn = new Date(presenceData.checkin);
+    const checkOut = new Date(presenceData.checkout);
+
+    // Menghitung workhours
+    const workHoursResult = checkOut - checkIn;
+    const hours = Math.floor(workHoursResult / 3600000);
+    const minutes = Math.floor((workHoursResult % 3600000) / 60000);
+    const workHours = `${hours}h ${minutes}m`;
+
+    // Menambahkan properti workHours ke objek Presence yang ada
+    presenceData.workHours = workHours;
+  });
+
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7); // Menghitung tanggal seminggu yang lalu
+
+  const filteredPresence = presence?.filter((item) => {
+    const itemDate = new Date(item.checkin);
+    return itemDate >= oneWeekAgo;
+  });
+
+  function statusStyle(data) {
+    if (data.type === 'Absent') {
+      return 'bg-red/20 text-red p-1';
+    } else if (data.type === 'Present') {
+      return 'text-purple bg-purple/20 p-1';
+    } else if (data.type === 'Late') {
+      return 'text-yellow bg-yellow/20 p-1';
+    } else {
+      return 'bg-[#E6EFFC] text-purple';
+    }
+  }
+
+  function checkInStyle(data) {
+    if (data.type === 'Absent') {
+      return 'text-red';
+    } else if (data.type === 'Work from Office' || data.type === 'Late') {
+      return 'text-yellow';
+    } else {
+      return 'text-purple';
+    }
+  }
+
   return (
     <div className="w-full bg-white p-5 mt-10 rounded-lg">
       <div className="flex justify-between items-center p-3">
-        <h1 className="text-xl font-bold">Attendance History</h1>
-        <div className="relative flex items-center gap-6">
-          <div>
-            <input
-              type="text"
-              id="search"
-              placeholder="Quick Search..."
-              className="w-96 h-10 pl-10 bg-white border-2 border-[#D5D9DD] text-sm placeholder:text-grey rounded"
-            />
-          </div>
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FiSearch color='#9295AB' size={18} />
-          </div>
-        </div>
+        <h1 className="text-xl font-bold">Attendance History Weekly</h1>
       </div>
       <div className="mt-2">
         <table className="w-full">
-          <thead className="">
+          <thead>
             <tr className="border-b-4 border-t-2 text-grey text-left">
-              <th className="p-4">Date</th>
-              <th>
-                <div className="flex items-center">
-                  <span>Status</span>
-                  <Icon
-                    icon="bxs:up-arrow"
-                    color="#20285a"
-                    width="5.88"
-                    rotate={2}
-                    className="ml-1"
-                  />
-                </div>
-              </th>
-              <th className="flex items-center mt-4">
-                Check-in
-                <Icon
-                  icon="bxs:up-arrow"
-                  color="#20285a"
-                  width="5.88"
-                  rotate={2}
-                  className="ml-1"
-                />
-              </th>
-              <th>
-                <div className="flex items-center">
-                  <span>Check-out</span>
-                  <Icon
-                    icon="bxs:up-arrow"
-                    color="#20285a"
-                    width="5.88"
-                    rotate={2}
-                    className="ml-1"
-                  />
-                </div>
-              </th>
-              <th>
-                <div className="flex items-center">
-                  <span>Work hours</span>
-                  <Icon
-                    icon="bxs:up-arrow"
-                    color="#20285a"
-                    width="5.88"
-                    rotate={2}
-                    className="ml-1"
-                  />
-                </div>
-              </th>
+              <th className="p-4">No</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>Work hours</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b">
-              <td className="text-primary p-4">29 July 2023</td>
-              <td className="bg-white"><span className="text-purple bg-[#E6EFFC] p-1">Work from office</span></td>
-              <td className="text-purple ml-4">09:00</td>
-              <td className="text-purple">18:00</td>
-              <td className="text-primary">10h 2m</td>
-            </tr>
+            {filteredPresence ? filteredPresence?.map((data, index) => (
+              <tr key={index} className="border-b">
+                <td className="text-primary p-4">{index + 1}</td>
+                <td className="text-primary">{format(new Date(data.date), 'dd-MM-yyyy')}</td>
+                <td className="bg-white"><span className={`text-purple bg-[#E6EFFC] ${statusStyle(data)}`}>{data.absen}</span></td>
+                <td className={`text-purple ${checkInStyle(data)}`}>{data.checkin ? format(new Date(data.checkin), 'HH:mm') : '-:-:-'}</td>
+                <td className="text-purple">{data.checkout ? format(new Date(data.checkout), 'HH:mm') : '-:-:-'}</td>
+                <td className="text-primary">{data.workHours}</td>
+              </tr>
+            )) : <Spinner size={20} />}
           </tbody>
         </table>
       </div>

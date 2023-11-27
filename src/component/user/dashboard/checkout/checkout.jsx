@@ -1,7 +1,7 @@
 import { format } from "date-fns";
-import { useState } from "react";
 import { Spinner } from "@chakra-ui/react";
 import { useCheckOut } from "../../../../api/attendance/useCheckout";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 const Checkout = ({ id, CheckOutPopUp, refetch }) => {
 
@@ -12,7 +12,7 @@ const Checkout = ({ id, CheckOutPopUp, refetch }) => {
     const { mutate, isPending } = useCheckOut(id, {
         onSuccess: (data) => {
             console.log(data);
-            refetch
+            refetch()
             CheckOutPopUp(false)
         },
         onError: (error) => {
@@ -29,29 +29,29 @@ const Checkout = ({ id, CheckOutPopUp, refetch }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-20 bg-black/60">
-            <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-8 w-1/3 h-1/3 flex flex-col justify-center rounded-lg">
-                <div>
-                    <h1 className="text-center text-[#2F2F2F] font-normal">{date}</h1>
-                    <h1 className="text-center text-[#2F2F2F] font-normal">{Times}</h1>
+            <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-5 w-2/4 h-2/5 flex flex-col justify-center rounded-lg">
+                <div className="flex justify-center">
+                    <IoAlertCircleOutline size={80} className="text-yellow" />
                 </div>
-                <h1 className="text-center text-[#2F2F2F] font-normal">Checkout</h1>
-                <div className="flex justify-center items-center mt-4">
+                <h1 className="text-center text-xl text-[#2F2F2F] font-semibold">Checkout Now?</h1>
+                <h1 className="mt-1 text-center font-semibold">{Times} - {date}</h1>
+                <div className="flex justify-center items-center mt-4 gap-6">
                     <button
                         onClick={() => CheckOutPopUp(false)}
-                        className="bg-red w-[100px] h-[40px] text-center text-white font-semibold hover:bg-red/50 mr-4"
+                        className="bg-red w-32 h-10 rounded-lg text-center text-white font-semibold hover:bg-red-dark transition-colors duration-200 "
                     >
                         No
                     </button>
                     <button
                         onClick={handleCheckout}
-                        className="bg-green w-[100px] h-[40px] text-center text-white font-semibold hover:bg-green/50"
+                        disabled={isPending}
+                        className="bg-green w-32 h-10 rounded-lg flex items-center justify-center text-white font-semibold hover:bg-green-dark transition-colors duration-200"
                     >
-                        {isPending ? <Spinner size={6} color="green" /> : "Yes"}
+                        {isPending ? <Spinner size={"sm"} color="green" /> : "Yes"}
                     </button>
                 </div>
             </div>
         </div>
     );
 };
-
 export default Checkout;

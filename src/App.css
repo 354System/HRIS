@@ -11,10 +11,10 @@
     src: url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
   }
 
-  body {
+  *, body, html {
     font-family: 'Urbanist';
   }
-
+  
   .navtitle {
     font-family: 'Poppins';
   }
@@ -32,6 +32,27 @@
 
   .animate-dropdown {
     animation: dropdown 0.2s ease-in-out;
+    color: #ffd7d7;
   }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
   

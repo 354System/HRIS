@@ -1,23 +1,41 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useLeaveApplication } from "../../../../api/attendance/useLeaveApplication";
 import { Spinner } from "@chakra-ui/react";
+import { confirmAlert, successAlert } from "../../../../lib/sweetAlert";
+import { flowbiteTheme } from "../../../../lib/flowbiteTheme";
+import { GrDocumentPdf } from "react-icons/gr";
+import { IoIosAdd } from "react-icons/io";
+import { BsCalendar2DateFill } from "react-icons/bs";
+import { FcLeave } from "react-icons/fc";
+import { Button, Datepicker, Flowbite, Select, TextInput, Textarea } from "flowbite-react";
+import { format } from "date-fns";
 
 const LeaveApplications = ({ leave }) => {
-  const [LeaveApplication, setLeaveApplication] = useState({
+  const [data, setData] = useState({
     cuti: "",
-    fromdate: Date,
-    untildate: Date,
+    fromdate: '',
+    untildate: '',
     description: "",
+    file: '',
+    otherReason: ""
   })
-  const [succesMsg, setSuccesMsg] = useState("")
-  const [errorMsg, setErrorMsg] = useState("")
-  const [selectedFileName, setSelectedFileName] = useState("");
+  const [color, setColor] = useState({
+    cuti: 'gray',
+    fromdate: 'gray',
+    untildate: 'gray',
+    description: 'gray',
+    otherReason: 'gray',
+  })
+  const [errorMsg, setErrorMsg] = useState({
+    input: '',
+    file: ''
+  })
 
   const fileinput = useRef(null)
 
   const handleInputChange = (e) => {
-    setLeaveApplication((prevState) => ({
+    setData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
@@ -26,43 +44,162 @@ const LeaveApplications = ({ leave }) => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      const allowedExtensions = ["jpg", "png", "pdf"];
+      const allowedExtensions = ["pdf"];
       const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
 
       if (allowedExtensions.includes(fileExtension)) {
-        setSelectedFileName(selectedFile.name);
+        // Memasukkan informasi file ke dalam documentData
+        setErrorMsg((prevError) => ({
+          ...prevError,
+          file: '',
+        }))
+        setData((prevState) => ({
+          ...prevState,
+          file: selectedFile,
+        }));
       } else {
-        alert("Hanya file dengan ekstensi .jpg, .png, dan .pdf yang dicutikan.");
+        setErrorMsg((prevError) => ({
+          ...prevError,
+          file: "File must be .pdf",
+        }))
         e.target.value = "";
       }
+    }
+  };
+
+  const otherReasonRef = useRef(null)
+
+  useEffect(() => {
+    if (data.cuti === 'Enter Other Reason') {
+      otherReasonRef.current.focus();
+    }
+  }, [data.cuti, otherReasonRef]);
+
+  const findFirstEmptyField = () => {
+    const fields = ['cuti', 'fromdate', 'untildate', 'description', 'file', 'otherReason'];
+    for (const field of fields) {
+      if (field === 'otherReason' && data.cuti === 'Enter Other Reason' && !data[field]) {
+        return field;
+      }
+      if (!data[field]) {
+        return field;
+      }
+    }
+    return null;
+  };
+
+  const validateInput = () => {
+    const { cuti, fromdate, untildate, description, file, otherReason } = data;
+    const missingFields = [];
+    if (!cuti) {
+      missingFields.push('reason');
+    }
+    if (cuti === 'Enter Other Reason' && !otherReason) {
+      missingFields.push('reason');
+    }
+    if (!fromdate) {
+      missingFields.push('fromdate');
+    }
+    if (!untildate) {
+      missingFields.push('untildate');
+    }
+    if (!description) {
+      missingFields.push('description');
+    }
+    if (!file) {
+      missingFields.push('file');
+    }
+    if (missingFields.length > 0) {
+      const errorMessage = `${missingFields.join(', ')} ${missingFields.length > 1 ? 'are' : 'is'} Required !`;
+      setErrorMsg({
+        input: errorMessage
+      });
+      setColor({
+        cuti: missingFields.includes('cuti') ? 'failure' : 'gray',
+        fromdate: missingFields.includes('fromdate') ? 'failure' : 'gray',
+        untildate: missingFields.includes('untildate') ? 'failure' : 'gray',
+        description: missingFields.includes('description') ? 'failure' : 'gray',
+        file: missingFields.includes('file') ? 'failure' : 'gray',
+      });
+      return false;
+    } else {
+      setErrorMsg((prevState) => ({
+        ...prevState,
+        input: ''
+      }))
+      setColor((prevState) => ({
+        ...prevState,
+        cuti: 'gray',
+        fromdate: 'gray',
+        untildate: 'gray',
+        description: 'gray',
+        file: 'gray'
+      }))
+      return true
     }
   }
 
   const { mutate, isPending } = useLeaveApplication({
     onSuccess: (data) => {
-      setSuccesMsg(data.message);
+      successAlert({
+        title: 'Your Paid Leave has been Submitted !',
+        text: 'Please wait for your approval',
+      })
+      console.log(data);
       leave(false);
     },
     onError: (error) => {
       console.log(error);
-      const errorMessage = error.response.data.message;
-      setErrorMsg(errorMessage);
+      setErrorMsg((prevState) => ({
+        ...prevState,
+        input: 'Something went wrong !'
+      }));
     }
   })
 
-  const handleSubmit = () => {
-    const { fromdate, untildate, description } = LeaveApplication
-    mutate({
-      cuti: '',
-      fromdate,
-      untildate,
-      description
-    })
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    validateInput()
+    const { cuti, fromdate, untildate, description, otherReason, file } = data
+    if (validateInput()) {
+      setErrorMsg((prevState) => ({
+        ...prevState,
+        input: '',
+        file: ''
+      }))
+      confirmAlert({
+        title: "Are you sure want to Submit this data",
+        confirmText: "Yes, Submit !"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          mutate({
+            cuti: cuti === 'Enter Other Reason' ? otherReason : cuti,
+            fromdate,
+            untildate,
+            description
+          })
+        }
+      })
+    } else {
+      const emptyField = findFirstEmptyField();
+      const inputElement = document.getElementById(emptyField);
+      inputElement.focus();
+      inputElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setColor((prevState) => ({
+        ...prevState,
+        cuti: !cuti ? 'failure' : 'gray',
+        fromdate: !fromdate ? 'failure' : 'gray',
+        untildate: !untildate ? 'failure' : 'gray',
+        description: !description ? 'failure' : 'gray',
+        file: !file ? 'failure' : 'gray',
+        otherReason: !otherReason ? 'failure' : 'gray',
+      }));
+    }
   }
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-full">
-      <div className="absolute gap-4 p-6 top-1/2 transform -translate-y-1/2 bg-white w-[550px] h-[550px] rounded-lg flex flex-col">
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/60 w-full h-full">
+      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 w-1/2 h-4/5 rounded-lg flex flex-col overflow-y-auto">
         <div className="absolute right-2 top-2">
           <button
             onClick={() => leave(false)}
@@ -70,109 +207,136 @@ const LeaveApplications = ({ leave }) => {
             <Icon icon="ion:close" color="white" width="17.44" />
           </button>
         </div>
-        <div className="flex items-center gap-2 mb-2">
-          <div className="bg-gray-300 rounded-full w-[50px] h-[50px] flex items-center justify-center">
-            <Icon icon="solar:widget-add-outline" />
+        <div className="flex items-center gap-2">
+          <div className="bg-purple rounded-full w-[50px] h-[50px] flex items-center justify-center">
+          <FcLeave size={25}/>
           </div>
           <div>
             <p className=" font-semibold">Leave Applications</p>
           </div>
         </div>
-        <div className="flex-col flex ">
-          {succesMsg && <p className="text-green">{succesMsg}</p>}
-          {errorMsg && <p className="text-red">{errorMsg}</p>}
-          <select
-            id="cuti"
-            value={LeaveApplication.cuti}
-            onChange={handleInputChange}
-            className="bg-[#ACACAC]/50 p-3 cursor-pointer border border-gray-300 text-black text-sm rounded-lg font-semibold h-12"
-          >
-            <option value="Sick" className="font-semibold">
-              Sick
-            </option>
-            <option value="Holiday" className="font-semibold">
-              Holiday
-            </option>
-            <option value="Family event" className="font-semibold">
-              Family Events
-            </option>
-            <option value="Other">Other</option> {/* Tambahkan opsi "Other" */}
-          </select>
-          {LeaveApplication.cuti === 'Other' && ( // Tampilkan input teks hanya jika "Other" dipilih
-            <input
-              id="otherReason"
-              type="text"
-              value={LeaveApplication.cuti}
-              onChange={handleInputChange}
-              placeholder="Enter Other Reason"
-              className="mt-4 p-3 cursor-pointer bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg font-semibold h-10"
-            />
-          )}
-        </div>
-        <div className="flex justify-end">
-          <label
-            htmlFor="fromdate"
-            className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-          ></label>
-          <input
-            type="date"
-            id="fromdate"
-            onChange={handleInputChange}
-            className="bg-[#ACACAC]/50 h-12 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Start Date"
-          />
-        </div>
-        <div className="flex justify-end">
-          <div>
-            <label
-              htmlFor="untildate"
-              className="mb-2 text-sm font-medium text-gray-900 dark:text-white absolute"
-            ></label>
-          </div>
-          <input
-            type="date"
-            id="untildate"
-            onChange={handleInputChange}
-            className="bg-[#ACACAC]/50 h-12 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="End Date"
-          />
-        </div>
-        <div className="flex gap-3 w-full relative items-center">
-          <div className="bg-[#ACACAC]/50 w-[70px] h-[50px] rounded-lg flex items-center justify-center">
-            <Icon icon="eva:folder-add-fill" width="21.95" onClick={() => fileinput.current.click()} className="cursor-pointer" />
-          </div>
-          <Icon icon="ri:add-circle-fill" width="21.44" className="absolute left-0 top-0 mt-8 ml-12 cursor-pointer" onClick={() => fileinput.current.click()} />
-          <input
-            type="file"
-            id="file_input"
-            className="hidden"
-            ref={fileinput}
-            onChange={handleFileChange}
-          />
-          <div className="bg-[#ACACAC]/50 w-full h-[50px] flex items-center p-3 rounded-lg">
-            {selectedFileName && <p className="text-sm">{selectedFileName}</p>}
-          </div>
-        </div>
-        <div className="flex h-[135px]">
-          <label
-            htmlFor="description"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          ></label>
-          <input
-            type="text"
-            id="description"
-            onChange={handleInputChange}
-            className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-[#ACACAC]/50 sm:text-md"
-            placeholder="Description"
-          ></input>
-        </div>
-        <div className=" flex justify-end gap-8">
-          <span onClick={() => leave(false)} className="flex items-center font-semibold cursor-pointer text-gray-700 hover:underline underline-offset-2 hover:text-gray-800 transition duration-300">
-            Cancel
-          </span>
-          <button onClick={handleSubmit} className="w-24 bg-purple hover:bg-[#5c215c] transition-colors duration-300 text-white font-semibold p-3 rounded-lg">
-            {isPending ? <Spinner size={"sm"} /> : "Submit"}
-          </button>
-        </div>
+        <Flowbite theme={{ theme: flowbiteTheme }}>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="flex-col flex">
+              <Select
+                color={color.cuti}
+                id="cuti"
+                value={data.cuti}
+                onChange={handleInputChange}
+                className="w-full"
+              >
+                <option value='' className="font-semibold">
+                  Select Reason
+                </option>
+                <option value="Sick">
+                  Sick
+                </option>
+                <option value="Holiday">
+                  Holiday
+                </option>
+                <option value="Family event">
+                  Family Events
+                </option>
+                <option value="Enter Other Reason">Enter Other Reason</option> {/* Tambahkan opsi "Other" */}
+              </Select>
+              {data.cuti === 'Enter Other Reason' && (
+                <TextInput
+                  color={color.otherReason}
+                  ref={otherReasonRef}
+                  id="otherReason"
+                  value={data.otherReason}
+                  type="text"
+                  onChange={handleInputChange}
+                  placeholder="Enter Other Reason"
+                  className="w-full"
+                />
+              )}
+            </div>
+            <div className="">
+              <Datepicker
+                color={color.fromdate}
+                className="w-full"
+                placeholder="Select From Date"
+                id="fromdate"
+                value={data.fromdate}
+                showClearButton={false}
+                onSelectedDateChanged={date => setData(prevNewData => ({ ...prevNewData, fromdate: format(date, 'MMMM dd, yyyy') }))}
+                rightIcon={BsCalendar2DateFill}
+                icon={false}
+                required
+              />
+            </div>
+            <div className="">
+              <Datepicker
+                color={color.untildate}
+                className="w-full"
+                placeholder="Select Until Date"
+                id="untildate"
+                value={data.untildate}
+                disabled={!data.fromdate}
+                showClearButton={false}
+                minDate={new Date(data.fromdate)}
+                onSelectedDateChanged={date => setData(prevNewData => ({ ...prevNewData, untildate: format(date, 'MMMM dd, yyyy') }))}
+                rightIcon={BsCalendar2DateFill}
+                icon={false}
+                required
+              />
+            </div>
+            <div className="" onClick={() => fileinput.current.click()}>
+              <TextInput
+                color={color.file}
+                className="w-full h-10 cursor-pointer"
+                id="file"
+                value={data?.file?.name}
+                icon={GrDocumentPdf}
+                rightIcon={IoIosAdd}
+                readOnly
+                placeholder="Upload File Document"
+              />
+              <input
+                type="file"
+                hidden
+                accept=".pdf, image/*, .jpeg, .jpg, .png,"
+                ref={fileinput}
+                onChange={handleFileChange}
+              />
+              {errorMsg.file && <p className="text-sm text-red-500">{errorMsg.file}</p>}
+            </div>
+            <div className="">
+              <Textarea
+                color={color.description}
+                id="description"
+                value={data.description}
+                onChange={handleInputChange}
+                rows={4}
+                className="block p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 "
+                placeholder='Description'
+                required
+              />
+            </div>
+            <div className="flex justify-between items-center">
+              <div>
+                {errorMsg.input && <p className="text-red-500 font-semibold">{errorMsg.input}</p>}
+              </div>
+              <div className="flex gap-x-4 justify-center items-center">
+                <h1 onClick={() => popUp(false)} className="font-semibold cursor-pointer hover:underline" >
+                  Cancel
+                </h1>
+                <Button
+                  onClick={handleSubmit}
+                  color="purple"
+                  isProcessing={isPending}
+                  processingSpinner={<Spinner size={'sm'} />}
+                  type="submit"
+                  disabled={isPending}
+                  className=" h-11 font-semibold"
+                >
+                  Send Paid Leave
+                </Button>
+              </div>
+            </div>
+          </form>
+        </Flowbite>
       </div>
     </div >
   );

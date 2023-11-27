@@ -1,16 +1,20 @@
 import './App.css'
 import React from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { useAuthInfo } from './use context/useAuthInfo'
+import PrivateRoute from './privat-router/privatRoute'
+import Login from './auth/Login'
 import DashboardAdmin from './pages/admin/Dashboard'
 import DashboardUser from './pages/user/dashboard'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import AttendanceOverview from './pages/admin/AttendanceOverview'
-import Login from './auth/Login'
-import DataUser from './pages/admin/Datauser'
-import PrivateRoute from './privat-router/privatRoute'
 import AttendanceHistoryUser from './pages/user/AttendanceHistory'
-import { useAuthInfo } from './use context/useAuthInfo'
+import DataUser from './pages/admin/Datauser'
 import LeavePermissionOverviewAdmin from './pages/admin/LeavePermission'
+import LeavePermissionOverviewUser from './pages/user/LeavePermission'
+import WikiDocumentAdmin from './pages/admin/WikidocumentAdmin'
 import PathNotFound from './pages/path not found/PathNotFound'
+import InquiryLetterUser from './pages/user/InquiryLetter'
+import InquiryLetterAdmin from './pages/admin/InquiryLetter'
 function App() {
   const { userData } = useAuthInfo()
   const role = userData?.role
@@ -18,17 +22,17 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route path="*" element={<PathNotFound />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <DashboardAdmin /> : <DashboardUser />} />} />
-          {/* path admin */}
-          <Route path="/attendance-overview" element={<PrivateRoute requiredRoles={["Admin"]} element={<AttendanceOverview />} />} />
+          <Route path="/attendance-overview" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <AttendanceOverview /> : <AttendanceHistoryUser />} />} />
+          <Route path="/permission-and-leave" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <LeavePermissionOverviewAdmin /> : <LeavePermissionOverviewUser />} />} />
           <Route path="/employee-data" element={<PrivateRoute requiredRoles={["Admin"]} element={<DataUser />} />} />
-          <Route path="/permission-and-leave" element={<PrivateRoute requiredRoles={["Admin"]} element={<LeavePermissionOverviewAdmin />} />} />
-          {/* path user */}
-          <Route path="/attendance-history" element={<PrivateRoute requiredRoles={"Public"} element={<AttendanceHistoryUser />} />} />
-          {/* path not found */}
-          <Route path="*" element={<PathNotFound />} />
+          <Route path="/request" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <InquiryLetterAdmin /> : <InquiryLetterUser />} />} />
+          {/* <Route path="/wiki-document" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <WikiDocumentAdmin /> : <LeavePermissionOverviewUser />} />} /> */}
+          <Route path="/wiki-document" element={<WikiDocumentAdmin />} />
+          {/* <Route path='/request' element={<InquiryLetterUser />} /> */}
         </Routes>
       </Router>
     </>

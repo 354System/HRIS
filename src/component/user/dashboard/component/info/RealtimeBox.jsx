@@ -2,10 +2,9 @@ import { BsSun } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
-import { usePresenceCurrentUser } from "../../../../../api/fetchDataCurrentUser/useFetchPresence";
 import Checkout from "../../checkout/checkout";
 import CheckIn from "../../checkin/check-in";
-const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
+const RealtimeInsightBoxUser = ({ data, refetchPresence }) => {
   const [realtime, setRealtime] = useState("");
   const [date, setDate] = useState("");
   const [checkInPopUp, setCheckInPopUp] = useState(false)
@@ -17,19 +16,18 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
   const [presentDataToday, setPresentDataToday] = useState()
   const [id, setId] = useState('')
 
-  const { data: Presence, refetch: refetchPresenceToday } = usePresenceCurrentUser();
-
   const today = new Date().toLocaleDateString(); // Ambil tanggal hari ini dalam format yang sesuai dengan data Anda (pastikan formatnya sama)
 
   useEffect(() => {
-    const presentDataToday = Presence?.filter((item) => {
+    const presentDataToday = data?.filter((item) => {
       const itemDate = new Date(item.checkin).toLocaleDateString();
 
       return itemDate === today;
     });
     setPresentDataToday(presentDataToday)
-  }, [Presence])
+  }, [data])
 
+  // checkin n checkout
   useEffect(() => {
     if (presentDataToday && presentDataToday.length > 0) {
       const id = presentDataToday[0]._id;
@@ -39,6 +37,7 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
         const checkIn = format(getCheckin, "HH:mm");
         setCheckInOut({
           checkin: checkIn,
+          checkout: '-:-:-'
         });
         setId(id);
       }
@@ -53,6 +52,7 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
     }
   }, [presentDataToday]);
 
+  //time
   const updateRealtime = () => {
     const time = new Date();
     const timeFormatted = format(time, "HH:mm:ss a");
@@ -61,7 +61,6 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
     const dateFormatted = format(time, "dd MMMM yyyy");
     setDate(dateFormatted);
   };
-
   useEffect(() => {
     setInterval(() => {
       updateRealtime();
@@ -100,7 +99,7 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
           {!presentDataToday?.[0] ? (
             <button
               onClick={() => setCheckInPopUp(true)} // Melakukan check-in
-              className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple"
+              className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple hover:bg-purple-dark transition duration-200 ease-in-out"
             >
               <span className="text-white text-sm font-bold">Check-In</span>
             </button>
@@ -109,7 +108,7 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
               {!presentDataToday?.[0].checkout && (
                 <button
                   onClick={() => setCheckOutPopUp(true)} // Melakukan check-out
-                  className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple"
+                  className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple hover:bg-purple-dark transition duration-200 ease-in-out"
                 >
                   <span className="text-white text-sm font-bold">Check Out</span>
                 </button>
@@ -117,16 +116,15 @@ const RealtimeInsightBoxUser = ({ CheckInPopUp }) => {
               {presentDataToday && presentDataToday?.[0].checkout ? (
                 <Link to="/attendance-history">
                   <button
-                    className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple"
-                  >
+                    className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple hover:bg-purple-dark transition duration-200 ease-in-out">
                     <span className="text-white text-sm font-bold">View Presence History</span>
                   </button>
                 </Link>
               ) : null}
             </>
           )}
-          {checkOutPopUp ? <Checkout CheckOutPopUp={setCheckOutPopUp} refetch={refetchPresenceToday()} id={id} /> : null}
-          {checkInPopUp ? <CheckIn refetch={refetchPresenceToday()} CheckInPopUp={setCheckInPopUp} /> : null}
+          {checkInPopUp ? <CheckIn refetchPresence={refetchPresence} CheckInPopUp={setCheckInPopUp} /> : null}
+          {checkOutPopUp ? <Checkout CheckOutPopUp={setCheckOutPopUp} refetch={refetchPresence} id={id} /> : null}
         </div>
       </div>
     </div>

@@ -6,19 +6,15 @@ import Result from "./result";
 import { usePresent } from "../../../../api/attendance/usePresent";
 import format from "date-fns/format";
 import { Spinner } from "@chakra-ui/react";
-const Camera = ({ checkInPopUp, status, refetch }) => {
-  // result popup
+const Camera = ({ checkInPopUp, status, refetchPresence }) => {
+  const [errorMsg, setErrorMsg] = useState("");
   const [resultPopUp, setResultPopUp] = useState(false);
-  // aturan react webcam
   const [devices, setDevices] = useState([]);
   const webcamRef = useRef(null);
-  // realtime
   const [times, setTimes] = useState("");
   const [date, setDate] = useState("");
-  // location
   const [distance, setDistance] = useState(0);
   const [radius, setRadius] = useState(0);
-  // data absensi
   const [dataAbsensi, setDataAbsensi] = useState({
     filePhoto: null,
     times: "",
@@ -26,7 +22,6 @@ const Camera = ({ checkInPopUp, status, refetch }) => {
     status: "",
   });
 
-  // handle close popup
 
   // realtime
   const updateRealtime = () => {
@@ -86,10 +81,10 @@ const Camera = ({ checkInPopUp, status, refetch }) => {
           const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           const distance = earthRadius * c;
 
-          return distance; // Jarak dalam kilometer
+          return distance;
         }
 
-        const allowedDistance = 20; // 10 meter dalam kilometer
+        const allowedDistance = 20;
         const distance = calculateDistance(companyLatitude, companyLongitude, userLatitude, userLongitude);
         setRadius(allowedDistance);
         setDistance(distance);
@@ -98,7 +93,7 @@ const Camera = ({ checkInPopUp, status, refetch }) => {
       if (navigator.permissions && navigator.permissions.query) {
         navigator.permissions.query({ name: 'geolocation' }).then((result) => {
           if (result.state === 'denied') {
-            // Layanan lokasi tidak diizinkan, tampilkan pesan kesalahan atau perintah untuk mengaktifkan lokasi.
+            setErrorMsg('Please Turn on Location');
           }
         });
       }
@@ -109,12 +104,13 @@ const Camera = ({ checkInPopUp, status, refetch }) => {
 
   const { mutate, isPending } = usePresent({
     onSuccess: (data) => {
+      refetchPresence();
       console.log(data);
       setResultPopUp(true);
-      refetch
     },
     onError: (error) => {
       console.log(error);
+      setErrorMsg('an Error Occurred During Absence');
     },
   })
 
@@ -159,60 +155,67 @@ const Camera = ({ checkInPopUp, status, refetch }) => {
           checkin: Date(formattedDate),
           absen: status,
         });
+
       } else {
         console.log('anda tidak berada di jarak yang ditentukan');
+        setErrorMsg('Anda tidak berada di jarak yang ditentukan');
       }
     } catch (error) {
       console.error('Error dalam capturePhoto:', error);
+      setErrorMsg('Error dalam capturePhoto:', error);
     }
   };
 
   return (
-    <div className="absolute w-full h-full inset-0 flex items-center justify-center z-20 bg-black/60">
-      <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-8 w-[650px] h-[600px] rounded-lg">
-        <div onClick={() => checkInPopUp(false)} className="flex justify-end">
-          <button
-            className="absolute top-0 right-0 -mr-3 -mt-3 bg-black w-[41.64px] h-[41.64px] rounded-full flex items-center justify-center">
-            <Icon icon="ion:close" color="white" width="17.44" />
-          </button>
-        </div>
-        <div className="flex mb-4">
-          <div className="bg-gray-300 rounded-full w-[50px] h-[50px] flex items-center justify-center">
-            <Icon icon="solar:camera-minimalistic-broken" />
-          </div>
-          <div className="flex flex-col px-2 ">
-            <span className=" font-semibold">Work From Office</span>
-            <div className="flex gap-x-2">
-              <span className="font-bold text-s text-primary ">{times}</span>
-              <span className="font-bold text-s text-primary ">{date}</span>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center">
-          {devices.map((device, key) => (
-            <div key={key} className="relative">
-              <Webcam
-                className=""
-                audio={false}
-                videoConstraints={{ deviceId: device.deviceId }}
-                ref={webcamRef}
-                screenshotFormat="image/png"
-                mirrored={true}
-              />
+    <>
+      {resultPopUp ? (
+        <Result datas={dataAbsensi} checkInPopUp={checkInPopUp} />
+      ) :
+        <div className="fixed w-full h-full inset-0 flex items-center justify-center z-20 bg-black/60">
+          <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-6 w-[650px] h-[90%] rounded-lg">
+            <div onClick={() => checkInPopUp(false)} className="flex justify-end">
               <button
-                onClick={handleSubmit}
-                className="bg-purple mb-2 absolute bottom-0 left-1/2 transform -translate-x-1/2 p-2 rounded-full"
-              >
-                {isPending ? <Spinner /> : <Icon icon="system-uicons:camera" width="28.5" color="white" />}
+                className="absolute top-0 right-0 -mr-3 -mt-3 bg-black transition-transform transform hover:scale-105 hover:bg-gray-900 hover:shadow-lg w-[41.64px] h-[41.64px] rounded-full flex items-center justify-center">
+                <Icon icon="ion:close" color="white" width="17.44" />
               </button>
-              {resultPopUp && (
-                <Result datas={dataAbsensi} checkInPopUp={checkInPopUp} />
-              )}
             </div>
-          ))}
+            <div className="flex mb-4 items-center gap-2">
+              <div className="bg-gray-300 rounded-full w-14 h-14 flex items-center justify-center">
+                <Icon icon="solar:camera-minimalistic-broken" />
+              </div>
+              <div className="flex flex-col">
+                <span className=" font-semibold">{status}</span>
+                <div className="flex gap-x-2">
+                  <span className="font-bold text-s text-primary">{times}</span>
+                  <span className="font-bold text-s text-primary">{date}</span>
+                </div>
+                {errorMsg && <span className="text-red-500">{errorMsg}</span>}
+              </div>
+            </div>
+            <div className="w-full h-full">
+              {devices.map((device, key) => (
+                <div key={key} className="relative h-[85%] flex justify-center">
+                  <Webcam
+                    className=" rounded-lg h-full"
+                    audio={false}
+                    videoConstraints={{ deviceId: device.deviceId }}
+                    ref={webcamRef}
+                    screenshotFormat="image/png"
+                    mirrored={true}
+                  />
+                  <button
+                    onClick={handleSubmit}
+                    className="bg-purple hover:bg-purple-dark hover:scale-105 transition-all duration-200 mb-2 absolute bottom-0 left-1/2 transform -translate-x-1/2 p-2 rounded-full flex items-center justify-center"
+                  >
+                    {isPending ? <Spinner /> : <Icon icon="system-uicons:camera" width="28.5" color="white" />}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      }
+    </>
   );
 };
 

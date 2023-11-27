@@ -5,7 +5,7 @@ import { useAuthInfo } from "../../use context/useAuthInfo";
 export const usePresenceCurrentUser = () => {
     const { userData } = useAuthInfo();
     const userId = userData?._id
-    const { data, isLoading, refetch } = useQuery({
+    const { data, isLoading, refetch, isError, error } = useQuery({
         queryKey: ['presence current user'],
         enabled: !!userId,
         queryFn: async () => {
@@ -17,6 +17,8 @@ export const usePresenceCurrentUser = () => {
     return {
         data,
         isLoading,
-        refetch,
+        isError,
+        error,
+        refetch
     }
 };

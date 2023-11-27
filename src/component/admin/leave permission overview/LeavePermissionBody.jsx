@@ -31,7 +31,7 @@ const LeavePermissionBody = ({ permissionData, paidLeaveData, refetchDataPermiss
                 {paidLeave ? <div className="flex gap-3">
                 <button className={`h-12 w-28 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${pending ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`} onClick={() =>{ setApprove(false); setDisApprove(false); setPending(true)}}>Pending</button>
                 <button className={`h-12 w-28 focus :outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${approve ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`} onClick={() =>{ setApprove(true); setDisApprove(false); setPending(false)}}>Approve</button>
-                <button className={`h-12 w-28 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${disApprove ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`} onClick={() =>{ setApprove(false); setDisApprove(true); setPending(false)}}>DisApprove</button>
+                <button className={`h-12 w-28 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${disApprove ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`} onClick={() =>{ setApprove(false); setDisApprove(true); setPending(false)}}>Rejected</button>
                 </div> : null}
             </div>
             {permission ? <TablePermissionAdmin permissionData={permissionData} refetchDataPermission={refetchDataPermission} /> : null}

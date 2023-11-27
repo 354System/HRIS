@@ -53,14 +53,14 @@ const AOtable = () => {
         const today = new Date();
 
         // Mengurutkan array absensi berdasarkan tanggal (tanggal terbaru ke yang terlama)
-        absensi.sort((a, b) => {
+        absensi?.sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateB - dateA;
         });
 
         // Filter array absensi untuk hanya mendapatkan tanggal sebelum hari ini
-        const absensiSebelumHariIni = absensi.filter((item) => {
+        const absensiSebelumHariIni = absensi?.filter((item) => {
             const itemDate = new Date(item.date);
             return itemDate < today;
         });
@@ -151,7 +151,7 @@ const AOtable = () => {
             <div className="h-4/5 ">
                 <table className="w-full bg-white ">
                     <thead>
-                        <tr className=" border-b-4 border-t-2 text-primary">
+                        <tr className="bg-gray-200 text-primary">
                             <th className="text-start p-5">ID</th>
                             <th className="text-start">Employee</th>
                             <th className="text-start">Role</th>
@@ -166,8 +166,8 @@ const AOtable = () => {
                     <tbody>
                         {displayedAbsensiData &&
                             displayedAbsensiData.map((item, index) => (
-                                <tr key={index} className="border-b">
-                                    <td className="p-5 text-primary">{item.id}</td>
+                                <tr key={index} className={index % 2 === 1 ? "bg-gray-100  border-b" : " border-b"}>
+                                <td className="p-5 text-primary">{item.id}</td>
                                     <td className="text-primary">{item.employe}</td>
                                     <td className="text-primary">{item.divisi}</td>
                                     <td className=" text-primary">{item.departement}</td>

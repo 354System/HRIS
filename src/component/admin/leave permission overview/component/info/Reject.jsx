@@ -14,7 +14,7 @@ const RejectPaidLeaveAdmin = ({paidLeaveData}) => {
         </div>
       </div>
       <div>
-        <span className="text-base text-primary font-bold">Reject</span>
+        <span className="text-base text-primary font-bold">Rejected</span>
         <div className="flex items-center gap-1">
           <div className="w-4 h-4 bg-[#CE7171] flex items-center justify-center rounded-full">
             <img

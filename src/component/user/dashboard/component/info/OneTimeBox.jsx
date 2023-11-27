@@ -1,10 +1,10 @@
 import { FiUsers } from 'react-icons/fi'
-import { format, isSameMonth } from 'date-fns';
+import { format } from 'date-fns';
 const OnTimeBoxUser = ({ data }) => {
 
-    const onTimeDataInMonth = data?.filter((item) => {
-        const now = format(new Date(), 'yyyy-MM') === format(new Date(item.date), 'yyyy-MM');
-        return item.type === 'Present' && now;
+    const onTimeDataInMonth = data && data?.filter((item) => {
+        const now = format(new Date(), 'yyyy-MM') === format(new Date(item?.date), 'yyyy-MM');
+        return item?.type === 'Present' && now;
     });
 
     return (

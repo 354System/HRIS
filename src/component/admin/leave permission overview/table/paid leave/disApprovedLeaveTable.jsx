@@ -37,7 +37,7 @@ const DisApprovedLeaveTable = ({ paidLeaveData }) => {
                 </tr>
             </thead>
             <tbody>
-                {paidLeaveData ? paidLeaveData.filter((data) => data.approval === "DisApproved").map((data, index) => (
+                {paidLeaveData ? paidLeaveData.filter((data) => data.approval === "Reject").map((data, index) => (
                     <tr className="border-b" key={index}>
                         <td className="text-primary text-left w-48 p-4">{data.user.name}</td>
                         <td className="text-grey text-center">{data.user.position}</td>

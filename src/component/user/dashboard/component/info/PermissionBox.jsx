@@ -16,19 +16,17 @@ const PermisionBoxUser = () => {
 
   return (
     <div className="w-64 h-full flex flex-col justify-between  rounded-lg ">
-      <div>
-        <div className="bg-purple rounded-lg">
-          <button onClick={handleLeave} className="w-64 h-[56px] flex items-center  p-3 bg-purple text-center rounded-lg">
+        <div className="rounded-lg">
+          <button onClick={handleLeave} className="w-64 h-[56px] flex items-center p-3 bg-purple hover:bg-purple-dark transition duration-200 ease-in-out text-center rounded-lg">
             <Icon icon="solar:calendar-mark-outline" color="white" width="22" />
             <span className="text-white text-xs font-bold px-4">
               Leave Applications
             </span>
           </button>
         </div>
-      </div>
       <div className="mt-6">
         <div className="rounded-lg">
-          <button onClick={handlePermision} className="w-64 h-[56px] flex items-center  p-3 bg-yellow text-center rounded-lg">
+          <button onClick={handlePermision} className="w-64 h-[56px] flex items-center  p-3 bg-yellow hover:bg-yellow-dark transition duration-200 ease-in-out text-center rounded-lg">
             <Icon
               icon="solar:alarm-turn-off-outline"
               color="white"

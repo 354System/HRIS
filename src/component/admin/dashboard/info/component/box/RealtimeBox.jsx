@@ -22,7 +22,7 @@ const RealtimeBoxAdmin = () => {
     }, []);
 
     return (
-        <div className="w-64 h-full bg-white rounded flex flex-col justify-between items-center p-4">
+        <div className="w-[271px] h-full bg-white rounded flex flex-col justify-between items-center p-4">
             <div className="flex gap-4 w-full items-center">
                 <BsSun size={50} className="text-purple" />
                 <div className="flex flex-col w-full">

@@ -8,16 +8,17 @@ export function Navbar() {
         '/permission-and-leave': 'Attendance Permission & Leave',
         '/employee-data': 'Employee',
         '/attendance-history': 'History',
+        '/wiki-document': 'Wiki Document',
+        '/request': 'Request',
     };
 
     // Mengambil judul berdasarkan lokasi saat ini
     const currentPageTitle = pageTitles[location.pathname] || '';
     const { userData } = useAuthInfo()
     return (
-        <nav className="fixed z-10 top-6 right-7 w-[89%] h-[75px] flex items-center justify-between bg-white p-6 shadow-lg rounded-lg ">
-            <div>
-                <span className="navtitle text-xl font-semibold text-primary">{currentPageTitle}</span>
-            </div>
+        <nav className="fixed z-10 top-6 right-7 w-[89%] h-[75px] flex items-center justify-between bg-white p-6 shadow-lg rounded-lg backdrop-blur-md">                <div>
+            <span className="navtitle text-xl font-semibold text-primary">{currentPageTitle}</span>
+        </div>
             <div className="relative flex items-center gap-x-6">
                 <div>
                     <input
