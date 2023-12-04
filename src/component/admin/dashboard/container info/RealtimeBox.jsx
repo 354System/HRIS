@@ -29,7 +29,7 @@ export function RealtimeInsightBox() {
     }, []);
 
     return (
-        <div className="w-60 h-full bg-white rounded flex flex-col justify-between items-center p-5">
+        <div className="laptop:w-72 laptop:h-full bg-white rounded flex flex-col laptop:justify-between items-center p-10  hp:w-96">
             <div className="flex gap-4 w-full items-center">
                 <BsSun size={50} className='text-purple' />
                 <div className="flex flex-col w-full">

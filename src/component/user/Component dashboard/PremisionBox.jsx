@@ -15,29 +15,29 @@ const PremisionBox = () => {
   }
 
   return (
-    <div className="w-60 2xl:w-80  h-full flex flex-col justify-between  rounded-lg gap-4">
-      <div className="bg-[#A332C3] rounded-lg">
-        <button onClick={handleLeave} className=" h-[56px] flex items-center  p-3 bg-purple text-center rounded-lg hover:bg-fuchsia-700 w-full">
+    <div className="laptop:w-80 h-full hp:w-full flex laptop:flex-col laptop:gap-6 hp:gap-4 ">
+      <div className="hp:w-full laptop:w-full hp:h-14 rounded-lg">
+        <button onClick={handleLeave} className="laptop:w-80 hp:w-full laptop:h-[56px] hp:h-full hp:gap-3 flex items-center p-3 bg-purple hover:bg-purple-dark transition duration-200 ease-in-out text-center rounded-lg">
           <Icon icon="solar:calendar-mark-outline" color="white" width="22" />
-          <span className="text-white text-xs font-semibold px-4">
+          <span className="text-white text-xs laptop:font-bold hp:font-semibold laptop:px-4">
             Leave Applications
           </span>
         </button>
-        {leave ? <LeaveApplications leave={setLeave} /> : null}
       </div>
-      <div className="rounded-lg">
-        <button onClick={handlePermision} className="w-full h-[56px] flex items-center  p-3 bg-[#F9BE2A] text-center rounded-lg hover:bg-[#FBB901]">
+      <div className="rounded-lg hp:w-full laptop:w-full hp:h-14">
+        <button onClick={handlePermision} className="laptop:w-80 hp:w-full laptop:h-[56px] hp:h-full hp:gap-3 flex items-center p-3 bg-yellow hover:bg-yellow-dark transition duration-200 ease-in-out text-center rounded-lg">
           <Icon
             icon="solar:alarm-turn-off-outline"
             color="white"
             width="22"
           />
-          <span className="text-white text-xs font-semibold px-4">
+          <span className="text-white text-xs laptop:font-bold hp:font-semibold laptop:px-4">
             Permission
           </span>
         </button>
-        {popUp ? <Permision popUp={setPopUp} /> : null}
       </div>
+      {popUp ? <Permision popUp={setPopUp} /> : null}
+      {leave ? <LeaveApplications leave={setLeave} /> : null}
     </div>
   );
 };

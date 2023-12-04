@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 export function EarlyDepartureBox() {
     return (
-        <div className=" 2xl:w-80 w-60 h-full flex flex-col justify-between bg-white rounded p-5">
+        <div className=" laptop:w-80 w-60 h-full flex flex-col justify-between bg-white rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
                     <span>456</span>

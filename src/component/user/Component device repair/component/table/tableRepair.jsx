@@ -8,9 +8,9 @@ const TableRepair = () => {
 
     function approvalStatus(approval) {
         if (approval === 'Approved') {
-            return <td className="pl-2"><span className="text-white bg-green p-2">Approved</span></td>
-        } else if (approval === 'DisApproved') {
-            return <td className="pl-2"><span className="text-white bg-red p-2">Disapproved</span></td>
+            return <td className="pl-2"><span className="text-white bg-green-500 p-2">Approved</span></td>
+        } else if (approval === 'Reject') {
+            return <td className="pl-2"><span className="text-white bg-red-500 p-2">Rejected</span></td>
         } else {
             return <td className="pl-2"><span className="text-white bg-yellow p-2 rounded-lg">Wait For Response</span></td>
         }

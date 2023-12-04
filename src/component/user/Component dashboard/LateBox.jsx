@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
-const LateBox =() => {
+const LateBox = () => {
     return (
-        <div className="w-60 2xl:w-80 h-full flex flex-col justify-between bg-white rounded p-5">
+        <div className="laptop:w-80 w-64 h-full flex flex-col bg-white justify-between rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
                     <span>2</span>
@@ -12,7 +12,7 @@ const LateBox =() => {
             </div>
             <div>
                 <span className="text-base text-primary font-bold">Late </span>
-                <div className='flex items-center gap-1'>
+                <div className='hp:hidden flex items-center gap-1'>
                     <div className='w-4 h-4 bg-[#CE7171] flex items-center justify-center rounded-full p-1'>
                         <img src="/src/assets/Vector2.png" alt="" />
                     </div>

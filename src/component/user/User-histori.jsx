@@ -10,7 +10,7 @@ const Attendance = () => {
         <SidebarmenuUser />
       </div>
       <div className="w-full p-8">
-        <NavbarUser title="Dashboard"/>
+        <NavbarUser title="History User"/>
         <UserHistori/>
       </div>
     </div>

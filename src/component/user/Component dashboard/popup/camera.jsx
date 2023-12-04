@@ -55,47 +55,26 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
     });
 
 
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file);
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('checkin', date);
+    formData.append('absen', "Work From Office");
 
-      fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/create', {
-        method: 'POST',
-        headers: {
-          // Tambahkan token ke header permintaan
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json', // Pastikan menambahkan header ini
-        },
-        body: JSON.stringify({
-          absen: String(status),
-          checkin: new Date().toISOString(), // Konversi ke format string
-        }),
+    fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/create', {
+      method: 'POST',
+      headers: {
+        // Tambahkan token ke header permintaan
+        Authorization: `Bearer ${token}`,
+      },
+      body: (formData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Absen Berhasil:', data);
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Absen Berhasil:', data);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-
-      
-      fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/file', {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('File uploaded successfully:', data);
-        })
-        .catch(error => {
-          console.error('Error uploading file:', error);
-        });
-    } else {
-      console.error('No file selected');
-    }
-
-    setSuccess(true);
+      .catch(error => {
+        console.error('Error:', error);
+      });
   });
 
 
@@ -184,6 +163,7 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
               />
               <button
                 onClick={() => {
+                  console.log("Button clicked");
                   capturePhoto();
                 }}
                 className="bg-[#A332C3] absolute bottom-0 left-[250px] m-2 p-2 rounded-full"
@@ -191,7 +171,7 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
                 <Icon icon="system-uicons:camera" width="28.5" color="white" />
               </button>
               {success && (
-                <Result datas={datas}  capturePhoto={capturePhoto} checkInPopUp={checkInPopUp} />
+                <Result datas={datas} capturePhoto={capturePhoto} checkInPopUp={checkInPopUp} />
               )}
             </div>
           ))}

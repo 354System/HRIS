@@ -51,7 +51,7 @@ const PurchaseOfGoods = ({ category }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data); // Handle respons dari backend
-                window.location.href = "/Repair/Device";
+                // window.location.href = "/Repair/Device";
             })
             .catch((error) => {
                 console.error(error);

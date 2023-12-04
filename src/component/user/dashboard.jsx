@@ -13,21 +13,21 @@ import NavbarUser from "./Component dashboard/Navbar";
 const DashboardUser = () => {
   return (
     <div className="w-full min-h-screen flex absolute bg-gray-200">
-      <div className="p-8">
+      <div className="p-4 hp:hidden laptop:flex ">
         <SidebarmenuUser />
       </div>
-      <div className="w-full p-8">
-        <NavbarUser title="Dashboard"/>
-        <div className="w-full mb-10">
+      <div className="w-full p-4">
+        <NavbarUser title="Dashboard" />
+        <div className="laptop:flex hp:hidden flex-col gap-6 mt-32">
           <div className="w-full  flex h-72 gap-6">
             <RealtimeInsightBox />
             <div className="w-full flex flex-col gap-8">
-              <div className="flex h-1/2 gap-10">
+              <div className="flex h-1/2 gap-10 ">
                 <OnTimeBox />
                 <AbsenBox />
                 <LeaveBox />
               </div>
-              <div className="flex h-1/2 items-end gap-10">
+              <div className="flex h-1/2 items-end gap-10 ">
                 <LateBox />
                 <WorkingDayThismonthBox />
                 <PremisionBox />
@@ -35,9 +35,28 @@ const DashboardUser = () => {
             </div>
           </div>
         </div>
-        <div className="">
+        <div className="laptop:hidden flex flex-col mt-4 gap-2 hp:mr-4 hp:flex">
+          <div className="flex h-1/4 gap-2 mt-24">
+            <RealtimeInsightBox />
+          </div>
+          <div className="flex h-1/4 gap-2 mt-4">
+            <PremisionBox />
+          </div>
+          <div className="flex h-1/4 gap-2 mt-2">
+            <OnTimeBox />
+            <AbsenBox />
+          </div>
+          <div className="flex h-1/4 gap-2">
+            <LateBox />
+            <LeaveBox />
+          </div>
+          <div className="flex max-h-1/4 gap-2">
+            <WorkingDayThismonthBox />
+          </div>
+        </div>
+        <div className="mt-10">
           <h1 className="font-bold text-[#252C58] px-2">Attendance History</h1>
-          <Histori  />
+          <Histori />
         </div>
       </div>
     </div>

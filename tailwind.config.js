@@ -4,6 +4,10 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",],
   theme: {
+    screens: {
+      laptop: "1024px",
+      hp: {max: "767px"},
+    },
     transparent: "transparent",
     current: "currentColor",
     extend: {

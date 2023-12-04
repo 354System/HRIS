@@ -35,7 +35,7 @@ const RealtimeInsightBox = ({checkInPopUp}) => {
   }, []);
 
   return (
-    <div className="w-64 h-full bg-white rounded flex flex-col justify-between items-center p-5">
+    <div className="w-80 h-full bg-white rounded flex flex-col justify-between items-center p-5 ml-2 ">
       <div className="flex gap-4 w-full items-center">
         <BsSun size={50} className="text-purple" />
         <div className="flex flex-col w-full">
@@ -54,7 +54,7 @@ const RealtimeInsightBox = ({checkInPopUp}) => {
           <span className="text-lg text-primary">Today:</span>
           <span className="text-lg text-primary font-bold">{date}</span>
         </div>
-        <div>
+        <div className="">
           <button
             onClick={handlePopup}
             className="w-[198px] h-[37px] flex items-center rounded p-3 bg-purple hover:bg-fuchsia-700"

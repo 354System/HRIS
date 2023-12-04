@@ -15,7 +15,7 @@ const RepairDeviceBox = () => {
 
     return (
     <>
-        <div className=" 2xl:w-80 w-[250px] h-[134px] flex flex-col bg-[#A332C3] justify-justify-start rounded p-5 cursor-pointer" onClick={handleAdd}>
+        <div className=" laptop:w-80 w-[250px] h-[134px] flex flex-col bg-[#A332C3] justify-justify-start rounded p-5 cursor-pointer" onClick={handleAdd}>
             <div className="flex justify-justify-start items-center">
                 <div className='rounded-full bg-[#E6EAF5]/40 w-10 h-10 flex items-center justify-center'>
                     <Icon icon="solar:document-medicine-linear" color="white" width="27" />

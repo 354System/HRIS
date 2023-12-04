@@ -3,9 +3,7 @@ import { Icon } from "@iconify/react";
 
 
 const DataDokumen = () => {
-
     
-
     return (
         <div className="mt-2 bg-white">
             <table className="w-full">

@@ -41,16 +41,16 @@ const AODashboard = () => {
 
 
     return (
-        <div className="w-full bg-white p-5">
-            <div className="flex justify-between">
-                <h1 className="text-2xl font-bold">Attendance Overview Today</h1>
+        <div className="w-full p-5  laptop:bg-white laptop:p-5 laptop:mt-5 laptop:rounded-lg hp:bg-white">
+            <div className="laptop:flex justify-between laptop:mt-8 hp:mt-4 laptop:text-2xl hp:text-xl laptop:font-bold  hp:font-bold gap-y-4 hp:flex hp:flex-col">
+                <h1 className="">Attendance Overview Today</h1>
                 <div className="relative flex items-center gap-x-6">
                     <div>
                         <input
                             type="text"
                             id="search"
                             placeholder="Quick Search..."
-                            className="w-96 h-10 pl-10 bg-white border-2 border-[#D5D9DD] text-sm placeholder:text-grey rounded"
+                            className="laptop:w-96 hp:w-60 h-10 pl-10 bg-white border-2 border-[#D5D9DD] text-sm placeholder:text-grey rounded"
                         />
                     </div>
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -58,11 +58,11 @@ const AODashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className='mt-10'>
-                <table className="w-full ">
+            <div className="w-full laptop:mt-10 hp:mt-6 hp:overflow-x-auto">
+                <table className="hp:w-[900px] laptop:w-full">
                     <thead>
-                        <tr className=" border-b-4 border-t-2 text-primary">
-                            <th className="text-start p-5">ID</th>
+                        <tr className="hp:text-base laptop:border-b-4 laptop:border-t-2 hp:bg-gray-100 text-grey text-left">
+                            <th className="laptop:p-4 hp:p-3">ID</th>
                             <th className="text-start">Employee</th>
                             <th className="text-start">Role</th>
                             <th className="text-start">Departement</th>
@@ -77,7 +77,7 @@ const AODashboard = () => {
                         {absensi &&
                             absensi.slice(-6).map((item) => (
                                 <tr key={item.id} className="border-b">
-                                    <td className="p-8 text-primary">{item.id}</td>
+                                    <td className="text-primary laptop:p-4 hp:p-3">{item.id}</td>
                                     <td className="text-primary">{item.employe}</td>
                                     <td className="text-primary">{item.divisi}</td>
                                     <td className=" text-primary">{item.departement}</td>
@@ -85,20 +85,20 @@ const AODashboard = () => {
                                     <td className=""><span className={`p-2 text-sm 
                                             ${item.status === 'Absent' ? 'bg-red-100 text-[#AA0000]' :
                                             item.status === 'Late Arrival' ? 'text-[#D5B500] bg-[#FFF8E7]' :
-                                            item.status === 'Work from Office' ? 'text-purple' : 'bg-[#E6EFFC] text-purple'}`}>
+                                                item.status === 'Work from Office' ? 'text-purple' : 'bg-[#E6EFFC] text-purple'}`}>
                                         {item.status}
                                     </span></td>
                                     <td className={` text-sm text-center
                                             ${item.status === 'Absent' ? 'text-[#AA0000]' :
                                             item.status === 'Late Arrival' ? 'text-[#D5B500]' :
-                                            item.status === 'Work from Office' ? 'text-purple' : 'text-purple'}`}>
-                                            {item.checkIn.slice(12)}
+                                                item.status === 'Work from Office' ? 'text-purple' : 'text-purple'}`}>
+                                        {item.checkIn.slice(12)}
                                     </td>
                                     <td className={`text-sm text-center
                                             ${item.status === 'Absent' ? 'text-[#AA0000]' :
                                             item.status === 'Late Arrival' ? 'text-[#D5B500] ' :
-                                            item.status === 'Work from Office' ? 'text-purple' : 'text-purple'}`}>
-                                            {item.checkOut.slice(12)}
+                                                item.status === 'Work from Office' ? 'text-purple' : 'text-purple'}`}>
+                                        {item.checkOut.slice(12)}
                                     </td>
                                     <td className="text-center text-primary">{item.workHours}</td>
                                 </tr>

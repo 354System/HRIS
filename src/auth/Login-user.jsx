@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Icon } from '@iconify/react';
-import { AiFillExclamationCircle } from "react-icons/ai";
 
 const LoginUser = () => {
 
@@ -79,29 +78,29 @@ const LoginUser = () => {
 
     return (
         <div className="flex w-full h-screen">
-            <div className="flex w-[70%] h-full bg-[#A332C3] items-center justify-center relative">
+            <div className="hidden laptop:flex laptop:w-full w-full h-full bg-[#A332C3] items-center justify-center relative">
                 <div className="absolute w-full h-screen bg-repeat">
-                    <img src="src/assets/ssss 1.png" alt="" className="h-full"/>
+                    <img src="src/assets/ssss 1.png" alt="" className="h-full" />
                 </div>
-                <div className="flex bg-white/50 p-16 w-[70%] h-[80%] relative rounded-lg border-4 border-white/40">
-                    <div className="font-bold text-6xl text-white w-[80%] h-[40%] leading-tight">
+                <div className="flex bg-white/50 p-16 w-full laptop:w-2/3 h-[80%] laptop:h-[70%] relative rounded-lg border-4 border-white/40">
+                    <div className="font-bold text-6xl text-white w-[80%] laptop:w-full h-[40%] laptop:h-full leading-tight">
                         <div>Very Good.</div>
                         <div>Works Are Waiting</div>
                         <div>For You</div>
                     </div>
-                    <img src="src/assets/01 2.png" alt="" className="absolute w-[60%] right-20 bottom-0" />
+                    <img src="src/assets/01 2.png" alt="" className="absolute w-[60%] laptop:w-[40%] right-20 laptop:right-0 bottom-0 laptop:bottom-10" />
                     <div className="absolute bottom-12 left-12">
                         <h1 className="text-white text-3xl font-semibold">Login Now</h1>
                     </div>
                 </div>
             </div>
-            <div className=" justify-evenly  p-8 flex flex-col w-[30%] h-full items-center">
-                <div className=" w-[70%] flex justify-center h-12">
-                    <img src="src/assets/logo terbaru.png" alt="" className=" mr-32"/>
+            <div className="laptop:w-[40%] lg:flex lg:justify-evenly p-8 flex flex-col  h-full items-center mx-auto hp:bg-white w-full laptop:bg-white">
+                <div className="w-[80%] flex justify-center h-10 laptop:h-12 laptop:w-[70%] mx-auto laptop:flex laptop:mt-4">
+                    <img src="src/assets/logo terbaru.png" alt="" className="mx-auto laptop:mr-32" />
                 </div>
-                <div className="flex flex-col text-xl  gap-y-6">
-                    <h1 className="font-semibold">Nice to see you again</h1>
-                    <form onSubmit={handleLoginSubmit}>
+                <div className="flex flex-col text-xl gap-y-6 w-full laptop:mt-10">
+                    <h1 className="font-semibold text-center laptop:text-center laptop:mt-4 mt-6">Nice to see you again</h1>
+                    <form onSubmit={handleLoginSubmit} className="w-full">
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col gap-2">
                                 <label htmlFor="email" className="text-lg">Login</label>
@@ -111,7 +110,7 @@ const LoginUser = () => {
                                     placeholder="Enter your email"
                                     value={user.email}
                                     onChange={handleChangeText}
-                                    className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[360px] h-[48px]"
+                                    className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full"
                                 />
                             </div>
                             <div className="mt-2 flex flex-col">
@@ -124,7 +123,7 @@ const LoginUser = () => {
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         id="password"
-                                        className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                                        className="bg-[#ACACAC]/50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full"
                                         placeholder="Enter Password"
                                         value={user.password}
                                         onChange={handleChangeText}
@@ -137,18 +136,18 @@ const LoginUser = () => {
                                     />
                                 </div>
                             </div>
-                            <div >
-                                <h1 className="text-[#A332C3] text-xs text-end cursor-pointer">Forgot Your Password?</h1>
+                            <div>
+                                <h1 className="text-[#A332C3] text-xs  cursor-pointer text-end md:text-start">Forgot Your Password?</h1>
                             </div>
                             <div>
-                                <button className="bg-[#A332C3] hover:bg-fuchsia-700 w-[360px] h-[40px] rounded-lg text-white text-sm font-semibold">
-                                    sign in
+                                <button className="bg-[#A332C3] hover:bg-fuchsia-700 w-full h-[40px] rounded-lg text-white text-sm font-semibold">
+                                    Sign In
                                 </button>
                             </div>
                         </div>
                     </form>
-                    <div className="mt-20">
-                        <h1 className="text-[#666666] text-xs">© Thinkspedia 2023</h1>
+                    <div className=" mt-36 md:mt-20">
+                        <h1 className="text-[#666666] text-xs text-center">© Thinkspedia 2023</h1>
                     </div>
                 </div>
             </div>
