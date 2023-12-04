@@ -1,18 +1,18 @@
 import React from "react";
 import { Sidebarmenu } from "../../component/Sidebarmenu";
-import { Navbar } from "../../component/Navbar";
 import User from "../../component/admin/User/user";
+import NavbarUser from "../../component/user/Component dashboard/Navbar";
 
 const DataUser = () => {
     return(
         <div className="bg-gray-200 min-h-screen w-full">
-            <div>
+            <div className="laptop:flex hp:hidden">
                 <Sidebarmenu/>
             </div>
             <div>
-                <Navbar/>
+                <NavbarUser title="Data User"/>
             </div>
-            <div className="p-10 mt-20 ml-20">
+            <div className="laptop:p-10 laptop:mt-20 laptop:ml-24">
                 <User/>
             </div>
         </div>
