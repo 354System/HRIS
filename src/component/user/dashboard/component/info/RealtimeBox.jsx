@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import Checkout from "../../checkout/checkout";
 import CheckIn from "../../checkin/check-in";
+import { useCheckOut } from "../../../../../api/attendance/useCheckout";
+import { confirmAlert, successAlert } from "../../../../../lib/sweetAlert";
+import { Button } from "flowbite-react";
+import { Spinner } from "@chakra-ui/react";
+import { flowbiteTheme } from "../../../../../lib/flowbiteTheme";
 const RealtimeInsightBoxUser = ({ data, refetchPresence }) => {
   const [realtime, setRealtime] = useState("");
   const [date, setDate] = useState("");
@@ -68,7 +73,7 @@ const RealtimeInsightBoxUser = ({ data, refetchPresence }) => {
   }, []);
 
   return (
-    <div className="w-64 h-full bg-white rounded flex flex-col justify-between items-center p-5">
+    <div className="laptop:w-64 hp:w-full h-full bg-white rounded flex flex-col justify-between items-center p-5">
       <div className="flex gap-4 w-full items-center">
         <BsSun size={50} className="text-purple" />
         <div className="flex flex-col w-full">
@@ -106,12 +111,14 @@ const RealtimeInsightBoxUser = ({ data, refetchPresence }) => {
           ) : (
             <>
               {!presentDataToday?.[0].checkout && (
-                <button
+                <Button
+                theme={flowbiteTheme}
+                  color="purple"
                   onClick={() => setCheckOutPopUp(true)} // Melakukan check-out
                   className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple hover:bg-purple-dark transition duration-200 ease-in-out"
                 >
                   <span className="text-white text-sm font-bold">Check Out</span>
-                </button>
+                </Button>
               )}
               {presentDataToday && presentDataToday?.[0].checkout ? (
                 <Link to="/attendance-history">

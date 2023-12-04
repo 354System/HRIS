@@ -64,21 +64,21 @@ const textInputTheme = {
             base: 'w-full',
             icon: {
                 base: 'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3',
-                svg: 'h-5 w-5 text-gray-500 dark:text-gray-400'
+                svg: 'h-4 w-4 text-gray-500 dark:text-gray-400'
             },
             rightIcon: {
                 base: 'cursor-pointer absolute inset-y-0 right-0 flex items-center pr-3',
-                svg: 'h-5 w-5 hover:text-gray-700 hover:bg-gray-200 transition-colors duration-200 rounded-full text-gray-500 dark:text-gray-400'
+                svg: 'h-5 w-5 hover:text-gray-700 transition-colors duration-200 text-gray-500 dark:text-gray-400'
             },
             input: {
-                base: 'block w-full border disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-900',
+                base: 'block w-full focus:outline-none border disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-900',
                 sizes: {
                     sm: 'p-2 sm:text-xs',
                     md: 'p-2.5 text-sm',
-                    lg: 'sm:text-md p-4'
+                    lg: 'text-sm p-3'
                 },
                 colors: {
-                    gray: "bg-gray-50 border-gray-300 text-gray-900",
+                    gray: "bg-slate-100 border-gray-300 text-gray-900 transition duration-200 focus:bg-white focus:border-primary focus:ring-primary focus:ring-1",
                     info: "border-cyan-500 bg-cyan-50 text-cyan-900 placeholder-cyan-700 ",
                     failure: "border-red-500 bg-red-50 text-red-900 placeholder-red-700 ",
                     warning: "border-yellow-500 bg-yellow-50 text-yellow-900 placeholder-yellow-700",

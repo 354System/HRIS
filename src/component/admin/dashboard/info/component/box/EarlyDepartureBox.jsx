@@ -12,7 +12,7 @@ const EarlyDepartureBox = () => {
             </div>
             <div>
                 <span className="text-base text-primary font-bold">Early Departure</span>
-                <div className='flex items-center gap-1'>
+                <div className='hp:hidden flex items-center gap-1'>
                     <div className='w-4 h-4 bg-[#97CE71] flex items-center justify-center rounded-full'>
                         <img src="src/assets/trendingup.svg" alt="" className='text-[#43900C]'/>
                     </div>

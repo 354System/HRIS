@@ -6,7 +6,7 @@ export const usePresent = ({ onSuccess, onError }) => {
         mutationFn: async (body) => {
             const loginResponse = await axiosInstance.post('/absensi/create', body, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 }
             })
             return loginResponse.data

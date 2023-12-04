@@ -13,7 +13,6 @@ const HistoryDashboard = ({ presence }) => {
     const hours = Math.floor(workHoursResult / 3600000);
     const minutes = Math.floor((workHoursResult % 3600000) / 60000);
     const workHours = `${hours}h ${minutes}m`;
-
     // Menambahkan properti workHours ke objek Presence yang ada
     presenceData.workHours = workHours;
   });
@@ -49,15 +48,15 @@ const HistoryDashboard = ({ presence }) => {
   }
 
   return (
-    <div className="w-full bg-white p-5 mt-10 rounded-lg">
+    <div className="hp:w-[600px] bg-white p-5 mt-5 rounded-lg overflow-x-auto">
       <div className="flex justify-between items-center p-3">
         <h1 className="text-xl font-bold">Attendance History Weekly</h1>
       </div>
       <div className="mt-2">
         <table className="w-full">
           <thead>
-            <tr className="border-b-4 border-t-2 text-grey text-left">
-              <th className="p-4">No</th>
+            <tr className="hp:text-base laptop:border-b-4 laptop:border-t-2 hp:bg-gray-100 text-grey text-left">
+              <th className="laptop:p-4 hp:p-3">No</th>
               <th>Date</th>
               <th>Status</th>
               <th>Check-in</th>
@@ -67,13 +66,13 @@ const HistoryDashboard = ({ presence }) => {
           </thead>
           <tbody>
             {filteredPresence ? filteredPresence?.map((data, index) => (
-              <tr key={index} className="border-b">
-                <td className="text-primary p-4">{index + 1}</td>
+              <tr key={index} className="border-b hp:text-base">
+                <td className="text-primary laptop:p-4 hp:p-3">{index + 1}</td>
                 <td className="text-primary">{format(new Date(data.date), 'dd-MM-yyyy')}</td>
                 <td className="bg-white"><span className={`text-purple bg-[#E6EFFC] ${statusStyle(data)}`}>{data.absen}</span></td>
                 <td className={`text-purple ${checkInStyle(data)}`}>{data.checkin ? format(new Date(data.checkin), 'HH:mm') : '-:-:-'}</td>
                 <td className="text-purple">{data.checkout ? format(new Date(data.checkout), 'HH:mm') : '-:-:-'}</td>
-                <td className="text-primary">{data.workHours}</td>
+                <td className="text-primary">{data.workHours === 'NaNh NaNm' ? '-:-:-' : data.workHours}</td>
               </tr>
             )) : <Spinner size={20} />}
           </tbody>

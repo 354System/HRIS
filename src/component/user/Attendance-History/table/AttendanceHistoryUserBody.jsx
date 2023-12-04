@@ -42,32 +42,30 @@ const AttendanceBody = () => {
     }
 
     return (
-        <div className="w-full rounded-lg">
-            <table className="w-full text-center">
-                <thead>
-                    <tr className="bg-gray-200 text-center">
-                        <th className="p-4">No</th>
-                        <th className="p-4">Date</th>
-                        <th className="text-center">Status</th>
-                        <th className="">Check-In</th>
-                        <th className="">Check-Out</th>
-                        <th className="">Work hours</th>
+        <table className="laptop:w-full hp:w-[600px] laptop:rounded-lg hp:rounded hp:overflow-x-auto">
+            <thead>
+                <tr className="bg-gray-200 text-center">
+                    <th className="p-4">No</th>
+                    <th className="p-4">Date</th>
+                    <th className="text-center">Status</th>
+                    <th className="">Check-In</th>
+                    <th className="">Check-Out</th>
+                    <th className="">Work hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                {presenceData ? presenceData?.map((data, index) => (
+                    <tr key={index} className={index % 2 === 0 ? "bg-gray-100 text-center" : "text-center"}>
+                        <td>{index + 1}</td>
+                        <td className=" p-4 max-w-[90px]">{format(new Date(data.date), 'dd-MM-yyyy')}</td>
+                        <td><span className={`${statusStyle(data)} p-2`}>{data.absen}</span></td>
+                        <td className={`${checkInStyle(data)}`}>{data.checkin ? format(new Date(data.checkin), 'HH:mm') : '-:-:-'}</td>
+                        <td className="text-purple text-lg">{data.checkout ? format(new Date(data.checkout), 'HH:mm') : '-:-:-'}</td>
+                        <td className="text-primary">{data.workHours}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {presenceData ? presenceData?.map((data, index) => (
-                        <tr key={index} className={index % 2 === 0 ? "bg-gray-100 text-center" : "text-center"}>
-                            <td>{index + 1}</td>
-                            <td className=" p-4 max-w-[90px]">{format(new Date(data.date), 'dd-MM-yyyy')}</td>
-                            <td><span className={`${statusStyle(data)} p-2`}>{data.absen}</span></td>
-                            <td className={`${checkInStyle(data)}`}>{data.checkin ? format(new Date(data.checkin), 'HH:mm') : '-:-:-'}</td>
-                            <td className="text-purple text-lg">{data.checkout ? format(new Date(data.checkout), 'HH:mm') : '-:-:-'}</td>
-                            <td className="text-primary">{data.workHours}</td>
-                        </tr>
-                    )) : null}
-                </tbody>
-            </table>
-        </div>
+                )) : null}
+            </tbody>
+        </table>
     )
 }
 export default AttendanceBody;

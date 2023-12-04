@@ -68,7 +68,7 @@ const PurchaseInquiryDetailAdmin = ({ data, setDetailModal, refetchInquiryData }
         }).then((result) => {
             if (result.isConfirmed) {
                 mutate({
-                    approval: 'Reject'
+                    approval: 'Rejected'
                 })
             }
         })

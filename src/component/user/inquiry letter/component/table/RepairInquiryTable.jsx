@@ -110,9 +110,9 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
     }
 
     return (
-        <div className="mt-5">
-            <table className="w-full">
-                <thead className="">
+        <div className="laptop:mt-5 hp:mt-10 w-full h-96 text-center hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[600px]">
+                <thead>
                     <Flowbite theme={{ theme: flowbiteTheme }}>
                         <tr className="border-b-4 border-t-2 text-grey text-left">
                             <th className="p-4 text-center">No</th>

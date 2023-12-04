@@ -7,8 +7,7 @@ import { FiSearch } from "react-icons/fi";
 import { useFetchAllInquiryLetter } from "../../../../api/fetchData/useFetchAllInquiryLetter";
 
 const InquiryLetterBodyAdmin = () => {
-    const { data: mantap, isLoading, refetch } = useFetchAllInquiryLetter();
-    console.log(mantap);
+    const { data, isLoading, refetch } = useFetchAllInquiryLetter();
     const [repairTable, setRepairTable] = useState(true);
     const [purchaseTable, setPurchaseTable] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState('');
@@ -45,8 +44,8 @@ const InquiryLetterBodyAdmin = () => {
                     />
                 </div>
             </div>
-            {repairTable ? <RepairInquiryTableAdmin data={mantap} searchKeyword={searchKeyword} refetch={refetch} /> : null}
-            {purchaseTable ? <PurchaseInquiryTableAdmin data={mantap} searchKeyword={searchKeyword} refetch={refetch} /> : null}
+            {repairTable ? <RepairInquiryTableAdmin data={data} searchKeyword={searchKeyword} refetch={refetch} /> : null}
+            {purchaseTable ? <PurchaseInquiryTableAdmin data={data} searchKeyword={searchKeyword} refetch={refetch} /> : null}
         </div>
     )
 }

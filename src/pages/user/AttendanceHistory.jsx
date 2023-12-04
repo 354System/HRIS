@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar } from "../../component/bar/Navbar";
 import { Sidebarmenu } from "../../component/bar/Sidebarmenu";
 import TableAttendanceHistory from "../../component/user/Attendance-History/history";
 const AttendanceHistoryUser = () => {
+  const [sideBarMenu, setSideBarMenu] = useState(false);
   return (
     <div className="absolute bg-gray-300 min-h-screen w-full">
-      <Navbar />
-      <Sidebarmenu />
-      <div className="p-7 mt-28 pl-28 w-full">
-        <TableAttendanceHistory />
+      <Navbar sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu}/>
+      <Sidebarmenu sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu}/>
+      <div className="laptop:p-7 hp:p-3 laptop:mt-28 hp:mt-24 laptop:pl-28 w-full hp:overflow-x-auto">
+        <div className="hp:overflow-x-auto">
+          <TableAttendanceHistory />
+        </div>
       </div>
     </div>
   );

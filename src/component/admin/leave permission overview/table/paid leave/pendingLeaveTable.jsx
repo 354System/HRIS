@@ -2,10 +2,12 @@ import { useState } from "react";
 import { format, intervalToDuration } from "date-fns";
 import { Spinner } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
+import { Dropdown } from "flowbite-react";
 import ApproveLeave from "../../confirm/approveLeave";
 import DisApproveLeave from "../../confirm/disApproveLeave";
-
 const PendingLeaveTable = ({ paidLeaveData, refetchDataPaidLeave }) => {
+    const [selectedStatus, setSelectedStatus] = useState('Default');
+    const [selectDate, setSelectDate] = useState(false);
     const [approvePopUp, setApprovePopUp] = useState(false);
     const [disApprovePopUp, setDisApprovePopUp] = useState(false);
     const [id, setId] = useState("");
@@ -53,7 +55,15 @@ const PendingLeaveTable = ({ paidLeaveData, refetchDataPaidLeave }) => {
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Total Days</th>
-                    <th>Action</th>
+                    <th className="flex justify-center p-4">
+                        <Dropdown label="Status" inline>
+                            <Dropdown.Item className={`${selectedStatus === 'Default' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('Default')}>Default</Dropdown.Item>
+                            <Dropdown.Item className={`${selectedStatus === 'Wait For Response' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Wait For Response')}>Wait For Response</Dropdown.Item>
+                            <Dropdown.Item className={`${selectedStatus === 'Approved' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Approved')}>Approved</Dropdown.Item>
+                            <Dropdown.Item className={`${selectedStatus === 'Reject' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Reject')}>Rejected</Dropdown.Item>
+                            <Dropdown.Item className={`${selectedStatus === 'Canceled' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('Canceled')}>Canceled</Dropdown.Item>
+                        </Dropdown>
+                    </th>
                 </tr>
             </thead>
             <tbody>

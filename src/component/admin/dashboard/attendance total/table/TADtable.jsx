@@ -45,41 +45,43 @@ const TADtable = ({ presence, permission, paidLeave, }) => {
     });
 
     return (
-        <table className="w-full">
-            <thead>
-                <tr className="bg-gray-200 text-primary">
-                    <th className="p-4">No</th>
-                    <th className="text-left">Employee</th>
-                    <th>Role</th>
-                    <th>Department</th>
-                    <th>Presence</th>
-                    <th>Ontime</th>
-                    <th>Late</th>
-                    <th>Absent</th>
-                    <th>Permission</th>
-                    <th>Paid Leave</th>
-                </tr>
-            </thead>
-            <tbody>
-                {Object.keys(groupedData).map((id, index) => {
-                    const item = groupedData[id];
-                    return (
-                        <tr key={index} className={index % 2 === 1 ? "bg-gray-100 text-center" : "text-center"}>
-                            <td className="p-4">{index + 1}</td>
-                            <td className="text-left">{item.employe}</td>
-                            <td>{item.divisi}</td>
-                            <td>{item.departement}</td>
-                            <td>{item.hadir}</td>
-                            <td>{item.ontime}</td>
-                            <td>{item.late}</td>
-                            <td>{item.absent}</td>
-                            <td>{item.izin}</td>
-                            <td>{item.cuti}</td>
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </table>
+        <div className="laptop:mt-5 hp:mt-40 w-full text-center hp:overflow-x-auto">
+        <table className="laptop:w-full hp:w-[1000px]">
+                <thead>
+                    <tr className="bg-gray-200 text-primary">
+                        <th className="p-4">No</th>
+                        <th className="text-left">Employee</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Presence</th>
+                        <th>Ontime</th>
+                        <th>Late</th>
+                        <th>Absent</th>
+                        <th>Permission</th>
+                        <th>Paid Leave</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.keys(groupedData).map((id, index) => {
+                        const item = groupedData[id];
+                        return (
+                            <tr key={index} className={index % 2 === 1 ? "bg-gray-100 text-center" : "text-center"}>
+                                <td className="p-4">{index + 1}</td>
+                                <td className="text-left">{item.employe}</td>
+                                <td>{item.divisi}</td>
+                                <td>{item.departement}</td>
+                                <td>{item.hadir}</td>
+                                <td>{item.ontime}</td>
+                                <td>{item.late}</td>
+                                <td>{item.absent}</td>
+                                <td>{item.izin}</td>
+                                <td>{item.cuti}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 };
 

@@ -46,12 +46,12 @@ const TADheader = ({ presenceData, permissionData, paidLeaveData, setFilteredPre
     }
 
     return (
-        <div className="flex flex-col justify-between h-32 mb-5">
+        <div className="flex flex-col laptop:justify-between laptop:h-32">
             <div className='gap-4'>
                 <h1 className="text-xl font-bold ml-2">Attendance Overview</h1>
                 <h1 className="text-base font-bold ml-2">{format(startDate, 'dd MMMM yyyy')} - {format(endDate, 'dd MMMM yyyy')}</h1>
             </div>
-            <div className='flex h-14 items-center ml-2'>
+            <div className='flex hp:flex-col h-14 laptop:items-center ml-2 hp:gap-2'>
                 <p>From Date :</p>
                 <div className="flex items-center justify-center w-32 h-10 ml-2 rounded-lg bg-gray border border-gray-dark focus-within:border-2 focus-within:border-primary hover:bg-gray-300 transition-colors duration-200">
                     <SlCalender size={20} fontFamily='primary' />
@@ -63,7 +63,7 @@ const TADheader = ({ presenceData, permissionData, paidLeaveData, setFilteredPre
                         className='bg-transparent cursor-pointer w-24 p-1 focus:outline-none'
                     />
                 </div>
-                <p className='ml-2'>to Date :</p>
+                <p className='ml-2'>To Date :</p>
                 <div className="flex items-center justify-center w-32 h-10 ml-2 rounded-lg bg-gray border border-gray-dark focus-within:border-2 focus-within:border-primary hover:bg-gray-300 transition-colors duration-200">
                     <SlCalender size={20} fontFamily='primary' />
                     <ReactDatePicker

@@ -18,6 +18,7 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
             return <td className=" text-center"><span className="text-yellow bg-yellow/10 p-2 font-semibold rounded text-sm">Wait For Response</span></td>
         }
     }
+    
     const sortedData = useMemo(() => {
         let orderedData = LeaveData;
 
@@ -26,7 +27,7 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
                 return Object.values(item).some(value => {
                     if (typeof value === 'string') {
                         // If it's a string, check if it includes the searchKeyword
-                        return value.toLowerCase().includes(searchKeyword.toLowerCase());
+                       return value.toLowerCase().includes(searchKeyword.toLowerCase());
                     } else if (item.date) {
                         // If it's a date, format it to 'dd-MMMM-yyyy' and check for inclusion
                         const formattedDate = format(new Date(item.date), 'dd-MM-yyyy');
@@ -65,8 +66,8 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
         return orderedData;
     }, [LeaveData, searchKeyword, selectedStatus, selectDate]);
     return (
-        <div className="mt-5">
-            <table className="w-full text-center">
+        <div className="laptop:mt-5 hp:mt-10 w-full h-96 text-center hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[600px]">
                 <thead>
                     <tr className="border-b-4 border-t-2 text-grey text-center">
                         <th className="p-4">No</th>
@@ -88,9 +89,9 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
                 {sortedData ? sortedData?.map((data, index) => (
                     <tbody>
                         <tr key={index} className="border-b">
-                            <td>{index + 1}</td>
-                            <td className="text-primary p-4 max-w-[90px]">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
-                            <td className="text-primary">{data.cuti}</td>
+                            <td className="text-purple">{index + 1}</td>
+                            <td className="text-primary p-4 laptop:max-w-[90px]">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
+                            <td className="text-primary hp:max-w-[90px]">{data.cuti}</td>
                             <td className="text-purple ">{format(new Date(data.fromdate), 'HH:mm')}</td>
                             <td className="text-purple">{format(new Date(data.untildate), 'HH:mm')}</td>
                             {approvalStatus(data.approval)}

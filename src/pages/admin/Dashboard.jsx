@@ -15,18 +15,18 @@ function DashboardAdmin() {
     <div className="absolute bg-gray-300 min-h-screen w-full">
       <Sidebarmenu />
       <Navbar />
-      <div className="p-7 mt-28 pl-28 w-full ">
-        <div className="w-full h-72 mb-10">
+      <div className="laptop:p-7 hp:p-3 laptop:mt-28 hp:mt-24 laptop:pl-28 w-full">
+        <div className="laptop:h-72 hp:h-1/2">
           <DashboardInfoAdmin />
         </div>
-        <div className="flex w-full h-80 mb-10">
-          <DashboardChartAdmin data={allPresence}/>
+        <div className="hp:hidden flex w-full h-80 mt-10">
+          <DashboardChartAdmin data={allPresence} />
         </div>
-        <div className="w-full mb-10">
+        <div className="w-full laptop:mt-10 hp:mt-5">
           <HistoryDashboardAdmin data={allPresence} />
         </div>
-        <div className="w-full mb-10">
-          <TotalAttendanceDashboard presenceData={allPresence} permissionData={allPermission} paidLeaveData={allPaidLeave} refetchPermission={refetchPermission} refetchPaidLeave={refetchPaidLeave}/>
+        <div className="w-full laptop:mt-10 hp:mt-5">
+          <TotalAttendanceDashboard presenceData={allPresence} permissionData={allPermission} paidLeaveData={allPaidLeave} refetchPermission={refetchPermission} refetchPaidLeave={refetchPaidLeave} />
         </div>
       </div>
     </div>

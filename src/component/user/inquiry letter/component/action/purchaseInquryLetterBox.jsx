@@ -7,7 +7,7 @@ const PurchaseInquiryLetterBox = ({ refetchInquiryData }) => {
     const [category, setCategory] = useState('Purchase');
     return (
         <>
-            <div className="2xl:w-80 w-[271px] h-full flex flex-col bg-purple hover:bg-purple-dark transition-colors duration-200 justify-between rounded p-5 cursor-pointer" onClick={() => setPurchaseFormPopUp(true)}>
+            <div className="laptop:w-[271px] hp:w-full active:bg-purple-dark h-full flex flex-col bg-purple hover:bg-purple-dark transition-colors duration-200 justify-between rounded p-5 cursor-pointer" onClick={() => setPurchaseFormPopUp(true)}>
                 <div className="flex justify-between items-center">
                     <div className='rounded-full bg-[#E6EAF5]/40 w-10 h-10 flex items-center justify-center'>
                         <FaRegListAlt color="white" size={23} />

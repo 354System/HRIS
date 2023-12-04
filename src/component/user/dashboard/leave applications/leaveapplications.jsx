@@ -161,6 +161,12 @@ const LeaveApplications = ({ leave }) => {
     e.preventDefault()
     validateInput()
     const { cuti, fromdate, untildate, description, otherReason, file } = data
+    const formData = new FormData();
+    formData.append('cuti', cuti === 'Enter Other Reason' ? otherReason : cuti);
+    formData.append('fromdate', fromdate);
+    formData.append('untildate', untildate);
+    formData.append('description', description);
+    formData.append('image', file);
     if (validateInput()) {
       setErrorMsg((prevState) => ({
         ...prevState,
@@ -172,12 +178,7 @@ const LeaveApplications = ({ leave }) => {
         confirmText: "Yes, Submit !"
       }).then((result) => {
         if (result.isConfirmed) {
-          mutate({
-            cuti: cuti === 'Enter Other Reason' ? otherReason : cuti,
-            fromdate,
-            untildate,
-            description
-          })
+          mutate(formData)
         }
       })
     } else {
@@ -198,8 +199,8 @@ const LeaveApplications = ({ leave }) => {
   }
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/60 w-full h-full">
-      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 w-1/2 h-4/5 rounded-lg flex flex-col overflow-y-auto">
+    <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
+      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 laptop:w-1/2 hp:w-11/12 laptop:h-4/5 hp:h-2/4 rounded-lg flex flex-col overflow-y-auto">
         <div className="absolute right-2 top-2">
           <button
             onClick={() => leave(false)}
@@ -209,7 +210,7 @@ const LeaveApplications = ({ leave }) => {
         </div>
         <div className="flex items-center gap-2">
           <div className="bg-purple rounded-full w-[50px] h-[50px] flex items-center justify-center">
-          <FcLeave size={25}/>
+            <FcLeave size={25} />
           </div>
           <div>
             <p className=" font-semibold">Leave Applications</p>
@@ -248,7 +249,7 @@ const LeaveApplications = ({ leave }) => {
                   type="text"
                   onChange={handleInputChange}
                   placeholder="Enter Other Reason"
-                  className="w-full"
+                  className="w-full mt-4"
                 />
               )}
             </div>

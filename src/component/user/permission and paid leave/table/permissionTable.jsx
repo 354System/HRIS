@@ -1,9 +1,9 @@
 import { format } from "date-fns"
 import { usePermissionCurrentUser } from "../../../../api/fetchDataCurrentUser/useFetchPermission"
 import { Spinner } from "@chakra-ui/react";
-import { Dropdown } from "flowbite-react";
 import { useMemo, useState } from "react";
 import { BsSortDown, BsSortUp } from "react-icons/bs";
+import { Dropdown } from "flowbite-react";
 
 const PermissionTableUser = ({ searchKeyword }) => {
     const [selectedStatus, setSelectedStatus] = useState('Default');
@@ -67,8 +67,8 @@ const PermissionTableUser = ({ searchKeyword }) => {
     }, [permissionData, searchKeyword, selectedStatus, selectDate]);
 
     return (
-        <div className="mt-5">
-            <table className="w-full text-center">
+        <div className="laptop:mt-5 hp:mt-10 w-full h-96 text-center hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[600px]">
                 <thead>
                     <tr className="border-b-4 border-t-2 text-grey text-center">
                         <th className="p-4">No</th>
@@ -91,8 +91,8 @@ const PermissionTableUser = ({ searchKeyword }) => {
                     <tbody>
                         <tr key={index} className="border-b">
                             <td className="text-purple">{index + 1}</td>
-                            <td className="text-purple p-4 max-w-[90px]">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
-                            <td className="text-primary">{data.izin}</td>
+                            <td className="text-primary p-4 laptop:max-w-[90px]">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
+                            <td className="text-primary hp:max-w-[90px]">{data.izin}</td>
                             <td className="text-purple ">{format(new Date(data.fromdate), 'dd-MM-yyyy')}</td>
                             <td className="text-purple">{format(new Date(data.untildate), 'dd-MM-yyyy')}</td>
                             {approvalStatus(data.approval)}

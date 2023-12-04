@@ -30,8 +30,8 @@ function App() {
           <Route path="/permission-and-leave" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <LeavePermissionOverviewAdmin /> : <LeavePermissionOverviewUser />} />} />
           <Route path="/employee-data" element={<PrivateRoute requiredRoles={["Admin"]} element={<DataUser />} />} />
           <Route path="/request" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <InquiryLetterAdmin /> : <InquiryLetterUser />} />} />
-          {/* <Route path="/wiki-document" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <WikiDocumentAdmin /> : <LeavePermissionOverviewUser />} />} /> */}
-          <Route path="/wiki-document" element={<WikiDocumentAdmin />} />
+          <Route path="/wiki-document" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <WikiDocumentAdmin /> : <LeavePermissionOverviewUser />} />} />
+          {/* <Route path="/wiki-document" element={<WikiDocumentAdmin />} /> */}
           {/* <Route path='/request' element={<InquiryLetterUser />} /> */}
         </Routes>
       </Router>

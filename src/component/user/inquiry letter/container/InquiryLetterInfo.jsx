@@ -11,8 +11,26 @@ import RejectRepairInquiryBoxUser from "../component/inquiry info/RejectRepairBo
 const InquiryLetterInfo = ({ dataInquiry, refetchInquiryData }) => {
     return (
         <div className="w-full h-full flex">
-            <div className="w-full h-full flex flex-col gap-6">
-                <div className="flex h-1/2 gap-8">
+            <div className="w-full h-full flex flex-col laptop:gap-6 hp:gap-4">
+                <div className="flex h-1/4 gap-4 laptop:hidden">
+                    <PurchaseInquiryLetterBox refetchInquiryData={refetchInquiryData} />
+                </div>
+                <div className="flex h-1/4 gap-4 laptop:hidden">
+                    <RepairInquryLetterBox refetchInquiryData={refetchInquiryData} />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <ApprovePurchaseBoxUser refetchInquiryData={refetchInquiryData} />
+                    <ApproveRepairBoxUser refetchInquiryData={refetchInquiryData} />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <WaitingPurchaseInquiryBoxUser refetchInquiryData={refetchInquiryData} />
+                    <WaitingRepairInquiryBoxUser refetchInquiryData={refetchInquiryData} />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <RejectPurchaseInquiryBoxUser refetchInquiryData={refetchInquiryData} />
+                    <RejectRepairInquiryBoxUser refetchInquiryData={refetchInquiryData} />
+                </div>
+                <div className="flex h-1/2 gap-8 hp:hidden">
                     <div data-tooltip-id="purchase">
                         <PurchaseInquiryLetterBox refetchInquiryData={refetchInquiryData} />
                         <Tooltip id="purchase" content="Create Purchase Request" place='top' offset={-10} style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
@@ -27,7 +45,7 @@ const InquiryLetterInfo = ({ dataInquiry, refetchInquiryData }) => {
                         <RejectPurchaseInquiryBoxUser />
                     </div>
                 </div>
-                <div className="flex h-1/2 gap-8">
+                <div className="flex h-1/2 gap-8 hp:hidden">
                     <div data-tooltip-id="repair">
                         <RepairInquryLetterBox refetchInquiryData={refetchInquiryData} />
                         <Tooltip id="repair" content="Create Repair Request" place='top' offset={-10} style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />

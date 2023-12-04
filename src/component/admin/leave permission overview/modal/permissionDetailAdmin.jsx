@@ -1,19 +1,16 @@
 import { format } from "date-fns"
 import { Button, Datepicker, Flowbite, Spinner, TextInput, Textarea } from "flowbite-react"
-import { AiOutlineDollarCircle } from "react-icons/ai"
 import { BsCalendar2DateFill } from "react-icons/bs"
 import { FaUser } from "react-icons/fa"
 import { GrDocumentText } from "react-icons/gr"
-import { HiOutlineDocumentText } from "react-icons/hi"
 import { IoIosCheckmarkCircle, IoMdClose } from "react-icons/io"
 import { MdCancel, MdOutlineDocumentScanner } from "react-icons/md"
-import { RiFileDamageLine } from "react-icons/ri"
 import { useState } from "react"
-import { flowbiteTheme } from "../../../../../lib/flowbiteTheme"
-import { confirmAlert, successAlert } from "../../../../../lib/sweetAlert"
-import { useApprovalInquiryLetter } from "../../../../../api/inquiry letter/useApproveRejectInquiryLetter"
+import { useApprovalInquiryLetter } from "../../../../api/inquiry letter/useApproveRejectInquiryLetter"
+import { confirmAlert, successAlert } from "../../../../lib/sweetAlert"
+import { flowbiteTheme } from "../../../../lib/flowbiteTheme"
 
-const RepairInquiryDetailAdmin = ({ data, setDetailModal, refetchInquiryData }) => {
+const PermissionDetailAdmin = ({ data, setDetailModal, refetchPermissionData }) => {
     const [errorMsg, setErrorMsg] = useState("")
 
     function approvalStatus(approval) {
@@ -85,49 +82,53 @@ const RepairInquiryDetailAdmin = ({ data, setDetailModal, refetchInquiryData }) 
                         <GrDocumentText size={20} color="white" />
                     </div>
                     <div>
-                        <h1 className="font-semibold">Repair Inquiry Details</h1>
+                        <h1 className="font-semibold">Permission Details</h1>
                     </div>
                 </div>
                 <Flowbite theme={{ theme: flowbiteTheme }}>
                     <div className="p-2">
                         <div className="mb-6">
-                            {approvalStatus(data.approval)}
+                            {approvalStatus(data?.approval)}
+                        </div>
+                        <div className="mb-4 flex items-center ">
+                            <p className="w-1/5 text-sm font-semibold">ID Permission :</p>
+                            <TextInput className="w-4/5" icon={MdOutlineDocumentScanner} value={data._id} disabled />
                         </div>
                         <div className="mb-4 flex items-center">
-                            <p className="w-1/6">ID Request :</p>
-                            <TextInput className="w-5/6" icon={MdOutlineDocumentScanner} value={data._id} disabled />
+                            <p className="w-1/5 text-sm font-semibold">Created Date :</p>
+                            <Datepicker className="w-4/5" rightIcon={BsCalendar2DateFill} icon={false} value={format(new Date(data.createdAt), 'MMMM dd, yyyy')} disabled />
                         </div>
                         <div className="mb-4 flex items-center">
-                            <p className="w-1/6">Date :</p>
-                            <Datepicker className="w-5/6" rightIcon={BsCalendar2DateFill} icon={false} value={format(new Date(data.date), 'MMMM dd, yyyy')} disabled />
+                            <p className="w-1/5 text-sm font-semibold">Employee :</p>
+                            <TextInput className="w-4/5" icon={FaUser} value={data.user.name} disabled />
                         </div>
                         <div className="mb-4 flex items-center">
-                            <p className="w-1/6">User :</p>
-                            <TextInput className="w-5/6" icon={FaUser} value={data.user.name} disabled />
+                            <p className="w-1/5 text-sm font-semibold">Role :</p>
+                            <TextInput className="w-4/5" icon={FaUser} value={data.user.position} disabled />
                         </div>
                         <div className="mb-4 flex items-center">
-                            <p className="w-1/6">Title :</p>
-                            <TextInput className="w-5/6" icon={HiOutlineDocumentText} value={data.title.replace(/\b\w/g, (char) => char.toUpperCase())} disabled />
+                            <p className="w-1/5 text-sm font-semibold">Departement :</p>
+                            <TextInput className="w-4/5" icon={FaUser} value={data.user.divisi} disabled />
                         </div>
                         <div className="mb-4 flex items-center">
-                            <p className="w-1/6">Damage :</p>
-                            <TextInput className="w-5/6" icon={RiFileDamageLine} value={data.damage.replace(/\b\w/g, (char) => char.toUpperCase())} disabled />
+                            <p className="w-1/5 text-sm font-semibold">From Date :</p>
+                            <Datepicker className="w-4/5" rightIcon={BsCalendar2DateFill} icon={false} value={format(new Date(data.fromdate), 'MMMM dd, yyyy')} disabled />
                         </div>
                         <div className="mb-4 flex items-center">
-                            <p className="w-1/6">Cost :</p>
-                            <TextInput className="w-5/6" icon={AiOutlineDollarCircle} value={new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', }).format(parseFloat(data.cost.replace(/[,.]/g, '')))} disabled />
+                            <p className="w-1/5 text-sm font-semibold">End Date :</p>
+                            <Datepicker className="w-4/5" rightIcon={BsCalendar2DateFill} icon={false} value={format(new Date(data.untildate), 'MMMM dd, yyyy')} disabled />
                         </div>
                         <div className="mb-6 flex items-center">
-                            <p className="w-1/6">Chronology :</p>
+                            <p className="w-1/5 text-sm font-semibold">Description :</p>
                             <Textarea
-                                value={data.chronology}
+                                value={data.description}
                                 rows={3}
-                                className="block w-5/6 p-2.5 text-sm bg-gray-50 rounded-lg border border-gray-300 "
+                                className="block w-4/5 p-2.5 text-sm bg-gray-50 rounded-lg border border-gray-300 "
                                 disabled
                             />
                         </div>
                         <div className="flex items-center">
-                            {data.approval === 'Wait For Response' &&
+                            {data.approval && data.approval === 'Wait For Response' &&
                                 <div className="flex flex-col w-full">
                                     <div className="flex justify-between w-full gap-2">
                                         <Button disabled={isPending} isProcessing={isPending} processingSpinner={<Spinner size={'sm'} />} className="flex justify-center items-center" color="red" onClick={handleReject}>
@@ -149,4 +150,4 @@ const RepairInquiryDetailAdmin = ({ data, setDetailModal, refetchInquiryData }) 
         </div>
     )
 }
-export default RepairInquiryDetailAdmin;
+export default PermissionDetailAdmin;

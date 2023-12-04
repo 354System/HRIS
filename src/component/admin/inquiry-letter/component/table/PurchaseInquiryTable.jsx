@@ -2,17 +2,13 @@ import { Spinner } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { Dropdown, Tooltip } from "flowbite-react";
 import { useMemo, useState } from "react";
-import { CiCircleCheck } from 'react-icons/ci'
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { RxDotsHorizontal } from "react-icons/rx";
-import ApproveInquiryAdmin from "../action/approveInquiry";
-import RejectInquiryLetter from "../action/rejectInquiryLetter";
 import { BsSortDown, BsSortUp } from "react-icons/bs";
-import { IoIosCheckmarkCircle } from "react-icons/io";
+import { IoIosCheckmarkCircle, IoIosInformationCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import PurchaseInquiryDetailAdmin from "../modal/purchaseInquiryDetail";
 import { useApprovalInquiryLetter } from "../../../../../api/inquiry letter/useApproveRejectInquiryLetter";
 import { confirmAlert, pendingAlert, successAlert } from "../../../../../lib/sweetAlert";
+import { PiDotsThreeCircleFill } from "react-icons/pi";
 
 const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword }) => {
     const [selectedItem, setSelectedItem] = useState(null)
@@ -23,8 +19,8 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
     function approvalStatus(approval) {
         if (approval === 'Approved') {
             return <td className=" text-center"><span className="text-green bg-green/10 p-2 font-semibold rounded text-sm">Approved</span></td>
-        } else if (approval === 'Reject' || approval === 'Canceled') {
-            return <td className=" text-center"><span className="text-red bg-red/10 p-2 font-semibold rounded text-sm">{approval === 'Reject' ? 'Reject' : 'Canceled'}</span></td>
+        } else if (approval === 'Rejected' || approval === 'Canceled') {
+            return <td className=" text-center"><span className="text-red bg-red/10 p-2 font-semibold rounded text-sm">{approval === 'Rejected' ? 'Rejected' : 'Canceled'}</span></td>
         } else {
             return <td className=" text-center"><span className="text-yellow bg-yellow/10 p-2 font-semibold rounded text-sm">Wait For Response</span></td>
         }
@@ -39,9 +35,22 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
                     if (typeof value === 'string') {
                         // If it's a string, check if it includes the searchKeyword
                         return value.toLowerCase().includes(searchKeyword.toLowerCase());
-                    } else if (item.date) {
-                        // If it's a date, format it to 'dd-MMMM-yyyy' and check for inclusion
-                        const formattedDate = format(new Date(item.date), 'dd-MM-yyyy');
+                    } else if (typeof value === 'object' && value !== null) {
+                        // If it's an object, check if any of its values match the searchKeyword
+                        return Object.values(value).some(innerValue => {
+                            if (typeof innerValue === 'string') {
+                                return innerValue.toLowerCase().includes(searchKeyword.toLowerCase());
+                            } else if (typeof innerValue === 'object' && innerValue !== null) {
+                                // If it's an object inside the user object, check its values
+                                return Object.values(innerValue).some(nestedValue =>
+                                    nestedValue.toLowerCase().includes(searchKeyword.toLowerCase())
+                                );
+                            }
+                            return false;
+                        });
+                    } else if (value instanceof Date) {
+                        // If it's a date, format it to 'dd-MM-yyyy' and check for inclusion
+                        const formattedDate = format(value, 'dd-MM-yyyy');
                         return formattedDate.toLowerCase().includes(searchKeyword.toLowerCase());
                     }
                     return false;
@@ -82,7 +91,7 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
         onSuccess: (data) => {
             console.log(data);
             refetch();
-            successAlert({ title: "Success Approve", text: `id : ${data._id}, title : ${data.title} has been approved` });
+            successAlert({ title: "Success Approve", text: `id : ${selectedItem._id}, title : ${selectedItem.title} has been ${data.data?.approval}` });
             setSelectedItem(null);
         },
         onError: (error) => {
@@ -96,11 +105,11 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
         pendingAlert({ title: "Loading ..." });
     }
 
-    const handleApprove = () => {
+    const handleApprove = (item) => {
         confirmAlert({
             title: "Are you sure you want to approve this repair request?",
-            text: `"${selectedItem?._id}" will be approved and cannot be undone.`,
-            confirmText: "Yes, Approve",
+            confirmText: "Yes, Approve it!",
+            text: `"${item?._id}" : "${item?.title}", will be approved and cannot be undone.`,
         }).then((result) => {
             if (result.isConfirmed) {
                 mutate({
@@ -110,15 +119,15 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
         })
     }
 
-    const handleReject = () => {
+    const handleReject = (item) => {
         confirmAlert({
             title: "Are you sure you want to reject this repair request?",
-            confirmText: "Yes, Reject",
-            text: `"${selectedItem?._id}" will be rejected and cannot be undone.`,
+            confirmText: "Yes, Reject it!",
+            text: `"${item?._id}" : "${item?.title}", will be rejected and cannot be undone.`,
         }).then((result) => {
             if (result.isConfirmed) {
                 mutate({
-                    approval: 'Reject'
+                    approval: 'Rejected'
                 })
             }
         })
@@ -130,7 +139,7 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
                 <thead className="">
                     <tr className="border-b-4 border-t-2 text-grey text-left">
                         <th className="p-4 text-center">No</th>
-                        <th className="p-4">Name</th>
+                        <th className="p-4">Employee</th>
                         <th className="flex items-center p-4 gap-1"><p onClick={() => setSelectDate(!selectDate)} className="cursor-pointer">Date</p>{selectDate ? <BsSortDown onClick={() => setSelectDate(!selectDate)} className="cursor-pointer" /> : <BsSortUp onClick={() => setSelectDate(!selectDate)} className="cursor-pointer" />}</th>
                         <th className="p-4">Title</th>
                         <th className="p-4">Cost Estimation</th>
@@ -150,31 +159,26 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
                     {sortedData ? sortedData.filter(item => item.category === 'Purchase').map((item, index) => (
                         <tr key={index} className="border-b hover:bg-gray-100">
                             <td className="text-purple p-4 text-center">{index + 1}</td>
-                            <td onClick={() => { setDetailModal(true), setSelectedItem(item) }} className="text-primary cursor-pointer p-4">{item.user?.name}</td>
+                            <td onClick={() => { setDetailModal(true), setSelectedItem(item) }} className="text-primary cursor-pointer hover:underline p-4">{item.user?.name}</td>
                             <td className="text-purple p-4">{format(new Date(item.date), 'dd-MM-yyyy')}</td>
-                            <td className="p-4">{item.title}</td>
+                            <td className="p-4">{item.title?.replace(/\b\w/g, (char) => char.toUpperCase())}</td>
                             <td className="p-4">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', }).format(parseFloat(item.cost.replace(/[,.]/g, '')))}</td>
                             {approvalStatus(item.approval)}
                             <td className="flex h-16 items-center justify-center gap-2">
                                 {item.approval === 'Wait For Response' ?
-                                    (
-                                        <div className="h-8 flex justify-center items-center gap-1">
-                                            <button data-tooltip-id="approve" onClick={() => { handleApprove(); setSelectedItem(item); }} className="group w-8 h-8 flex justify-center items-center rounded-lg bg-green text-white hover:bg-green-dark transition-colors duration-200 ease-in-out">
-                                                <IoIosCheckmarkCircle size={20} className="group-hover:scale-105 duration-200 transition-transform" />
-                                            </button>
-                                            <button data-tooltip-id="reject" onClick={() => { handleReject(); setSelectedItem(item); }} className="group w-8 h-8 flex justify-center items-center rounded-lg bg-red text-white hover:bg-red-dark transition-colors duration-200 ease-in-out">
-                                                <MdCancel size={17} className="group-hover:scale-105 duration-200 transition-transform" />
-                                            </button>
-                                            <Tooltip id="aprove" content="Approve Inquiry" place="top" style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
-                                            <Tooltip id="reject" content="Reject Inquiry" place="top" style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
-                                        </div>
-                                    )
+                                    <div className="flex justify-center">
+                                        <Dropdown arrowIcon={false} inline label={<PiDotsThreeCircleFill size={35} color="gray" className="hover:scale-105" />}>
+                                            <Dropdown.Item onClick={() => { setSelectedItem(item), handleApprove(item) }} className="hover:bg-green/80 hover:text-white transition-colors duration-200" icon={IoIosCheckmarkCircle}>Approve</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => { setSelectedItem(item), handleReject(item) }} className="hover:bg-red/70 hover:text-white transition-colors duration-200" icon={MdCancel}>Reject</Dropdown.Item>
+                                            <Dropdown.Divider />
+                                            <Dropdown.Item className="hover:bg-blue-400 hover:text-white transition-colors duration-200" onClick={() => { setSelectedItem(item), setDetailModal(true); }} icon={IoIosInformationCircle}>Detail</Dropdown.Item>
+                                        </Dropdown>
+                                    </div>
                                     :
-                                    <div className="flex justify-center gap-x-1">
-                                        <button data-tooltip-id="detail" onClick={() => { setDetailModal(true); setSelectedItem(item); }} className="group w-10 h-10 flex justify-center items-center rounded-lg mb-4 bg-gray-200 text-black hover:bg-gray-300 hover:text-black transition-colors duration-200 ease-in-out">
-                                            <RxDotsHorizontal size={17} className="group-hover:scale-125 duration-200 transition-transform" />
-                                        </button>
-                                        <Tooltip id="detail" content="Purchase Inquiry Detail" place="top" style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
+                                    <div className="flex justify-center">
+                                        <Dropdown arrowIcon={false} inline label={<PiDotsThreeCircleFill size={35} className="hover:scale-105" />}>
+                                            <Dropdown.Item className="hover:bg-blue-400 hover:text-white transition-colors duration-200" onClick={() => { setSelectedItem(item), setDetailModal(true); }} icon={IoIosInformationCircle}>Detail</Dropdown.Item>
+                                        </Dropdown>
                                     </div>
                                 }
                             </td>

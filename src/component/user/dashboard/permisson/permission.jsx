@@ -6,8 +6,9 @@ import { BsCalendar2DateFill } from "react-icons/bs";
 import { Button, Datepicker, Flowbite, Select, TextInput, Textarea } from "flowbite-react";
 import { flowbiteTheme } from "../../../../lib/flowbiteTheme";
 import { GrDocumentPdf } from "react-icons/gr";
-import { IoIosAdd } from "react-icons/io";
 import { HiOutlineDocumentText } from "react-icons/hi";
+import { IoIosAdd } from "react-icons/io";
+import { TbCalendarUser } from "react-icons/tb";
 import { confirmAlert, successAlert } from "../../../../lib/sweetAlert";
 import { format } from "date-fns";
 
@@ -141,8 +142,8 @@ const Permision = ({ popUp }) => {
 
   const { mutate, isPending } = usePermission({
     onSuccess: (data) => {
-      successAlert({ 
-        title: 'Your Permission has been Submitted !', 
+      successAlert({
+        title: 'Your Permission has been Submitted !',
         text: 'Please wait for your approval',
       })
       console.log(data);
@@ -159,6 +160,13 @@ const Permision = ({ popUp }) => {
     e.preventDefault()
     validateInput()
     const { izin, fromdate, untildate, description, otherReason, file } = permission
+    const formData = new FormData();
+    formData.append('izin', izin === 'Enter Other Reason' ? otherReason : izin);
+    formData.append('fromdate', fromdate);
+    formData.append('untildate', untildate);
+    formData.append('description', description);
+    formData.append('image', file);
+
     if (validateInput()) {
       setErrorMsg((prevState) => ({
         ...prevState,
@@ -170,12 +178,7 @@ const Permision = ({ popUp }) => {
         confirmText: "Yes, Submit !"
       }).then((result) => {
         if (result.isConfirmed) {
-          mutate({
-            izin: izin === 'Enter Other Reason' ? otherReason : izin,
-            fromdate,
-            untildate,
-            description
-          })
+          mutate(formData)
         }
       })
     } else {
@@ -196,8 +199,8 @@ const Permision = ({ popUp }) => {
   }
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/60 w-full h-full">
-      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 w-1/2 h-4/5 rounded-lg flex flex-col overflow-y-auto">
+    <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
+      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 laptop:w-1/2 hp:w-11/12 laptop:h-4/5 hp:h-2/4 rounded-lg flex flex-col overflow-y-auto">
         <div className="absolute right-2 top-2">
           <button
             onClick={() => popUp(false)}
@@ -206,8 +209,8 @@ const Permision = ({ popUp }) => {
           </button>
         </div>
         <div className="flex gap-2 items-center">
-          <div className="bg-gray-300 rounded-full w-[50px] h-[50px] flex items-center justify-center">
-            <Icon icon="solar:widget-add-outline" />
+          <div className="bg-purple rounded-full w-[50px] h-[50px] flex items-center justify-center">
+            <TbCalendarUser size={25} color="white" />
           </div>
           <div>
             <span className=" font-semibold">Permission</span>

@@ -15,6 +15,9 @@ function PrivateRoute({ element, requiredRoles }) {
     }
   }, [userData?.role]);
 
+  if (userData) {
+    
+  }
   if (!validToken) {
     return <Navigate to="/login" />;
   }

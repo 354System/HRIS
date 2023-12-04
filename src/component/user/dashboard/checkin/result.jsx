@@ -8,8 +8,8 @@ const Result = ({ datas, checkInPopUp }) => {
   };
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center z-20 bg-black/60">
-      <div className="fixed flex flex-col p-3 justify-between top-1/2 transform -translate-y-1/2 bg-white px-8 w-[650px] h-[90%] rounded-lg">
+    <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
+      <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-6 laptop:w-[650px] laptop:h-[90%] hp:w-11/12 hp:min-h-2/3 rounded-lg">
         <div className="absolute right-0 top-0 -mr-2 -mt-2">
           <button
             onClick={handleClose}
@@ -33,7 +33,7 @@ const Result = ({ datas, checkInPopUp }) => {
         </div>
         <div className="flex justify-between">
           <div className="text-primary">
-            <h1>Time Attendance:</h1>
+            <h1 className="text-sm">Time Attendance:</h1>
             <h1 className="font-semibold">{datas.times}</h1>
           </div>
           <div className="text-primary">

@@ -1,26 +1,27 @@
 import { useState } from "react";
 import TablePaidLeaveAdmin from "./table/paidLeave";
 import TablePermissionAdmin from "./table/permission";
+import { TextInput } from "flowbite-react";
+import { flowbiteTheme } from "../../../lib/flowbiteTheme";
+import { FiSearch } from "react-icons/fi";
 
 const LeavePermissionBody = ({ permissionData, paidLeaveData, refetchDataPermission, refetchDataPaidLeave }) => {
     const [permission, setPermission] = useState(true);
     const [paidLeave, setPaidLeave] = useState(false);
-    const [approve, setApprove] = useState(false);
-    const [disApprove, setDisApprove] = useState(false);
-    const [pending, setPending] = useState(true);
+    const [searchKeyword, setSearchKeyword] = useState('');
 
     return (
         <div className="bg-white w-full rounded-lg p-7">
             <div className="flex items-center justify-between w-full h-20">
                 <div className="flex gap-3">
-                    <button className={`h-12 w-28 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${permission ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`}
+                    <button className={`h-12 w-36 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide text-sm ${permission ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500 border border-gray-500 hover:bg-purple/50 hover:text-white transition-colors duration-200'}`}
                         onClick={() => {
                             setPermission(true);
                             setPaidLeave(false);
                         }}>
                         Permission
                     </button>
-                    <button className={`h-12 w-28 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${paidLeave ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`}
+                    <button className={`h-12 w-36 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide text-sm ${paidLeave ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500 border border-gray-500 hover:bg-purple/50 hover:text-white transition-colors duration-200'}`}
                         onClick={() => {
                             setPermission(false);
                             setPaidLeave(true);
@@ -28,14 +29,21 @@ const LeavePermissionBody = ({ permissionData, paidLeaveData, refetchDataPermiss
                         Paid Leave
                     </button>
                 </div>
-                {paidLeave ? <div className="flex gap-3">
-                <button className={`h-12 w-28 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${pending ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`} onClick={() =>{ setApprove(false); setDisApprove(false); setPending(true)}}>Pending</button>
-                <button className={`h-12 w-28 focus :outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${approve ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`} onClick={() =>{ setApprove(true); setDisApprove(false); setPending(false)}}>Approve</button>
-                <button className={`h-12 w-28 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide ${disApprove ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500'}`} onClick={() =>{ setApprove(false); setDisApprove(true); setPending(false)}}>Rejected</button>
-                </div> : null}
+                <div>
+                    <TextInput
+                        theme={flowbiteTheme}
+                        type="text"
+                        id="search"
+                        placeholder="Quick Search..."
+                        icon={FiSearch}
+                        className="w-96"
+                        value={searchKeyword}
+                        onChange={(e) => setSearchKeyword(e.target.value)}
+                    />
+                </div>
             </div>
-            {permission ? <TablePermissionAdmin permissionData={permissionData} refetchDataPermission={refetchDataPermission} /> : null}
-            {paidLeave ? <TablePaidLeaveAdmin paidLeaveData={paidLeaveData} refetchDataPaidLeave={refetchDataPaidLeave} approve={approve} disApprove={disApprove} pending={pending} /> : null}
+            {permission ? <TablePermissionAdmin permissionData={permissionData} searchKeyword={searchKeyword} refetchDataPermission={refetchDataPermission} /> : null}
+            {paidLeave ? <TablePaidLeaveAdmin paidLeaveData={paidLeaveData} searchKeyword={searchKeyword} refetchDataPaidLeave={refetchDataPaidLeave} /> : null}
         </div>
     )
 }

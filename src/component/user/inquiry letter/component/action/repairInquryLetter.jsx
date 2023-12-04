@@ -7,7 +7,7 @@ const RepairInquryLetterBox = ({ refetchInquiryData }) => {
     const [repairFormPopUp, setRepairFormPopUp] = useState(false)
     return (
         <>
-            <div className=" 2xl:w-80 w-[271px] h-full flex flex-col bg-yellow hover:bg-yellow-dark transition-colors duration-200 justify-justify-start rounded p-5 cursor-pointer" onClick={() => setRepairFormPopUp(true)}>
+            <div className=" 2xl:w-80 laptop:w-[271px] hp:w-full h-full flex flex-col bg-yellow hover:bg-yellow-dark transition-colors duration-200 justify-justify-start rounded p-5 cursor-pointer" onClick={() => setRepairFormPopUp(true)}>
                 <div className="flex justify-justify-start items-center">
                     <div className='rounded-full bg-[#E6EAF5]/40 w-10 h-10 flex items-center justify-center'>
                         <Icon icon="solar:document-medicine-linear" color="white" width="27" />

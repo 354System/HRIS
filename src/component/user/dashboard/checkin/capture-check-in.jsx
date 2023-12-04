@@ -6,6 +6,7 @@ import Result from "./result";
 import { usePresent } from "../../../../api/attendance/usePresent";
 import format from "date-fns/format";
 import { Spinner } from "@chakra-ui/react";
+import { IoCamera } from "react-icons/io5";
 const Camera = ({ checkInPopUp, status, refetchPresence }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [resultPopUp, setResultPopUp] = useState(false);
@@ -21,7 +22,6 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
     date: "",
     status: "",
   });
-
 
   // realtime
   const updateRealtime = () => {
@@ -141,6 +141,7 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
 
       const now = new Date();
       const formattedDate = format(now, "dd-MMM-yyyy");
+      const checkInFormatted = format(now, "dd-MMM-yyyy, HH:mm:ss");
 
       setDataAbsensi({
         filePhoto: file,
@@ -149,15 +150,16 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
         status: status,
       });
 
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("checkin", checkInFormatted);
+      formData.append("absen", "Work From Office");
+
       // mengirim http request ke server
       if (distance <= radius) {
-        mutate({
-          checkin: Date(formattedDate),
-          absen: status,
-        });
-
+        mutate(formData);
       } else {
-        console.log('anda tidak berada di jarak yang ditentukan');
+        console.log('');
         setErrorMsg('Anda tidak berada di jarak yang ditentukan');
       }
     } catch (error) {
@@ -171,8 +173,8 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
       {resultPopUp ? (
         <Result datas={dataAbsensi} checkInPopUp={checkInPopUp} />
       ) :
-        <div className="fixed w-full h-full inset-0 flex items-center justify-center z-20 bg-black/60">
-          <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-6 w-[650px] h-[90%] rounded-lg">
+        <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
+          <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-6 laptop:w-[650px] laptop:h-[90%] hp:w-11/12 hp:min-h-2/3 rounded-lg">
             <div onClick={() => checkInPopUp(false)} className="flex justify-end">
               <button
                 className="absolute top-0 right-0 -mr-3 -mt-3 bg-black transition-transform transform hover:scale-105 hover:bg-gray-900 hover:shadow-lg w-[41.64px] h-[41.64px] rounded-full flex items-center justify-center">
@@ -180,16 +182,16 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
               </button>
             </div>
             <div className="flex mb-4 items-center gap-2">
-              <div className="bg-gray-300 rounded-full w-14 h-14 flex items-center justify-center">
-                <Icon icon="solar:camera-minimalistic-broken" />
+              <div className="bg-purple rounded-full laptop:w-14 laptop:h-14 hp:w-12 hp:h-12 flex items-center justify-center">
+                <IoCamera size={30} color="white" />
               </div>
               <div className="flex flex-col">
-                <span className=" font-semibold">{status}</span>
+                <span className="text-xl font-semibold">{status}</span>
                 <div className="flex gap-x-2">
                   <span className="font-bold text-s text-primary">{times}</span>
                   <span className="font-bold text-s text-primary">{date}</span>
                 </div>
-                {errorMsg && <span className="text-red-500">{errorMsg}</span>}
+                {errorMsg && <span className="hp:text-sm text-red-500">{errorMsg}</span>}
               </div>
             </div>
             <div className="w-full h-full">
@@ -204,6 +206,7 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
                     mirrored={true}
                   />
                   <button
+                    type="button"
                     onClick={handleSubmit}
                     className="bg-purple hover:bg-purple-dark hover:scale-105 transition-all duration-200 mb-2 absolute bottom-0 left-1/2 transform -translate-x-1/2 p-2 rounded-full flex items-center justify-center"
                   >

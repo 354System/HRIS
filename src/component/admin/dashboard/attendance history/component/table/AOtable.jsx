@@ -45,37 +45,39 @@ const AOTableDashboard = ({ data }) => {
         }
     }
     return (
-        <table className="w-full">
-            <thead>
-                <tr className=" border-b-4 border-t-2 text-primary">
-                    <th className="text-start p-4">No</th>
-                    <th className="text-start p-4">Employee</th>
-                    <th className="text-start p-4">Role</th>
-                    <th className="text-start p-4">Departement</th>
-                    <th className="text-start p-4">Date</th>
-                    <th className="text-start p-4">Status</th>
-                    <th className="text-center p-4">Check-In</th>
-                    <th className="text-center p-4">Check-Out</th>
-                    <th className="text-center p-4">Work Hours</th>
-                </tr>
-            </thead>
-            <tbody>
-                {dataToday ?
-                    dataToday.map((item, index) => (
-                        <tr key={index} className="border-b">
-                            <td className="p-4 text-primary">{index + 1}</td>
-                            <td className="p-4 w-52 text-primary">{item.user?.name}</td>
-                            <td className="p-4  text-primary">{item.user?.position}</td>
-                            <td className="p-4 text-primary">{item.user?.divisi}</td>
-                            <td className="p-4  text-primary">{format(new Date(item.createdAt), 'dd-MM-yyyy')}</td>
-                            <td><span className={`${statusStyle(item)}`}>{item.absen}</span></td>
-                            <td className={`${checkInStyle(item)} text-center`}>{item.checkin ? format(new Date(item.checkin), 'HH:mm') : '-:-:-'}</td>
-                            <td className="p-4 text-purple text-center">{item.checkout ? format(new Date(item.checkout), 'HH:mm') : '-:-:-'}</td>
-                            <td className="p-4 text-center text-primary">{item.workHours ? item.workHours : '-'}</td>
-                        </tr>
-                    )) : <Spinner size={30} />}
-            </tbody>
-        </table>
+        <div className="laptop:mt-5 hp:mt-10 w-full text-center hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[1000px]">
+                <thead>
+                    <tr className=" border-b-4 border-t-2 text-primary">
+                        <th className="text-start p-4">No</th>
+                        <th className="text-start p-4">Employee</th>
+                        <th className="text-start p-4">Role</th>
+                        <th className="text-start p-4">Departement</th>
+                        <th className="text-start p-4">Date</th>
+                        <th className="text-start p-4">Status</th>
+                        <th className="text-center p-4">Check-In</th>
+                        <th className="text-center p-4">Check-Out</th>
+                        <th className="text-center p-4">Work Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {dataToday ?
+                        dataToday.map((item, index) => (
+                            <tr key={index} className="border-b text-start">
+                                <td className="p-4 text-primary">{index + 1}</td>
+                                <td className="p-4 laptop:w-52 text-primary">{item.user?.name}</td>
+                                <td className="p-4  text-primary">{item.user?.position}</td>
+                                <td className="p-4 text-primary">{item.user?.divisi}</td>
+                                <td className="p-4  text-primary">{format(new Date(item.createdAt), 'dd-MM-yyyy')}</td>
+                                <td><span className={`${statusStyle(item)}`}>{item.absen}</span></td>
+                                <td className={`${checkInStyle(item)} text-center`}>{item.checkin ? format(new Date(item.checkin), 'HH:mm') : '-:-:-'}</td>
+                                <td className="p-4 text-purple text-center">{item.checkout ? format(new Date(item.checkout), 'HH:mm') : '-:-:-'}</td>
+                                <td className="p-4 text-center text-primary">{item.workHours ? item.workHours : '-'}</td>
+                            </tr>
+                        )) : <Spinner size={30} />}
+                </tbody>
+            </table>
+        </div>
     )
 }
 export default AOTableDashboard

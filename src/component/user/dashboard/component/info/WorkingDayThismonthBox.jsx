@@ -6,7 +6,7 @@ const WorkingDayThismonthBoxUser = ({ data }) => {
         return item.type === 'Present' && now
     })
     return (
-        <div className="w-64 h-full flex flex-col justify-between bg-white rounded p-5">
+        <div className="laptop:w-64 hp:w-full h-full flex flex-col bg-white justify-between rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
                     <span>{data?.length}</span>
@@ -16,8 +16,8 @@ const WorkingDayThismonthBoxUser = ({ data }) => {
                 </div>
             </div>
             <div className='mt-2'>
-                <span className="text-base text-primary font-bold">Working Day This month</span>
-                <div className='flex items-center gap-1'>
+                <span className="laptop:text-base hp:text-sm text-primary font-bold">Working Day This month</span>
+                <div className='flex items-center gap-1 hp:hidden'>
                     <div className='w-4 h-4 bg-[#97CE71] flex items-center justify-center rounded-full'>
                         <img src="/src/assets/Vector1.svg" alt="" className='text-[#43900C]' />
                     </div>

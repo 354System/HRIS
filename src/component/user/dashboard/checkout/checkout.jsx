@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { Spinner } from "@chakra-ui/react";
 import { useCheckOut } from "../../../../api/attendance/useCheckout";
 import { IoAlertCircleOutline } from "react-icons/io5";
+import { successAlert } from "../../../../lib/sweetAlert";
 
 const Checkout = ({ id, CheckOutPopUp, refetch }) => {
 
@@ -9,8 +10,10 @@ const Checkout = ({ id, CheckOutPopUp, refetch }) => {
     const Times = format(now, "HH:mm:ss");
     const date = format(now, "dd MMMM yyyy");
 
-    const { mutate, isPending } = useCheckOut(id, {
+    const { mutate, isPending } = useCheckOut({
+        id,
         onSuccess: (data) => {
+            successAlert({title: 'Checkout Success', text: 'be careful on the way !'})
             console.log(data);
             refetch()
             CheckOutPopUp(false)
@@ -28,8 +31,8 @@ const Checkout = ({ id, CheckOutPopUp, refetch }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-20 bg-black/60">
-            <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-5 w-2/4 h-2/5 flex flex-col justify-center rounded-lg">
+        <div className="fixed inset-0 flex items-center justify-center min-h-screen z-20 bg-black/60">
+            <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-5 laptop:w-2/4 hp:w-5/6 laptop:h-2/5 hp:h-2/6 flex flex-col justify-center rounded-lg">
                 <div className="flex justify-center">
                     <IoAlertCircleOutline size={80} className="text-yellow" />
                 </div>

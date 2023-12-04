@@ -2,9 +2,11 @@ import { IoIosAdd, IoMdClose } from "react-icons/io";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { GrDocumentPdf } from "react-icons/gr";
 import { useRef, useState } from "react";
-import { Label, TextInput, Button } from "flowbite-react";
-import { textInputTheme } from "../../../../../lib/flowbiteTheme";
+import { Label, TextInput, Button, Flowbite } from "flowbite-react";
+import { flowbiteTheme, textInputTheme } from "../../../../../lib/flowbiteTheme";
 import { useCreateWikiDocument } from "../../../../../api/wiki document/useCreateWikiDocument";
+import { confirmAlert, successAlert } from "../../../../../lib/sweetAlert";
+import { Spinner } from "@chakra-ui/react";
 
 const AddWikiDocument = ({ setAddDocumentPopUp }) => {
     const [errorMsg, setErrorMsg] = useState({
@@ -57,27 +59,48 @@ const AddWikiDocument = ({ setAddDocumentPopUp }) => {
                 ...prevError,
                 input: "Please fill in the required fields",
             }))
+            return false
+        } else {
+            setErrorMsg((prevError) => ({
+                ...prevError,
+                input: '',
+            }))
+            return true
         }
     }
 
     const { mutate, isPending } = useCreateWikiDocument({
         onSuccess: (data) => {
+            successAlert({ title: "Success Add Document" });
             console.log(data);
             setAddDocumentPopUp(false)
         },
         onError: (error) => {
             console.log(error);
+            setErrorMsg({
+                ...errorMsg,
+                input: 'Something went wrong !'
+            })
         }
     })
 
     const handleSubmit = (e) => {
+        e.preventDefault();
         const { name, file } = documentData;
-        
         const formData = new FormData();
-        formData.append('title', name);
         formData.append('image', file);
-
-        mutate(formData);
+        formData.append('title', name);
+        if (validateInput()) {
+            confirmAlert({
+                title: 'Add Document',
+                confirmText: 'Add',
+                text: 'Are you sure you want to add this document ?',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    mutate(formData)
+                }
+            })
+        }
     }
 
     return (
@@ -97,48 +120,50 @@ const AddWikiDocument = ({ setAddDocumentPopUp }) => {
                     <h1 className="text-lg">Add Document</h1>
                 </div>
                 <div className="w-full">
-                    <form>
-                        <div className="block mb-2">
-                            <Label htmlFor="name">Name Document</Label>
-                        </div>
-                        <TextInput color={documentData.name ? "success" : "gray"}
-                            type="text" className="w-full h-10 mb-4"
-                            placeholder="Name Document" id="name"
-                            value={documentData.name}
-                            onChange={handleInputChange}
-                            required
-                        />
-                        <div className="block mb-2">
-                            <Label htmlFor="file" value="Upload File Document" />
-                        </div>
-                        <div className="flex flex-col gap-2 mb-8 h-14" onClick={() => fileinput.current.click()}>
-                            <TextInput
-                                theme={textInputTheme}
-                                color={documentData.file ? "success" : "gray"}
-                                className="w-full h-10 cursor-pointer"
-                                type="text" value={documentData.file ? documentData.file.name : ''}
-                                id="file" ref={fileinput}
-                                onChange={handleFileChange}
-                                icon={GrDocumentPdf}
-                                rightIcon={IoIosAdd}
-                                readOnly
-                                placeholder="Upload File Document"
+                    <Flowbite theme={{ theme: flowbiteTheme }}>
+                        <form onSubmit={handleSubmit}>
+                            <div className="block mb-2">
+                                <Label htmlFor="name">Name Document</Label>
+                            </div>
+                            <TextInput color={documentData.name ? "success" : "gray"}
+                                type="text" className="w-full h-10 mb-4"
+                                placeholder="Name Document" id="name"
+                                value={documentData.name}
+                                onChange={handleInputChange}
+                                required
                             />
-                            <input
-                                type="file"
-                                hidden
-                                ref={fileinput}
-                                onChange={handleFileChange}
-                            />
-                            {errorMsg.file && <p className="text-sm text-red-500">{errorMsg.file}</p>}
-                        </div>
-                        <div className="w-full flex justify-between items-center">
-                            <p className="text-red-500">{errorMsg.input}</p>
-                            <button onClick={handleSubmit} className="w-24 h-10 text-base rounded-lg text-white bg-purple hover:bg-purple-dark transition-colors duration-200" type="button">
-                                Submit
-                            </button>
-                        </div>
-                    </form>
+                            <div className="block mb-2">
+                                <Label htmlFor="file" value="Upload File Document" />
+                            </div>
+                            <div className="flex flex-col gap-2 mb-8 h-14" onClick={() => fileinput.current.click()}>
+                                <TextInput
+                                    theme={textInputTheme}
+                                    color={documentData.file ? "success" : "gray"}
+                                    className="w-full h-10 cursor-pointer"
+                                    type="text" value={documentData.file ? documentData.file.name : ''}
+                                    id="file" ref={fileinput}
+                                    onChange={handleFileChange}
+                                    icon={GrDocumentPdf}
+                                    rightIcon={IoIosAdd}
+                                    readOnly
+                                    placeholder="Upload File Document"
+                                />
+                                <input
+                                    type="file"
+                                    hidden
+                                    ref={fileinput}
+                                    onChange={handleFileChange}
+                                />
+                                {errorMsg.file && <p className="text-sm text-red-500">{errorMsg.file}</p>}
+                            </div>
+                            <div className="w-full flex justify-between items-center">
+                                <p className="text-red-500">{errorMsg.input}</p>
+                                <Button onClick={handleSubmit} isProcessing={isPending}  color="purple" processingSpinner={<Spinner size={"sm"} color="white" />} disabled={isPending} className="w-24 h-10" type="submit">
+                                    Submit
+                                </Button>
+                            </div>
+                        </form>
+                    </Flowbite>
                 </div>
             </div>
         </div>

@@ -115,12 +115,12 @@ const Login = () => {
 
     return (
         <div className="flex w-full h-screen">
-            <div className="flex w-[70%] h-full bg-purple items-center justify-center relative">
+            <div className="laptop:flex laptop:w-[70%] laptop:h-full hp:hidden bg-purple items-center justify-center relative">
                 <div className="absolute w-full h-screen bg-repeat">
                     <img src="src/assets/ssss 1.png" alt="" className="h-full" />
                 </div>
-                <div className="flex flex-col justify-between bg-white/50 p-16 w-[70%] h-[80%] relative rounded-lg border-2 border-white/40">
-                    <div className="font-bold 2xl:text-6xl lg:text-5xl text-white w-[80%] h-[40%] leading-tight">
+                <div className="flex flex-col justify-between bg-white/50 p-16 laptop:w-[70%] laptop:h-[80%] relative rounded-lg border-2 border-white/40">
+                    <div className="font-bold laptop:text-5xl text-white laptop:w-[80%] laptop:h-[40%] leading-tight">
                         {lines.map((line, index) => (
                             <div key={index}>
                                 {line}
@@ -130,23 +130,23 @@ const Login = () => {
                     <img
                         src={`src/assets/${images[textIndex]}`}
                         alt=""
-                        className="absolute w-[60%] right-8 bottom-0 transition-all duration-1000 ease-in-out"
+                        className="laptop:absolute laptop:w-[60%] laptop:right-8 laptop:bottom-0 hp:hidden laptop:block transition-all duration-1000 ease-in-out"
                     />
                     <div>
                         <h1 className="text-white text-xl font-semibold">Login Now</h1>
                     </div>
                 </div>
             </div>
-            <div className="justify-between p-8 flex flex-col w-[30%] h-full">
-                <div className="w-[70%] flex justify-center h-10">
-                    <img src="src/assets/logo terbaru.png" alt="" className="" />
+            <div className="hp:bg-white laptop:bg-white laptop:justify-between p-8 hp:py-20 flex flex-col laptop:w-[30%] laptop:h-full hp:w-full hp:h-full">
+                <div className="laptop:w-[70%] hp:w-full flex justify-center h-10">
+                    <img src="src/assets/logo terbaru.png" alt="" className="hp:w-2/3 laptop:w-full" />
                 </div>
-                <div className="flex flex-col text-xl gap-2 w-full">
+                <div className="flex flex-col text-xl gap-2 w-full hp:py-20">
                     <h1 className="font-semibold mb-3">Nice to see you again</h1>
                     <form onSubmit={handleLoginSubmit} className="w-full">
                         <Flowbite theme={{ theme: flowbiteTheme }}>
                             <div className="flex flex-col mb-3">
-                                <Label htmlFor="email" value="Email" className="pl-5 mb-1" />
+                                <Label htmlFor="email" value="Email" className="pl-5 mb-1 hp:text-black" />
                                 <TextInput
                                     type="email"
                                     id="email"
@@ -160,7 +160,7 @@ const Login = () => {
                                 />
                             </div>
                             <div className="relative w-full mb-5">
-                                <Label htmlFor="password" value="Password" className="pl-5 mb-1" />
+                                <Label htmlFor="password" value="Password" className="pl-5 mb-1 hp:text-black" />
                                 <TextInput
                                     type={showPassword ? "text" : "password"}
                                     id="password"
