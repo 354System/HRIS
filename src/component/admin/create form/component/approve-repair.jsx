@@ -1,19 +1,21 @@
-import { Icon } from '@iconify/react';
 import React from 'react';
+import { FaUserFriends } from "react-icons/fa";
 
 const ApproveRepair = () => {
 
 
     return (
-        <div className=" 2xl:w-80 w-[250px] h-[134px] flex flex-col bg-[#A332C3] justify-justify-start rounded p-5 cursor-pointer">
-            <div className="flex justify-justify-start items-center">
-                <div className='rounded-full bg-[#E6EAF5]/40 w-10 h-10 flex items-center justify-center'>
-                    <Icon icon="solar:document-medicine-linear" color="white" width="27" />
+        <div className="laptop:w-80 hp:w-full active:bg-purple-dark laptop:h-full hp:h-[70%] flex flex-col bg-purple hover:bg-purple-dark transition-colors duration-200 justify-between rounded p-5 cursor-pointer">
+            <div className="flex justify-between items-center">
+                <div className='text-3xl font-bold text-white'>
+                    <span>62</span>
+                </div>
+                <div className='rounded-full bg-[#e6eaf55b] w-10 h-10 flex items-center justify-center'>
+                    <FaUserFriends size={27} className="text-white" />
                 </div>
             </div>
-            <div className='mt-2 flex flex-col gap-y-2 '>
-                <span className="text-base text-white font-semibold">Create a Form</span>
-                <span className=" text-white font-semibold text-xs">Bantuan Perbaikan Device Kerja </span>
+            <div className='mt-6'>
+                <span className="text-base text-white font-bold">Form</span>
             </div>
         </div>
 

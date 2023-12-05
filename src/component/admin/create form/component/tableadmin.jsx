@@ -3,12 +3,12 @@ import { Icon } from "@iconify/react";
 
 const TableAdmin = () => {
     return (
-        <div className="bg-white w-full h-full">
-            <div className="flex justify-between items-center">
-                <div className="space-x-8 p-6">
-                    <button className="w-[160px] h-[40px] bg-[#A332C3] rounded-lg hover:bg-[#6e2882] text-white font-semibold transition-colors duration-200">Perbaikan Device</button>
-                    <button className="w-[160px] h-[40px] bg-[#D5D9DD] rounded-lg  text-[#252C58]/50  font-semibold ">Perbaikan Device</button>
-                </div>
+        <div className="w-full p-5  laptop:bg-white laptop:p-5 laptop:mt-5 laptop:rounded-lg hp:bg-white">
+            <div className="laptop:flex justify-between laptop:mt-8 hp:mt-4 laptop:text-lg laptop:font-semibold  hp:font-bold  hp:flex hp:flex-col hp:gap-5">
+                <div className="laptop:gap-x-5 hp:gap-x-5 hp:flex hp:text-sm">
+                    <button className="laptop:w-[160px] laptop:h-[40px] hp:w-[180px] hp:h-[40px] bg-[#A332C3] rounded-lg hover:bg-[#6e2882] text-white font-semibold transition-colors duration-200 ">Perbaikan Device</button>
+                    <button className="laptop:w-[160px] laptop:h-[40px] hp:w-[180px] hp:h-[40px] bg-[#D5D9DD] rounded-lg  text-[#252C58]/50  font-semibold ">Perbaikan Device</button>
+                 </div>
                 <div className="relative flex items-center mr-16">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                         <CiSearch />
@@ -20,13 +20,12 @@ const TableAdmin = () => {
                         className="w-[470px] h-[40px] pl-10 bg-gray-100 text-sm placeholder:text-grey rounded"
                     />
                 </div>
-
             </div>
-            <div className="mt-10">
-                <table className="w-full">
+            <div className="w-full laptop:mt-10 hp:mt-6 hp:overflow-x-auto">
+                <table className="hp:w-[900px] laptop:w-full">
                     <thead className="">
-                        <tr className="border-b-4 border-t-2 text-grey text-left">
-                            <th className="p-4">Date</th>
+                        <tr className="hp:text-base laptop:border-b-4 laptop:border-t-2 hp:bg-gray-100 text-grey text-left">
+                            <th className="p-4 ">Date</th>
                             <th className="">Title</th>
                             <th className="p-4">Kerusakan</th>
                             <th className="p-4">Estimasi Biaya</th>

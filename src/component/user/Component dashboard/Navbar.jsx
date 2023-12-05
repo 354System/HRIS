@@ -2,7 +2,7 @@ import { FiSearch } from 'react-icons/fi'
 import { IoMdNotificationsOutline } from 'react-icons/io'
 export default function NavbarUser(props) {
     return (
-        <div className='w-full flex justify-center items-center'>
+        <div className='laptop:w-full flex justify-center items-center'>
             <nav className="laptop:fixed hp:absolute z-10 top-6 laptop:right-8 hp:right-3 laptop:w-[89.4%] h-[80px] hp:w-[94%] flex items-center justify-between bg-white p-6 shadow-lg rounded-lg backdrop-blur-md mb-10">
                 <div>
                     <span className="navtitle laptop:text-xl hp:text-base font-semibold text-black">{props.title}</span>

@@ -7,7 +7,7 @@ import { LuNetwork } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 export function Sidebarmenu() {
     return (
-        <div className="flex flex-col fixed h-[95%] top-6 left-6 justify-between items-center w-16 bg-white py-4 shadow-lg rounded-lg">
+        <div className="hp:hidden flex flex-col fixed h-[95%] top-6 left-6 justify-between items-center w-16 bg-white py-4 shadow-lg rounded-lg">
             <div className='p-2'>
                 <img src="/src/assets/Thinkspedia Main Logo 1.png" alt="" className="w-8 h-8" />
             </div>

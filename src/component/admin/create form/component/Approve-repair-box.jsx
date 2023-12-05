@@ -2,7 +2,7 @@ import { LuUsers } from "react-icons/lu";
 
 const ApproveRepairBox = () => {
     return (
-        <div className=" 2xl:w-80 w-60 h-full flex flex-col bg-white justify-between rounded p-5">
+        <div className=" laptop:w-80 hp:w-[180px] laptop:h-full hp:h-full flex flex-col bg-white justify-between rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary flex flex-col'>
                     <span>62</span>
