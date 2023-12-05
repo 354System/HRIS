@@ -10,6 +10,7 @@ import WaitingBarangBox from "./component/waiting-barang-box";
 import RejectBarangBox from "./component/reject-barang-box";
 import RejectRepairBox from "./component/reject-device-box";
 import TableAdmin from "./component/tableadmin";
+import NavbarUser from "../../user/Component dashboard/Navbar";
 
 const SubmissionOfImprovements = () => {
     return (
@@ -18,7 +19,7 @@ const SubmissionOfImprovements = () => {
                 <Sidebarmenu />
             </div>
             <div className="w-full p-8">
-                <Navbar title="Device Approve"/>
+                <NavbarUser title="Device Approve"/>
                 <div className="w-full mb-10 mt-32">
                     <div className="w-full  flex  gap-6">
                         <div className="w-full flex flex-col gap-8 px-4">

@@ -28,7 +28,7 @@ const SidebarmenuUser = () => {
     }, [menuOpen]);
 
     return (
-        <div className="flex flex-col justify-between items-center w-16 h-full  bg-white py-4 shadow-lg rounded-lg">
+        <div className=" flex flex-col justify-between items-center w-16 h-full  bg-white py-4 shadow-lg rounded-lg">
             <div className='p-2'>
                 <img src="src/assets/logo.png" alt="" className="w-8 h-8" />
             </div>

@@ -16,7 +16,7 @@ export function Navbar() {
         <div className='w-full flex justify-center items-center'>
             <nav className="laptop:fixed hp:absolute z-10 top-6 laptop:right-6 laptop:w-[89.4%] laptop:h-[75px] hp:h-16 hp:w-[94%] flex items-center justify-between bg-white p-6 shadow-lg rounded-lg backdrop-blur-md">
                 <div className='flex items-center gap-3'>
-                    <FiMenu className='laptop:hidden text-primary w-6 h-6 transform active:scale-75 transition duration-200'  />
+                    <FiMenu className='laptop:hidden hp:hidden text-primary w-6 h-6 transform active:scale-75 transition duration-200'  />
                     <span className="navtitle laptop:text-xl hp:text-base font-semibold text-primary">{currentPageTitle}</span>
                 </div>
                 <div className="relative flex items-center gap-x-6">
@@ -32,11 +32,11 @@ export function Navbar() {
                         <FiSearch color='#9295AB' size={18} />
                     </div>
                     <div className='hp:hidden laptop:block'>
-                        <IoMdNotificationsOutline color='primary' className='hp:w-6 hp:h-6' />
+                        <IoMdNotificationsOutline color='primary' className='hp:w-6 hp:h-6 laptop:w-6 laptop:h-6' />
                     </div>
                     <div className='border-l-2 flex items-center laptop:px-5 hp:px-3 laptop:gap-4 hp:gap-2'>
                         <div className='laptop:hidden hp:block'>
-                            <IoMdNotificationsOutline color='primary' className='hp:w-6 hp:h-6' />
+                            <IoMdNotificationsOutline color='primary' className='hp:w-6 hp:h-6 ' />
                         </div>
                         <div>
                             <img src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="" className='hp:w-7 hp:h-7 laptop:w-10 laptop:h-10 rounded-full' />

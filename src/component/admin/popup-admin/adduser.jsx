@@ -61,8 +61,8 @@ const AddUserAdmin = (props) => {
   };
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/60 w-full h-[818px]">
-      <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-4 w-[667px] h-[590px] rounded-lg flex flex-col">
+    <div className=" fixed  inset-0 flex items-center justify-center z-20 bg-black/60 w-full min-h-screen">
+      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 laptop:w-1/2 hp:w-11/12 laptop:h-4/5 hp:h-2/4 rounded-lg flex flex-col overflow-y-auto">
         <div className="flex justify-end">
           <button
             onClick={handleExit}

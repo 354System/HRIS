@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 const DataDokumen = () => {
     
     return (
-        <div className="mt-2 bg-white">
+        <div className="mt-2 bg-white ">
             <table className="w-full">
                 <thead className="">
                     <tr className="border-b-4 border-t-2 text-grey text-left">
