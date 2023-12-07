@@ -1,37 +1,44 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { File } from "buffer";
-import mongoose from "mongoose";
 import { User } from "./user.schema";
+import { Document } from "mongoose";
+import { IAbsensi } from "src/interface/interface.absensi";
 
-export enum Category {
+export enum Category1 {
     WFO = 'Work From Office',
     WFH = 'Work Form Home'
 }
 
+export enum Category {
+    Present = 'Present',
+    Late = 'Late',
+    Absent = 'Absent'
+}
+
+
 @Schema({
-    timestamps:true,
+    timestamps: true,
 })
-export class Absensi {
+export class Absensi extends Document implements IAbsensi {
 
     @Prop()
-    absen: string;
-
-    @Prop()
-    checkin: string;
-
-    @Prop()
-    checkout: string;
-
-    @Prop()
-    photo: string;
+    absen: Category1;
 
     @Prop()
     date: Date;
     
     @Prop()
+    checkin: string;
+
+    @Prop()
+    checkout: Date;
+
+    @Prop()
+    file: string;
+
+    @Prop()
     type: Category;
 
-    @Prop({ type: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}] })
+    @Prop()
     user: User;
 
 }

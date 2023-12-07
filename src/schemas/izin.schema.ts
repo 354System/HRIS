@@ -1,39 +1,42 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { User } from "./user.schema";
-import mongoose from "mongoose";
-
+import { Document } from "mongoose";
+import { IIzin } from "src/interface/interface.izin";
 
 export enum Category {
-    Sakit = 'Sakit',
-    Liburan = 'Liburan',
-    Acara_Keluarga = 'Acara Keluarga'
+    Wait_For_Response = 'Wait For Response',
+    Approved = 'Approved',
+    Reject = 'Reject'
 }
+
 
 
 @Schema({
     timestamps:true,
 })
-export class Izin {
 
+export class Izin extends Document implements IIzin{
 
     @Prop()
-    izin: Category;
+    izin: string;
+
+    @Prop()
+    approval: Category;
     
     @Prop()
-    fromdate: string;
+    fromdate: Date;
     
     @Prop()
-    untildate: string;
+    untildate: Date;
     
-    // @Prop()
-    // photo: File;
+    @Prop()
+    file: string;
     
     @Prop()
     description : string;
     
-    @Prop({ type: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}] })
+    @Prop()
     user: User;
-
 
 }
 

@@ -1,13 +1,14 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/schemas/user.schema';
-// import * as Mongoose from 'mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs'
 import { Query } from 'express-serve-static-core';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
+import { Cron } from '@nestjs/schedule';
+import * as schedule from 'node-schedule';
 
 @Injectable()
 export class UserService {
@@ -33,16 +34,16 @@ export class UserService {
     return users;
   }
 
-  async findOne(id: number) {
-    return await this.userModel.findOne({ where: { id: id } });
-  }
+  // async findOne(id: number) {
+  //   return await this.userModel.findOne({ where: { id: id } });
+  // }
 
-  async findOneWithUserName(userName: string) {
-    return await this.userModel.findOne({ where: { email: userName } });
-  }
+  // async findOneWithUserName(userName: string) {
+  //   return await this.userModel.findOne({ where: { email: userName } });
+  // }
 
   async createUser(createUserDto: CreateUserDto): Promise<{ token: string }> {
-    const { name, email, numberphone, password } = createUserDto;
+    const { name, email, numberphone, password, divisi, position, } = createUserDto;
 
     // Periksa apakah email sudah ada dalam basis data
     const existingEmailUser = await this.userModel.findOne({ email });
@@ -65,6 +66,8 @@ export class UserService {
       email,
       numberphone,
       password: hashedPassword,
+      divisi,
+      position,
       role: 'Public',
     })
 
@@ -86,6 +89,34 @@ export class UserService {
     });
   }
 
+  @Cron('0 0 1 * *')
+  async addAnnualLeaveToAllUsers(): Promise<void> {
+    try {
+      // Ambil semua pengguna (users)
+      const users = await this.userModel.find().exec();
+
+      // Lakukan penambahan jatah cuti untuk setiap pengguna
+      const updatedUsers = await Promise.all(
+        users.map(async (user) => {
+          // Anda bisa menyesuaikan logika penambahan jatah cuti sesuai kebutuhan
+          const updatedRemainingCuti = isNaN(user.remainingCuti) ? 1 : user.remainingCuti + 1;
+
+          // Simpan perubahan ke database
+          return await this.userModel.findByIdAndUpdate(
+            user._id,
+            { remainingCuti: updatedRemainingCuti },
+            { new: true } // Opsional, untuk mendapatkan data terupdate
+          );
+        })
+      );
+
+      console.log('Jatah cuti berhasil ditambahkan untuk semua user:', updatedUsers);
+    } catch (error) {
+      console.error('Error saat menambahkan jatah cuti untuk semua user:', error);
+      throw error;
+    }
+  }
+
   async login(loginDto: LoginDto): Promise<{ token: string }> {
     const { email, password } = loginDto;
 
@@ -100,7 +131,7 @@ export class UserService {
     if (!isPasswordMatched) {
       throw new UnauthorizedException('Invalid Password')
     }
-    const token = this.jwtService.sign({ id: user._id, email: user.email })
+    const token = this.jwtService.sign({ id: user._id, role: user.role})
     const role = user.role
     const username = user.name
     const useremail = user.email
@@ -117,8 +148,6 @@ export class UserService {
   async deleteById(id: string): Promise<User> {
     return await this.userModel.findByIdAndDelete(id, {
     });
-
-
   }
 
   async getUserById(id: string) {
@@ -137,6 +166,8 @@ export class UserService {
 
     return { id_user: payload.id, role: user.role };
   }
+
+
 
 
 

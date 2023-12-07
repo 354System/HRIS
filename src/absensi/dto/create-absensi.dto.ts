@@ -1,20 +1,21 @@
-import { IsString } from "class-validator";
+import { IsDate, IsString } from "class-validator";
+import { Category1 } from "src/schemas/absensi.schema";
 import { User } from "src/schemas/user.schema";
 
 
 
 export class CreateAbsensiDto {
 
-    @IsString()
-    absen: string;
+    // @IsString()
+    absen: Category1;
 
-    @IsString()
+    // @IsString()
     checkin: string;
+    
+    // @IsDate()
+    date: Date;
 
-    @IsString()
-    checkout: string;
-
-    // photo: File;
+    image: Buffer;
 
     user: User;
 

@@ -7,5 +7,14 @@ export class UpdateUserDto  {
 
     @IsString()
     password: string;
+    
+    @IsString()
+    address: string;
+
+    @IsString()
+    divisi: string;
+
+    @IsString()
+    position: string;
 
 }
