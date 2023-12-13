@@ -2,7 +2,6 @@ import { Navigate } from 'react-router-dom';
 import { useAuthInfo } from '../use context/useAuthInfo';
 import { useEffect, useState } from 'react';
 import { LoadingScreen } from '../component/loading screen/loadingScreen';
-// import { useDataCurrentUser } from '../use context/useAllDataCurrentUser';
 
 function PrivateRoute({ element, requiredRoles }) {
   const { userData, validToken } = useAuthInfo();
