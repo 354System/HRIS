@@ -48,7 +48,7 @@ const RealtimeInsightBox = ({checkInPopUp}) => {
       <div>
         <div className="flex flex-col mb-4">
           <span className="text-lg text-primary">Time Attendance</span>
-          <span className="text-lg text-primary font-bold">09:00</span>
+          <span className="text-lg text-primary font-bold">09:15</span>
         </div>
         <div className="flex flex-col mb-4">
           <span className="text-lg text-primary">Today:</span>

@@ -1,10 +1,15 @@
 import { FiUsers } from 'react-icons/fi'
-const OnTimeBox = () => {
+const OnTimeBox = ({ dataAbsent }) => {
+
+
+        const onTimeData = dataAbsent?.filter(item => item.type === 'Present');
+
+
     return (
         <div className="laptop:w-80 w-64 h-full flex flex-col bg-white justify-between rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
-                    <span>1</span>
+                    <span>{onTimeData?.length}</span>
                 </div>
                 <div className='rounded-full bg-[#E6EAF5] w-10 h-10 flex items-center justify-center'>
                     <FiUsers size={20} color='purple' />

@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 const LeaveBox = () => {
+
     return (
         <div className=" laptop:w-80 w-64 h-full flex flex-col bg-white justify-between rounded p-5">
             <div className="flex justify-between items-center">

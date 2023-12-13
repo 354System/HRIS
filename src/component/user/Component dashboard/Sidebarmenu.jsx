@@ -14,6 +14,7 @@ const SidebarmenuUser = () => {
     const [mobileHeight, setMobileHeight] = useState('auto');
     const [desktopHeight, setDesktopHeight] = useState('auto');
 
+
     const sidebarRef = useRef(null);
 
     const handleToggleMenu = () => {
@@ -27,6 +28,15 @@ const SidebarmenuUser = () => {
         }
     }, [menuOpen]);
 
+    const handleLogout = () => {
+        // Hapus token dari penyimpanan lokal saat logout
+        localStorage.removeItem('token');
+        // Navigasi ke halaman login atau halaman lain yang sesuai
+        window.location.href = "/login";
+    };
+
+
+
     return (
         <div className=" flex flex-col justify-between items-center w-16 h-full  bg-white py-4 shadow-lg rounded-lg">
             <div className='p-2'>
@@ -34,26 +44,24 @@ const SidebarmenuUser = () => {
             </div>
             <div className='w-full flex flex-col justify-center items-center'>
                 <Link to={'/dashboard'}>
-                <PiSquaresFourFill size={23} className={`cursor-pointer mb-5 w-full  ${location.pathname === '/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                    <PiSquaresFourFill size={23} className={`cursor-pointer mb-5 w-full  ${location.pathname === '/dashboard' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link to={'/userhistori'}>
-                <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/userhistori' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                    <BiUser size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/userhistori' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <MdShowChart size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/report' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
-                <AiOutlineCalendar  size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/calendar' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                <AiOutlineCalendar size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/calendar' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 <Link to={'/Document'}>
-                <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/Document' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                    <LuNetwork size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/Document' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <Link to={'/Repair/Device'}>
-                <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/Repair/Device' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
+                    <MdAddchart size={23} className={`cursor-pointer mb-10 ${location.pathname === '/Repair/Device' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 </Link>
                 <AiOutlineSetting size={23} className={`cursor-pointer mb-5 w-full ${location.pathname === '/setting' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
                 <BiShieldQuarter size={23} className={`cursor-pointer w-full ${location.pathname === '/security' ? 'text-purple border-r-2 border-purple' : 'text-grey hover:text-primary'}`} />
             </div>
             <div className='p-2'>
-                <a href="/login">
-                <BsBoxArrowRight size={23} className='cursor-pointer text-grey hover:text-primary' />
-                </a>
+                <BsBoxArrowRight size={23} className='cursor-pointer text-grey hover:text-primary' onClick={handleLogout} />
             </div>
         </div>
     );

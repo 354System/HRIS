@@ -6,6 +6,14 @@ import { AiOutlineCalendar, AiOutlineSetting } from 'react-icons/ai'
 import { LuNetwork } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 export function Sidebarmenu() {
+
+    const handleLogout = () => {
+        // Hapus token dari penyimpanan lokal saat logout
+        localStorage.removeItem('token');
+        // Navigasi ke halaman login atau halaman lain yang sesuai
+        window.location.href = "/login";
+    };
+
     return (
         <div className="hp:hidden flex flex-col fixed h-[95%] top-6 left-6 justify-between items-center w-16 bg-white py-4 shadow-lg rounded-lg">
             <div className='p-2'>
@@ -38,7 +46,7 @@ export function Sidebarmenu() {
                 </Link>
             </div>
             <div className='p-2'>
-                <BsBoxArrowRight size={23} className='cursor-pointer text-grey hover:text-primary' />
+                <BsBoxArrowRight size={23} className='cursor-pointer text-grey hover:text-primary' onClick={handleLogout}/>
             </div>
         </div>
     )

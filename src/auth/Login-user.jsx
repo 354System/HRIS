@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 
 const LoginUser = () => {
 
-
     const [showPassword, setShowPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState('')
 

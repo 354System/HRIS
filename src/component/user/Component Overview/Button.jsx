@@ -3,7 +3,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 const Button = () => {
   return (
-    <div className="">
+    <div className="bg-white">
       <div className="flex gap-x-4">
         <div>
           <button className="bg-[#A332C3] text-white w-[119px] h-[40px] rounded-lg font-bold">

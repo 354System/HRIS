@@ -8,6 +8,9 @@ const DeviceRepair = ({ category, Repair }) => {
 
     const [file, setFile] = useState(null);
     const [selectedFileName, setSelectedFileName] = useState(null);
+    const [errorMsg, setErrorMsg] = useState({
+        file: '',
+    })
     const fileinput = useRef(null)
 
 
@@ -20,6 +23,8 @@ const DeviceRepair = ({ category, Repair }) => {
         cost: "",
         upload: "",
     });
+    console.log(device.upload);
+
 
     const handleExit = () => {
         Repair(false)
@@ -35,34 +40,59 @@ const DeviceRepair = ({ category, Repair }) => {
     };
 
 
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            const allowedExtensions = ["pdf"];
+            const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+
+            if (allowedExtensions.includes(fileExtension)) {
+                // Memasukkan informasi file ke dalam documentData
+                setErrorMsg((prevError) => ({
+                    ...prevError,
+                    file: '',
+                }))
+                setDevice((prevState) => ({
+                    ...prevState,
+                    upload: selectedFile,
+                }));
+            } else {
+                setErrorMsg((prevError) => ({
+                    ...prevError,
+                    file: "File must be .pdf",
+                }))
+                e.target.value = "";
+            }
+        }
+    };
+
+
 
     const token = localStorage.getItem("token");
 
     const headers = {
-        "Content-Type": "application/json",
         // Tambahkan token ke header permintaan
         "Authorization": `Bearer ${token}`,
     };
 
     const handleAddDevice = () => {
+        const formData = new FormData();
+        formData.append('category', 'Repair');  
+        formData.append('title', device.title);
+        formData.append('chronology', device.chronology);
+        formData.append('damage', device.damage);
+        formData.append('cost', device.cost);
+        formData.append('image', device.upload);
         // Kirim data pengguna ke backend
         fetch("https://fzsxpv5p-3000.asse.devtunnels.ms/form/create/repair", {
             method: "POST",
             headers: headers,
-            body: JSON.stringify({
-                category: device.category,
-                title: device.title,
-                date: device.date,
-                chronology: device.chronology,
-                damage: device.damage,
-                cost: device.cost,
-                uploadfile: device.upload,
-            }),
+            body: formData,
         })
             .then((response) => response.json())
             .then((data) => {
                 console.log(data); // Handle respons dari backend
-                window.location.href = "/Repair/Device";
+                // window.location.href = "/Repair/Device";
             })
             .catch((error) => {
                 console.error(error);
@@ -70,26 +100,6 @@ const DeviceRepair = ({ category, Repair }) => {
 
     };
 
-    const handleUpload = () => {
-        if (file) {
-            const formData = new FormData();
-            formData.append('image', file);
-
-            fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/form/file', {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('File uploaded successfully:', data);
-                })
-                .catch(error => {
-                    console.error('Error uploading file:', error);
-                });
-        } else {
-            console.error('No file selected');
-        }
-    };
 
 
     return (
@@ -214,21 +224,7 @@ const DeviceRepair = ({ category, Repair }) => {
                             id="file_input"
                             className="hidden"
                             ref={fileinput}
-                            onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                                if (selectedFile) {
-                                    const allowedExtensions = ["jpg", "png", "pdf"];
-                                    const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
-
-                                    if (allowedExtensions.includes(fileExtension)) {
-                                        setSelectedFileName(selectedFile.name);
-                                        setFile(selectedFile); // Tambahkan ini untuk mengatur nilai file
-                                    } else {
-                                        alert("Hanya file dengan ekstensi .jpg, .png, dan .pdf yang diizinkan.");
-                                        e.target.value = "";
-                                    }
-                                }
-                            }}
+                            onChange={handleFileChange}
                         />
 
                         <div className="bg-[#ACACAC]/50 w-full h-[50px] flex items-center px-2">
@@ -246,7 +242,7 @@ const DeviceRepair = ({ category, Repair }) => {
                     </h1>
                     <button
                         className="bg-[#A332C3] w-[155px] h-[46px] rounded-lg text-white font-semibold"
-                        onClick={() => { handleAddDevice(); handleUpload(); }}
+                        onClick={handleAddDevice()}
                     >
                         Send Permission
                     </button>

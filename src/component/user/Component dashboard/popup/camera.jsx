@@ -5,9 +5,9 @@ import Webcam from "react-webcam";
 import Result from "./result";
 
 const Camera = ({ WFO, checkInPopUp, status }) => {
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [success, setSuccess] = useState(false);
-  const token = localStorage.getItem("token");
   const [devices, setDevices] = useState([]);
   const [waktu, setWaktu] = useState("");
   const [tanggal, setTanggal] = useState("");
@@ -18,7 +18,9 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
     date: "",
     status: "",
   });
+
   const capturePhoto = useCallback(async () => {
+    setIsLoading(true);
     const imageSrc = webcamRef.current.getScreenshot();
     const base64ToBlob = (base64) => {
       const byteCharacters = atob(base64.split(",")[1]);
@@ -44,9 +46,7 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
     const getMinutes = date.getMinutes().toString().padStart(2, "0");;
     const times = `${getHours}:${getMinutes}`;
 
-
     // Sekarang, 'file' adalah objek File yang dapat Anda gunakan atau unggah
-    console.log("File:", file);
     setDatas({
       filePhoto: URL.createObjectURL(file),
       times: times,
@@ -54,29 +54,43 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
       status: status,
     });
 
-
     const formData = new FormData();
     formData.append('image', file);
     formData.append('checkin', date);
-    formData.append('absen', "Work From Office");
+    formData.append('absen', status);
 
+    const token = localStorage.getItem("token");
     fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/create', {
       method: 'POST',
       headers: {
-        // Tambahkan token ke header permintaan
         Authorization: `Bearer ${token}`,
       },
-      body: (formData)
+      body: formData,
     })
-      .then(response => response.json())
+      .then(response => {
+        if (response && response.status === 201) {
+          setIsLoading(false);
+          setSuccess(true);
+          // Melanjutkan dengan mendapatkan data JSON
+          return response.json();
+        } else {
+          setSuccess(false);
+          setIsLoading(false);
+          console.error(response);
+          setErrorMsg("Anda harus melakukan login terlebih dahulu");
+          // Jangan lupa throw error agar catch dapat menangkapnya
+          throw new Error("Login required");
+        }
+      })
       .then(data => {
-        console.log('Absen Berhasil:', data);
+        // Lanjutan pemrosesan jika diperlukan setelah mendapatkan data JSON
       })
       .catch(error => {
         console.error('Error:', error);
+        // Menangani kesalahan saat melakukan permintaan
+        setSuccess(false);
       });
-  });
-
+  }, [status]);
 
   const handleClose = () => {
     WFO(false);
@@ -125,11 +139,9 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
     navigator.mediaDevices.enumerateDevices().then(handleDevices);
   }, [handleDevices]);
 
-
-
   return (
     <div className="absolute w-full h-full inset-0 flex items-center justify-center z-20 bg-black/60">
-      <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-8 w-[632px] h-[600px] rounded-lg">
+      <div className="absolute top-1/2 transform -translate-y-1/2 bg-white p-8 w-[632px] h-[700px] rounded-lg">
         <div className="flex justify-end">
           <button
             onClick={handleClose}
@@ -150,6 +162,7 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
             </div>
           </div>
         </div>
+
         <div className="flex justify-start item mt-6">
           {devices.map((device, key) => (
             <div key={key} className="relative">
@@ -162,20 +175,21 @@ const Camera = ({ WFO, checkInPopUp, status }) => {
                 mirrored={true}
               />
               <button
-                onClick={() => {
-                  console.log("Button clicked");
-                  capturePhoto();
-                }}
+                disabled={isLoading}
+                onClick={capturePhoto}
                 className="bg-[#A332C3] absolute bottom-0 left-[250px] m-2 p-2 rounded-full"
               >
-                <Icon icon="system-uicons:camera" width="28.5" color="white" />
+                {isLoading ? <Icon icon="eos-icons:loading" width="28.5" color="white" /> : <Icon icon="system-uicons:camera" width="28.5" color="white" />}
               </button>
-              {success && (
-                <Result datas={datas} capturePhoto={capturePhoto} checkInPopUp={checkInPopUp} />
-              )}
+              {success && <Result datas={datas} checkInPopUp={checkInPopUp} />}
             </div>
           ))}
         </div>
+        {errorMsg && (
+          <div className=" text-red-500  rounded p-2">
+            <p>{errorMsg}</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
 import { Icon } from '@iconify/react';
-const LateBox = () => {
+const LateBox = ({ dataAbsent }) => {
+
+    const Late = dataAbsent?.filter(item => item.type === 'Late');
+
     return (
         <div className="laptop:w-80 w-64 h-full flex flex-col bg-white justify-between rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
-                    <span>2</span>
+                    <span>{Late?.length}</span>
                 </div>
                 <div className='rounded-full bg-[#E6EAF5] w-10 h-10 flex items-center justify-center'>
                     <Icon icon="pajamas:time-out" className='text-purple' fontSize={20} />

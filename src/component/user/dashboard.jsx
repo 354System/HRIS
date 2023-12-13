@@ -8,9 +8,45 @@ import PremisionBox from "./Component dashboard/PremisionBox";
 import Histori from "./Component dashboard/history";
 import SidebarmenuUser from "./Component dashboard/Sidebarmenu";
 import NavbarUser from "./Component dashboard/Navbar";
-
+import { useEffect, useState } from "react";
 
 const DashboardUser = () => {
+  const [absentData, setAbsentData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from backend when the component mounts
+    fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/user/user-info', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // Mengembalikan promise dari response.json()
+        return response.json();
+      })
+      .then((data) => {
+        const id = data.user_info.id
+        fetch(`https://fzsxpv5p-3000.asse.devtunnels.ms/absensi/by/${id}`, {
+          method: 'GET',
+        }).then(response => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error('Network response was not ok');
+          }
+        }).then(data => {
+          setAbsentData(data);
+        })
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, [])
+
   return (
     <div className="w-full min-h-screen flex absolute bg-gray-200">
       <div className="p-4 hp:hidden laptop:flex ">
@@ -23,13 +59,13 @@ const DashboardUser = () => {
             <RealtimeInsightBox />
             <div className="w-full flex flex-col gap-8">
               <div className="flex h-1/2 gap-10 ">
-                <OnTimeBox />
-                <AbsenBox />
+                <OnTimeBox dataAbsent={absentData} />
+                <AbsenBox dataAbsent={absentData} />
                 <LeaveBox />
               </div>
               <div className="flex h-1/2 items-end gap-10 ">
-                <LateBox />
-                <WorkingDayThismonthBox />
+                <LateBox dataAbsent={absentData}/>
+                <WorkingDayThismonthBox dataAbsent={absentData} />
                 <PremisionBox />
               </div>
             </div>

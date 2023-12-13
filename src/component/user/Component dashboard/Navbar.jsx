@@ -1,6 +1,55 @@
+import { useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi'
 import { IoMdNotificationsOutline } from 'react-icons/io'
 export default function NavbarUser(props) {
+
+    const [UserInfo, setUserInfo] = useState({});
+    const [id, setId] = useState('');
+
+
+    useEffect(() => {
+        // Fetch data from backend when the component mounts
+        fetch('https://fzsxpv5p-3000.asse.devtunnels.ms/user/user-info', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Mengembalikan promise dari response.json()
+                return response.json();
+            })
+            .then(data => {
+                setId(data.user_info.id); // Menggunakan data.id, karena objek respon memiliki properti "id"
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [])
+    useEffect(() => {
+        fetch(`https://fzsxpv5p-3000.asse.devtunnels.ms/user/by/${id}`, {
+            method: 'GET',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setUserInfo(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [id])
+
+
+
+
     return (
         <div className='laptop:w-full flex justify-center items-center'>
             <nav className="laptop:fixed hp:absolute z-10 top-6 laptop:right-8 hp:right-3 laptop:w-[89.4%] h-[80px] hp:w-[94%] flex items-center justify-between bg-white p-6 shadow-lg rounded-lg backdrop-blur-md mb-10">
@@ -28,8 +77,8 @@ export default function NavbarUser(props) {
                                 <img src="/src/assets/image1584.png" alt="" className='hp:w-7 hp:h-7 laptop:w-10 laptop:h-10 rounded-full' />
                             </div>
                             <div className='flex flex-col text-sm hp:text-xs'>
-                                <p className=''>Admin</p>
-                                <p>Octa</p>
+                                <p className=''>{UserInfo?.role}</p>
+                                <p>{UserInfo?.name}</p>
                             </div>
                         </div>
                     </div>
