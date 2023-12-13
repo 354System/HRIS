@@ -16,10 +16,10 @@ export function Navbar({ sideBarMenu, setSideBarMenu }) {
     const { userData } = useAuthInfo()
     return (
         <div className='w-full flex justify-center items-center'>
-            <nav className="laptop:fixed hp:absolute z-10 top-6 laptop:right-6 laptop:w-[89.4%] laptop:h-[75px] hp:h-16 hp:w-[94%] flex items-center justify-between bg-white p-6 shadow-lg rounded-lg backdrop-blur-md">
+            <nav className="laptop:fixed hp:absolute z-10 flex items-center justify-between laptop:w-[89.4%] laptop:h-[75px] hp:w-[94%] hp:h-16 top-6 laptop:right-6 p-5 shadow-lg rounded-lg bg-white">
                 <div className='flex items-center gap-3'>
-                    <FiMenu className='laptop:hidden text-primary w-6 h-6 transform active:scale-75 transition duration-200' onClick={() => setSideBarMenu(!sideBarMenu)} />
-                    <span className="navtitle laptop:text-xl hp:text-base font-semibold text-primary">{currentPageTitle}</span>
+                    <FiMenu className='laptop:hidden text-primary w-6 h-6 transform active:scale-75 transition duration-200' onClick={(e) => { e.stopPropagation(); setSideBarMenu(!sideBarMenu) }} />
+                    <span className="navtitle laptop:text-xl hp:text-base font-semibold text-primary hp:max-w-[120px] line-clamp-2">{currentPageTitle}</span>
                 </div>
                 <div className="relative flex items-center gap-x-6">
                     <div className={`hp:hidden laptop:block`}>
@@ -44,7 +44,7 @@ export function Navbar({ sideBarMenu, setSideBarMenu }) {
                             <img src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="" className='hp:w-7 hp:h-7 laptop:w-10 laptop:h-10 rounded-full' />
                         </div>
                         <div className='flex flex-col text-sm hp:text-xs'>
-                            <p className='laptop:hidden hp:block'>{userData?.name}</p>
+                        <p className='laptop:hidden hp:block'>{userData?.name && userData.name.split(' ')[0]}</p>
                             <p>{userData?.role}</p>
                             <p className='hp:hidden laptop:block'>{userData?.email}</p>
                         </div>

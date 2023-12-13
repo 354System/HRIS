@@ -44,6 +44,8 @@ const AOTableDashboard = ({ data }) => {
             return 'bg-[#E6EFFC] text-purple p-2';
         }
     }
+    console.log(data);
+
     return (
         <div className="laptop:mt-5 hp:mt-10 w-full text-center hp:overflow-x-auto">
             <table className="laptop:w-full hp:w-[1000px]">
@@ -74,7 +76,7 @@ const AOTableDashboard = ({ data }) => {
                                 <td className="p-4 text-purple text-center">{item.checkout ? format(new Date(item.checkout), 'HH:mm') : '-:-:-'}</td>
                                 <td className="p-4 text-center text-primary">{item.workHours ? item.workHours : '-'}</td>
                             </tr>
-                        )) : <Spinner size={30} />}
+                        )) : dataToday === undefined ? <tr><td className="absolute left-1/2">No data Available</td></tr> : <Spinner size={30} />}
                 </tbody>
             </table>
         </div>

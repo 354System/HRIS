@@ -3,8 +3,8 @@ import { useFetchAllUsers } from '../../../../../../api/fetchData/useFetchAllUse
 const TotalEmployedBox = () => {
     const { data: users, isLoading, refetch: refetchDataUser } = useFetchAllUsers();
     return (
-        <div className="w-64 h-full flex flex-col justify-between bg-white rounded p-5">
-            <div className="flex justify-between items-center"> 
+        <div className="laptop:w-2/6 hp:w-1/2 h-full flex flex-col justify-between bg-white rounded p-5">
+            <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
                     <span>{users?.length}</span>
                 </div>
@@ -14,14 +14,6 @@ const TotalEmployedBox = () => {
             </div>
             <div>
                 <span className="text-base text-primary font-bold">Total Employees</span>
-                <div className='hp:hidden flex items-center gap-1'>
-                    <div className='w-4 h-4 bg-[#97CE71] flex items-center justify-center rounded-full'>
-                        <p className='text-xs text-[#43900C]'>+</p>
-                    </div>
-                    <div>
-                        <span className='text-xs text-grey'>2 new employees added!</span>
-                    </div>
-                </div>
             </div>
         </div>
     )

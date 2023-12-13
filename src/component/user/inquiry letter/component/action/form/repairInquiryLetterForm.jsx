@@ -143,7 +143,9 @@ const RepairInquryLetterForm = ({ setRepairFormPopUp, refetchInquiryData }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         validateInput()
+        
         const { title, chronology, damage, cost, upload } = data
+
         const formData = new FormData();
         formData.append('category', 'Repair');
         formData.append('title', title);
@@ -151,6 +153,7 @@ const RepairInquryLetterForm = ({ setRepairFormPopUp, refetchInquiryData }) => {
         formData.append('damage', damage);
         formData.append('cost', cost);
         formData.append('image', upload);
+
         if (validateInput()) {
             setErrorMsg((prevState) => ({
                 ...prevState,
@@ -183,7 +186,7 @@ const RepairInquryLetterForm = ({ setRepairFormPopUp, refetchInquiryData }) => {
 
     return (
         <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
-            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 bg-white p-5 laptop:w-1/2 laptop:h-4/5 hp:w-11/12 hp:h-1/2 rounded-lg flex flex-col">
+            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 bg-white p-5 laptop:w-1/2 laptop:h-4/5 hp:w-11/12 hp:h-11/12 rounded-lg flex flex-col">
                 <div className="absolute top-2 right-2 ">
                     <button
                         onClick={() => setRepairFormPopUp(false)}

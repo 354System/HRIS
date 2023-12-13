@@ -10,9 +10,9 @@ export const AuthProvider = ({ children }) => {
     
     //info token user
     const { data: userId, refetch: refetchInfoToken, isError: errorToken, isSuccess } = useInfoToken()
-    console.log(userId);
     //saat pertama dirender isi dari dataUser merupakan userId lalu diproses dalam getDataUser dan dataUser menjadi data baru
     const { data: dataUser, refetch: refetchDataUser } = useFetchCurrentUser({ userId })
+    console.log(dataUser);
     
     useEffect(() => {
         if (errorToken) {

@@ -3,6 +3,8 @@ import { SlCalender } from 'react-icons/sl';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format, subMonths } from 'date-fns';
+import { Datepicker, Flowbite } from 'flowbite-react';
+import { flowbiteTheme } from '../../../../../lib/flowbiteTheme';
 
 const TADheader = ({ presenceData, permissionData, paidLeaveData, setFilteredPresence, setFilteredPermission, setFilteredPaidLeave }) => {
     const [startDate, setStartDate] = useState(subMonths(new Date(), 1)); // Default sebulan yang lalu
@@ -47,34 +49,28 @@ const TADheader = ({ presenceData, permissionData, paidLeaveData, setFilteredPre
 
     return (
         <div className="flex flex-col laptop:justify-between laptop:h-32">
-            <div className='gap-4'>
+            <div className='gap-4 hp:mb-4'>
                 <h1 className="text-xl font-bold ml-2">Attendance Overview</h1>
                 <h1 className="text-base font-bold ml-2">{format(startDate, 'dd MMMM yyyy')} - {format(endDate, 'dd MMMM yyyy')}</h1>
             </div>
             <div className='flex hp:flex-col h-14 laptop:items-center ml-2 hp:gap-2'>
                 <p>From Date :</p>
-                <div className="flex items-center justify-center w-32 h-10 ml-2 rounded-lg bg-gray border border-gray-dark focus-within:border-2 focus-within:border-primary hover:bg-gray-300 transition-colors duration-200">
-                    <SlCalender size={20} fontFamily='primary' />
-                    <ReactDatePicker
-                        selected={startDate}
+                <Flowbite theme={{ theme: flowbiteTheme }}>
+                    <Datepicker
+                        value={format(startDate, 'MMMM dd,yyyy')}
                         dayClassName={dayClassName}
-                        onChange={date => setStartDate(date)}
-                        dateFormat="dd/MM/yyyy" // Format tanggal yang diinginkan
-                        className='bg-transparent cursor-pointer w-24 p-1 focus:outline-none'
+                        onSelectedDateChanged={date => setStartDate(date)}
+                        className=' cursor-pointer w-44 focus:outline-none laptop:ml-2'
                     />
-                </div>
-                <p className='ml-2'>To Date :</p>
-                <div className="flex items-center justify-center w-32 h-10 ml-2 rounded-lg bg-gray border border-gray-dark focus-within:border-2 focus-within:border-primary hover:bg-gray-300 transition-colors duration-200">
-                    <SlCalender size={20} fontFamily='primary' />
-                    <ReactDatePicker
-                        selected={endDate}
+                    <p className='laptop:ml-2 '>To Date :</p>
+                    <Datepicker
+                        value={format(endDate, 'MMMM dd,yyyy')}
                         dayClassName={dayClassName}
-                        onChange={date => setEndDate(date)}
-                        dateFormat="dd/MM/yyyy" // Format tanggal yang diinginkan
-                        className='bg-transparent cursor-pointer w-24 p-1 focus:outline-none'
+                        onSelectedDateChanged={date => setEndDate(date)}
+                        className=' cursor-pointer w-44 focus:outline-none laptop:ml-2'
                     />
-                </div>
-                <button onClick={handleFilter} className='bg-primary hover:bg-primary-dark transition-colors duration-200 text-white font-bold py-2 px-4 rounded ml-3'>Filter</button>
+                </Flowbite>
+                <button onClick={handleFilter} className='bg-primary hover:bg-primary-dark transition-colors duration-200 text-white font-bold py-2 px-4 rounded laptop:ml-3'>Filter</button>
             </div>
         </div>
     );

@@ -134,8 +134,8 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
     }
 
     return (
-        <div className="mt-5">
-            <table className="w-full">
+        <div className="mt-5 w-full hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[1000px]">
                 <thead className="">
                     <tr className="border-b-4 border-t-2 text-grey text-left">
                         <th className="p-4 text-center">No</th>

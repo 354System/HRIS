@@ -10,7 +10,7 @@ const LateBoxUser = ({ data }) => {
         : [];
 
     return (
-        <div className="w-64 h-full flex flex-col bg-white justify-between rounded p-5">
+        <div className="laptop:w-2/6 hp:w-1/2 h-full flex flex-col bg-white justify-between rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
                     <span>{lateDataInMonth.length > 0 ? lateDataInMonth.length : 0}</span>
@@ -21,14 +21,6 @@ const LateBoxUser = ({ data }) => {
             </div>
             <div>
                 <span className="text-base text-primary font-bold">Late </span>
-                <div className='hp:hidden flex items-center gap-1'>
-                    <div className='w-4 h-4 bg-[#CE7171] flex items-center justify-center rounded-full p-1'>
-                        <img src="/src/assets/Vector2.png" alt="" />
-                    </div>
-                    <div>
-                        <span className='text-xs text-grey'>+3% Increase than yesterday</span>
-                    </div>
-                </div>
             </div>
         </div>
     )

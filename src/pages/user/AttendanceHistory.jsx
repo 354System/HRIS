@@ -6,14 +6,12 @@ const AttendanceHistoryUser = () => {
   const [sideBarMenu, setSideBarMenu] = useState(false);
   return (
     <div className="absolute bg-gray-300 min-h-screen w-full">
-      <Navbar sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu}/>
-      <Sidebarmenu sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu}/>
-      <div className="laptop:p-7 hp:p-3 laptop:mt-28 hp:mt-24 laptop:pl-28 w-full hp:overflow-x-auto">
-        <div className="hp:overflow-x-auto">
-          <TableAttendanceHistory />
-        </div>
+      <Navbar sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu} />
+      <Sidebarmenu sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu} />
+      <div className="laptop:p-7 hp:p-3 laptop:mt-28 hp:mt-24 laptop:pl-28 w-full ">
+        <TableAttendanceHistory />
       </div>
-    </div>
+    </div> 
   );
 };
 export default AttendanceHistoryUser;

@@ -183,7 +183,7 @@ const flowbiteTheme = {
                 button: {
                     base: "w-full rounded-lg px-5 py-2 text-center text-sm font-medium",
                     today: "bg-primary text-white hover:bg-primary-light transition-colors duration-200",
-                    clear: "border border-gray-300 bg-black text-gray-900 hover:bg-gray-100"
+                    clear: "border border-gray-300 text-gray-900 hover:bg-gray-100"
                 }
             },
         },
@@ -256,9 +256,11 @@ const flowbiteTheme = {
         "base": "group flex items-stretch items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none",
         "fullSized": "w-full",
         "color": {
+            "primary": "text-primary border border-primary enabled:hover:text-white enabled:hover:bg-primary-light focus:ring-primary active:scale-90 transition-all duration-200",
+            "primary2": "text-white bg-primary border border-primary enabled:hover:bg-primary-dark focus:ring-primary active:scale-90 transition-all duration-100",
             "dark": "text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700",
             "failure": "text-white bg-red-700 border border-transparent enabled:hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:enabled:hover:bg-red-700 dark:focus:ring-red-900",
-            "gray": "text-gray-900 bg-white border border-gray-200 enabled:hover:bg-gray-100 enabled:hover:text-cyan-700 :ring-cyan-700 focus:text-cyan-700 dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:enabled:hover:text-white dark:enabled:hover:bg-gray-700 focus:ring-2",
+            "gray": "active:scale-95 text-gray-900 bg-white border border-gray-200 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 focus:ring-4 focus:ring-gray-200 transtion-all duration-200",
             "info": "text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800",
             "light": "text-gray-900 bg-white border border-gray-300 enabled:hover:bg-gray-100 focus:ring-4 focus:ring-cyan-300 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:enabled:hover:bg-gray-700 dark:enabled:hover:border-gray-700 dark:focus:ring-gray-700",
             "purple": "text-white bg-purple border border-transparent enabled:hover:bg-purple-dark focus:ring-4 focus:ring-purple-300 dark:bg-purple-600 dark:enabled:hover:bg-purple-700 dark:focus:ring-purple-900 transtion-colors duration-200",

@@ -6,7 +6,7 @@ export default {
   theme: {
     screens: {
       hp: {max: "768px"},
-      laptop: "1024px",
+      laptop: {min: "760px"},
     },
     transparent: "transparent",
     current: "currentColor",

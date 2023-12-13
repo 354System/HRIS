@@ -15,6 +15,7 @@ import WikiDocumentAdmin from './pages/admin/WikidocumentAdmin'
 import PathNotFound from './pages/path not found/PathNotFound'
 import InquiryLetterUser from './pages/user/InquiryLetter'
 import InquiryLetterAdmin from './pages/admin/InquiryLetter'
+import Tes from './pages/test'
 function App() {
   const { userData } = useAuthInfo()
   const role = userData?.role
@@ -25,12 +26,20 @@ function App() {
           <Route path="*" element={<PathNotFound />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
+          {/* path online */}
           <Route path="/dashboard" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <DashboardAdmin /> : <DashboardUser />} />} />
           <Route path="/attendance-overview" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <AttendanceOverview /> : <AttendanceHistoryUser />} />} />
           <Route path="/permission-and-leave" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <LeavePermissionOverviewAdmin /> : <LeavePermissionOverviewUser />} />} />
           <Route path="/employee-data" element={<PrivateRoute requiredRoles={["Admin"]} element={<DataUser />} />} />
           <Route path="/request" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <InquiryLetterAdmin /> : <InquiryLetterUser />} />} />
           <Route path="/wiki-document" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <WikiDocumentAdmin /> : <LeavePermissionOverviewUser />} />} />
+          <Route path="/tes" element={<PrivateRoute requiredRoles={["Public", "Admin"]} element={role === "Admin" ? <Tes /> : <LeavePermissionOverviewUser />} />} />
+          {/* path offline */}
+          {/* <Route path="/dashboard" element={<DashboardUser />} />
+          <Route path="/admin/dashboard" element={<DashboardAdmin />} />
+          <Route path="/attendance-overview" element={<AttendanceHistoryUser />} />
+          <Route path="/permission-and-leave" element={<LeavePermissionOverviewUser />} />
+          <Route path="/request" element={<InquiryLetterUser />} /> */}
           {/* <Route path="/wiki-document" element={<WikiDocumentAdmin />} /> */}
           {/* <Route path='/request' element={<InquiryLetterUser />} /> */}
         </Routes>

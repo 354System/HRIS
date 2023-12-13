@@ -8,17 +8,17 @@ import DashboardInfoUser from "../../component/user/dashboard/container/containe
 
 const DashboardUser = () => {
   const { data: presence, refetch: refetchPresence } = usePresenceCurrentUser();
-  const { data: paidLeave } = useLeaveCurrentUser();
+  const { data: paidLeave, refetch: refetchPaidLeave } = useLeaveCurrentUser();
   const [sideBarMenu, setSideBarMenu] = useState(false);
   return (
     <div className="absolute bg-gray-300 min-h-screen w-full">
-      <Sidebarmenu sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu}/>
-      <Navbar sideBarMenu={sideBarMenu}a setSideBarMenu={setSideBarMenu} />
-      <div className="laptop:p-7 hp:p-3 laptop:mt-28 hp:mt-24 laptop:pl-28 w-full">
+      <Sidebarmenu sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu} />
+      <Navbar sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu} />
+      <div className="w-full laptop:mt-28 laptop:pl-28 laptop:p-7 hp:mt-24 hp:p-3">
         <div className="laptop:h-72 hp:h-1/2">
-          <DashboardInfoUser presence={presence} paidLeave={paidLeave} refetchPresence={refetchPresence} />
+          <DashboardInfoUser presence={presence} paidLeave={paidLeave} refetchPresence={refetchPresence} refetchPaidLeave={refetchPaidLeave} />
         </div>
-        <div className="hp:overflow-x-auto">
+        <div>
           <HistoryDashboard presence={presence} />
         </div>
       </div>

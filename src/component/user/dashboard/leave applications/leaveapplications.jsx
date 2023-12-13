@@ -9,9 +9,10 @@ import { IoIosAdd } from "react-icons/io";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { FcLeave } from "react-icons/fc";
 import { Button, Datepicker, Flowbite, Select, TextInput, Textarea } from "flowbite-react";
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
+import { useAuthInfo } from "../../../../use context/useAuthInfo";
 
-const LeaveApplications = ({ leave }) => {
+const LeaveApplications = ({ leave, refetchPaidLeave }) => {
   const [data, setData] = useState({
     cuti: "",
     fromdate: '',
@@ -31,6 +32,8 @@ const LeaveApplications = ({ leave }) => {
     input: '',
     file: ''
   })
+
+  const { userData } = useAuthInfo();
 
   const fileinput = useRef(null)
 
@@ -141,6 +144,7 @@ const LeaveApplications = ({ leave }) => {
 
   const { mutate, isPending } = useLeaveApplication({
     onSuccess: (data) => {
+      refetchPaidLeave();
       successAlert({
         title: 'Your Paid Leave has been Submitted !',
         text: 'Please wait for your approval',
@@ -150,10 +154,17 @@ const LeaveApplications = ({ leave }) => {
     },
     onError: (error) => {
       console.log(error);
-      setErrorMsg((prevState) => ({
-        ...prevState,
-        input: 'Something went wrong !'
-      }));
+      if (error.response.data.message === "Remaining Cuti not found") {
+        setErrorMsg((prevState) => ({
+          ...prevState,
+          input: "You have no leave allowance left !"
+        }));
+      } else {
+        setErrorMsg((prevState) => ({
+          ...prevState,
+          input: 'Something went wrong !'
+        }));
+      }
     }
   })
 
@@ -198,9 +209,66 @@ const LeaveApplications = ({ leave }) => {
     }
   }
 
+  const [maxDate, setMaxDate] = useState({
+    fromdate: null,
+    untildate: null
+  })
+  
+  const cutiAvailable = userData.remainingCuti
+
+  useEffect(() => {
+    if (data.fromdate && cutiAvailable !== undefined) {
+      const maxFromDate = addDays(new Date(data.fromdate), 1);
+      const maxUntildate = addDays(new Date(data.fromdate), cutiAvailable > 1 ? cutiAvailable - 1 : 0);
+      setMaxDate({ fromdate: maxFromDate, untildate: maxUntildate });
+    } else {
+      setMaxDate(null);
+    }
+  }, [data.fromdate, cutiAvailable]);
+
+  useEffect(() => {
+    const {cuti, fromdate, untildate, description, file, otherReason} = data
+    if (cuti === 'Enter Other Reason' && otherReason) {
+      setColor((prevState) => ({
+        ...prevState,
+        otherReason: 'gray'
+      }));
+    }
+    if (cuti) {
+      setColor((prevState) => ({
+        ...prevState,
+        cuti: 'gray'
+      }));
+    }
+    if (fromdate) {
+      setColor((prevState) => ({
+        ...prevState,
+        fromdate: 'gray'
+      }));
+    }
+    if (untildate) {
+      setColor((prevState) => ({
+        ...prevState,
+        untildate: 'gray'
+      }));
+    }
+    if (description) {
+      setColor((prevState) => ({
+        ...prevState,
+        description: 'gray'
+      }));
+    }
+    if (file) {
+      setColor((prevState) => ({
+        ...prevState,
+        file: 'gray'
+      }));
+    }
+  }, [data]);
+
   return (
     <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
-      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 laptop:w-1/2 hp:w-11/12 laptop:h-4/5 hp:h-2/4 rounded-lg flex flex-col overflow-y-auto">
+      <div className="fixed top-1/2 transform -translate-y-1/2 gap-4 bg-white p-4 laptop:w-1/2 hp:w-11/12 laptop:h-4/5 hp:h-11/12 rounded-lg flex flex-col overflow-y-auto">
         <div className="absolute right-2 top-2">
           <button
             onClick={() => leave(false)}
@@ -260,8 +328,9 @@ const LeaveApplications = ({ leave }) => {
                 placeholder="Select From Date"
                 id="fromdate"
                 value={data.fromdate}
+                minDate={new Date()}
                 showClearButton={false}
-                onSelectedDateChanged={date => setData(prevNewData => ({ ...prevNewData, fromdate: format(date, 'MMMM dd, yyyy') }))}
+                onSelectedDateChanged={date => setData(prevNewData => ({ ...prevNewData, fromdate: format(date, 'MMMM dd, yyyy'), untildate: '' }))}
                 rightIcon={BsCalendar2DateFill}
                 icon={false}
                 required
@@ -277,6 +346,7 @@ const LeaveApplications = ({ leave }) => {
                 disabled={!data.fromdate}
                 showClearButton={false}
                 minDate={new Date(data.fromdate)}
+                maxDate={maxDate ? maxDate.untildate : null}
                 onSelectedDateChanged={date => setData(prevNewData => ({ ...prevNewData, untildate: format(date, 'MMMM dd, yyyy') }))}
                 rightIcon={BsCalendar2DateFill}
                 icon={false}
@@ -316,11 +386,11 @@ const LeaveApplications = ({ leave }) => {
               />
             </div>
             <div className="flex justify-between items-center">
-              <div>
+              <div className="w-1/3">
                 {errorMsg.input && <p className="text-red-500 font-semibold">{errorMsg.input}</p>}
               </div>
               <div className="flex gap-x-4 justify-center items-center">
-                <h1 onClick={() => popUp(false)} className="font-semibold cursor-pointer hover:underline" >
+                <h1 onClick={() => leave(false)} className="font-semibold cursor-pointer hover:underline" >
                   Cancel
                 </h1>
                 <Button

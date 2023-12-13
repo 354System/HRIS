@@ -1,24 +1,20 @@
-import { FaPen, FaTrash } from "react-icons/fa";
-import { RxDotsHorizontal } from "react-icons/rx";
 import { Spinner } from "@chakra-ui/react";
 import { format } from "date-fns";
-import { Tooltip } from "react-tooltip";
 import { useMemo, useState } from "react";
-import RepairInquiryEditUser from "./action/repairInquiry/repairInquiryEdit";
-import InquiryDeleteUser from "./action/InquiryLetterDelete";
 import RepairInquiryDetailUser from "./action/repairInquiry/repairInquiryDetail";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import { MdCancelScheduleSend, MdOutlineCancel, MdOutlineCancelPresentation } from "react-icons/md";
+import { IoIosInformationCircle } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
 import { Dropdown, Flowbite } from "flowbite-react";
 import { flowbiteTheme } from "../../../../../lib/flowbiteTheme";
 import { BsSortDown, BsSortUp } from "react-icons/bs";
 import { useApprovalInquiryLetter } from "../../../../../api/inquiry letter/useApproveRejectInquiryLetter";
 import { confirmAlert, errorAlert, pendingAlert, successAlert } from "../../../../../lib/sweetAlert";
+import { PiDotsThreeCircleFill } from "react-icons/pi";
 
 const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword }) => {
     const [selectedItem, setSelectedItem] = useState(null)
     const [detailModal, setDetailModal] = useState(false)
-    const [selectedStatus, setSelectedStatus] = useState('Default');
+    const [selectedStatus, setSelectedStatus] = useState('All');
     const [selectDate, setSelectDate] = useState(false);
 
     function approvalStatus(approval) {
@@ -32,7 +28,10 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
     }
 
     const sortedData = useMemo(() => {
-        let orderedData = dataInquiry;
+        let orderedData = [];
+        if (dataInquiry) {
+            orderedData = dataInquiry.filter((item) => item.category === 'Repair');
+        }
 
         if (searchKeyword.trim() !== '') {
             orderedData = orderedData?.filter((item) => {
@@ -40,9 +39,22 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
                     if (typeof value === 'string') {
                         // If it's a string, check if it includes the searchKeyword
                         return value.toLowerCase().includes(searchKeyword.toLowerCase());
-                    } else if (item.date) {
-                        // If it's a date, format it to 'dd-MMMM-yyyy' and check for inclusion
-                        const formattedDate = format(new Date(item.date), 'dd-MM-yyyy');
+                    } else if (typeof value === 'object' && value !== null) {
+                        // If it's an object, check if any of its values match the searchKeyword
+                        return Object.values(value).some(innerValue => {
+                            if (typeof innerValue === 'string') {
+                                return innerValue.toLowerCase().includes(searchKeyword.toLowerCase());
+                            } else if (typeof innerValue === 'object' && innerValue !== null) {
+                                // If it's an object inside the user object, check its values
+                                return Object.values(innerValue).some(nestedValue =>
+                                    nestedValue.toLowerCase().includes(searchKeyword.toLowerCase())
+                                );
+                            }
+                            return false;
+                        });
+                    } else if (value instanceof Date) {
+                        // If it's a date, format it to 'dd-MM-yyyy' and check for inclusion
+                        const formattedDate = format(value, 'dd-MM-yyyy');
                         return formattedDate.toLowerCase().includes(searchKeyword.toLowerCase());
                     }
                     return false;
@@ -50,9 +62,8 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
             });
         }
 
-        if (selectedStatus !== 'Default') {
+        if (selectedStatus !== 'All') {
             const matchingStatusData = orderedData?.filter((item) => item.approval === selectedStatus);
-            const nonMatchingStatusData = orderedData?.filter((item) => item.approval !== selectedStatus);
 
             if (matchingStatusData.length > 0) {
                 if (selectDate) {
@@ -62,8 +73,9 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
                     // Jika selectDate false, urutkan dari terbaru hingga terlama
                     matchingStatusData?.sort((a, b) => new Date(b.date) - new Date(a.date));
                 }
-
-                orderedData = [...matchingStatusData, ...nonMatchingStatusData];
+                orderedData = [...matchingStatusData];
+            } else {
+                orderedData = [];
             }
         } else {
             if (selectDate) {
@@ -93,12 +105,12 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
     })
 
     if (isPending) {
-        pendingAlert({ title: 'Sending Your Purchase Request, Please Wait...' })
+        pendingAlert({ title: 'Sending Your Repair Request, Please Wait...' })
     }
 
     const handleCancel = () => {
         confirmAlert({
-            title: 'Are you sure want to Cancel this Purchase Request?',
+            title: 'Are you sure want to Cancel this Repair Request?',
             confirmText: 'Yes, Cancel it!',
         }).then((result) => {
             if (result.isConfirmed) {
@@ -110,8 +122,8 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
     }
 
     return (
-        <div className="laptop:mt-5 hp:mt-10 w-full h-96 text-center hp:overflow-x-auto">
-            <table className="laptop:w-full hp:w-[600px]">
+        <div className="laptop:mt-5 hp:mt-10 w-full text-center hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[1200px]">
                 <thead>
                     <Flowbite theme={{ theme: flowbiteTheme }}>
                         <tr className="border-b-4 border-t-2 text-grey text-left">
@@ -122,7 +134,7 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
                             <th className="p-4">Cost Estimation</th>
                             <th className="p-4 flex justify-center">
                                 <Dropdown label="Status" inline>
-                                    <Dropdown.Item className={`${selectedStatus === 'Default' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('Default')}>Default</Dropdown.Item>
+                                    <Dropdown.Item className={`${selectedStatus === 'All' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('All')}>All</Dropdown.Item>
                                     <Dropdown.Item className={`${selectedStatus === 'Wait For Response' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Wait For Response')}>Wait For Response</Dropdown.Item>
                                     <Dropdown.Item className={`${selectedStatus === 'Approved' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Approved')}>Approved</Dropdown.Item>
                                     <Dropdown.Item className={`${selectedStatus === 'Reject' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Reject')}>Rejected</Dropdown.Item>
@@ -134,7 +146,7 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
                     </Flowbite>
                 </thead>
                 <tbody className="text-left">
-                    {sortedData ? sortedData.filter(item => item.category === 'Repair').map((item, index) => (
+                    {sortedData && sortedData.filter(item => item.category === 'Repair').map((item, index) => (
                         <tr key={index} className="border-b">
                             <td className="text-purple p-4 text-center">{index + 1}</td>
                             <td className="text-purple p-4">{format(new Date(item.date), 'dd-MM-yyyy')}</td>
@@ -142,29 +154,27 @@ const RepairInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeyword
                             <td className="p-4">{item.damage.replace(/\b\w/g, (char) => char.toUpperCase())}</td>
                             <td className="p-4">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', }).format(parseFloat(item.cost.replace(/[,.]/g, '')))}</td>
                             {approvalStatus(item.approval)}
-                            <td className="p-4 flex justify-center">
+                            <td className="flex h-16 items-center justify-center gap-2">
                                 {item.approval === 'Wait For Response' ?
-                                    <div className="flex gap-2">
-                                        <button data-tooltip-id="cancel" onClick={() => { handleCancel(); setSelectedItem(item); }} className="group w-10 h-10 flex justify-center items-center rounded-lg bg-red text-white hover:bg-red-dark hover:text-white transition-colors duration-200 ease-in-out">
-                                            <MdOutlineCancel size={20} className="group-hover:scale-105 duration-200 transition-transform" />
-                                        </button>
-                                        <button data-tooltip-id="detail" onClick={() => { setDetailModal(true); setSelectedItem(item); }} className="group w-10 h-10 flex justify-center items-center rounded-lg bg-gray-200 text-black hover:bg-gray-300 hover:text-black transition-colors duration-200 ease-in-out">
-                                            <IoIosInformationCircleOutline size={28} className="group-hover:scale-105 duration-200 transition-transform" />
-                                        </button>
-                                        <Tooltip id="cancel" content="Cancel Repair Request" place="top" style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
-                                        <Tooltip id="detail" content="Purchase Request Detail" place="top" style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
+                                    <div className="flex justify-center">
+                                        <Dropdown arrowIcon={false} inline label={<PiDotsThreeCircleFill size={35} className="hover:scale-105 " />}>
+                                            <Dropdown.Item onClick={() => { setSelectedItem(item), handleCancel(item) }} className="active:bg-red/70 hover:bg-red/70 hover:text-white transition-colors duration-200" icon={MdCancel}>Cancel Request</Dropdown.Item>
+                                            <Dropdown.Divider />
+                                            <Dropdown.Item className="hover:bg-blue-400 hover:text-white transition-colors duration-200" onClick={() => { setSelectedItem(item), setDetailModal(true); }} icon={IoIosInformationCircle}>Detail</Dropdown.Item>
+                                        </Dropdown>
                                     </div>
                                     :
-                                    <>
-                                        <button data-tooltip-id="detail" onClick={() => { setDetailModal(true); setSelectedItem(item); }} className="group w-10 h-10 flex justify-center items-center rounded-lg bg-gray-200 text-black hover:bg-gray-300 hover:text-black transition-colors duration-200 ease-in-out">
-                                            <IoIosInformationCircleOutline size={28} className="group-hover:scale-105 duration-200 transition-transform" />
-                                        </button>
-                                        <Tooltip id="detail" content="Purchase Request Detail" place="top" style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
-                                    </>
+                                    <div className="flex justify-center">
+                                        <Dropdown arrowIcon={false} inline label={<PiDotsThreeCircleFill size={35} className="hover:scale-105" />}>
+                                            <Dropdown.Item className="hover:bg-blue-400 hover:text-white transition-colors duration-200" onClick={() => { setSelectedItem(item), setDetailModal(true); }} icon={IoIosInformationCircle}>Detail</Dropdown.Item>
+                                        </Dropdown>
+                                    </div>
                                 }
                             </td>
                         </tr>
-                    )) : <Spinner className="absolute left-1/2" />}
+                    ))}
+                    {sortedData?.length === 0 && <tr><td className="p-4 laptop:text-center hp:text-left text-lg font-semibold" colSpan={7}>Data Not Available</td></tr>}
+                    {sortedData === undefined && <Spinner className="absolute left-1/2" />}
                 </tbody>
             </table>
             {detailModal ? <RepairInquiryDetailUser refetchInquiryData={refetchInquiryData} setDetailModal={setDetailModal} data={selectedItem} /> : null}

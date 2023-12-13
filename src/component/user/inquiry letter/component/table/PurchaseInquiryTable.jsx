@@ -114,8 +114,8 @@ const PurchaseInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeywo
     }
 
     return (
-        <div className="laptop:mt-5 hp:mt-10 w-full h-96 text-center hp:overflow-x-auto">
-            <table className="laptop:w-full hp:w-[600px]">
+        <div className="laptop:mt-5 hp:mt-10 w-full text-center hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[1200px]">
                 <thead>
                     <Flowbite theme={{ theme: flowbiteTheme }}>
                         <tr className="border-b-4 border-t-2 text-grey text-left">
@@ -138,7 +138,7 @@ const PurchaseInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeywo
                     </Flowbite>
                 </thead>
                 <tbody className="text-left">
-                    {sortedData ? sortedData.filter(item => item.category === 'Purchase').map((item, index) => (
+                    {sortedData && sortedData.filter(item => item.category === 'Purchase').map((item, index) => (
                         <tr key={index} className="border-b">
                             <td className="p-4 text-center">{index + 1}</td>
                             <td className="text-purple p-4">{format(new Date(item.date), 'dd-MM-yyyy')}</td>
@@ -164,7 +164,9 @@ const PurchaseInquiryTableUser = ({ dataInquiry, refetchInquiryData, searchKeywo
                                 }
                             </td>
                         </tr>
-                    )) : filteredData.length === 0 ? <tr><td className="p-4 text-center text-lg font-semibold" colSpan={7}>Data Not Available</td></tr> : <Spinner className="absolute left-1/2" />}
+                    ))}
+                    {sortedData?.length === 0 && <tr><td className="p-4 laptop:text-center hp:text-left text-lg font-semibold" colSpan={7}>Data Not Available</td></tr>}
+                    {dataInquiry === undefined && <tr><td className="laptop:text-center hp:text-start" colSpan={6}><Spinner size={'lg'} color="purpler" /></td></tr>}
                 </tbody>
             </table>
             {detailModal ? <PurchaseInquiryDetailUser data={selectedItem} refetchInquiryData={refetchInquiryData} setDetailModal={setDetailModal} /> : null}

@@ -8,57 +8,61 @@ import WaitingRepairInquiryBoxUser from "../component/inquiry info/WaitingRepair
 import RejectPurchaseInquiryBoxUser from "../component/inquiry info/RejectPurchaseBox"
 import RejectRepairInquiryBoxUser from "../component/inquiry info/RejectRepairBox"
 
-const InquiryLetterInfo = ({ dataInquiry, refetchInquiryData }) => {
+const InquiryLetterInfo = ({ inquiryData, refetchInquiryData }) => {
     return (
         <div className="w-full h-full flex">
-            <div className="w-full h-full flex flex-col laptop:gap-6 hp:gap-4">
-                <div className="flex h-1/4 gap-4 laptop:hidden">
-                    <PurchaseInquiryLetterBox refetchInquiryData={refetchInquiryData} />
-                </div>
-                <div className="flex h-1/4 gap-4 laptop:hidden">
-                    <RepairInquryLetterBox refetchInquiryData={refetchInquiryData} />
-                </div>
-                <div className="flex h-1/6 gap-3 laptop:hidden">
-                    <ApprovePurchaseBoxUser refetchInquiryData={refetchInquiryData} />
-                    <ApproveRepairBoxUser refetchInquiryData={refetchInquiryData} />
-                </div>
-                <div className="flex h-1/6 gap-3 laptop:hidden">
-                    <WaitingPurchaseInquiryBoxUser refetchInquiryData={refetchInquiryData} />
-                    <WaitingRepairInquiryBoxUser refetchInquiryData={refetchInquiryData} />
-                </div>
-                <div className="flex h-1/6 gap-3 laptop:hidden">
-                    <RejectPurchaseInquiryBoxUser refetchInquiryData={refetchInquiryData} />
-                    <RejectRepairInquiryBoxUser refetchInquiryData={refetchInquiryData} />
-                </div>
-                <div className="flex h-1/2 gap-8 hp:hidden">
+            {/* laptop */}
+            <div className="w-full h-full flex flex-col gap-6 hp:hidden">
+                <div className="flex h-1/2 gap-8">
                     <div data-tooltip-id="purchase">
                         <PurchaseInquiryLetterBox refetchInquiryData={refetchInquiryData} />
                         <Tooltip id="purchase" content="Create Purchase Request" place='top' offset={-10} style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
                     </div>
                     <div>
-                        <ApprovePurchaseBoxUser />
+                        <ApprovePurchaseBoxUser inquiryData={inquiryData} />
                     </div>
                     <div>
-                        <WaitingPurchaseInquiryBoxUser />
+                        <WaitingPurchaseInquiryBoxUser inquiryData={inquiryData} />
                     </div>
                     <div>
-                        <RejectPurchaseInquiryBoxUser />
+                        <RejectPurchaseInquiryBoxUser inquiryData={inquiryData} />
                     </div>
                 </div>
-                <div className="flex h-1/2 gap-8 hp:hidden">
+                <div className="flex h-1/2 gap-8">
                     <div data-tooltip-id="repair">
                         <RepairInquryLetterBox refetchInquiryData={refetchInquiryData} />
                         <Tooltip id="repair" content="Create Repair Request" place='top' offset={-10} style={{ fontSize: '12px', padding: '5px', backgroundColor: '#2F2F2F', color: 'white', fontWeight: '600', letterSpacing: '0.05em' }} noArrow />
                     </div>
                     <div>
-                        <ApproveRepairBoxUser />
+                        <ApproveRepairBoxUser inquiryData={inquiryData} />
                     </div>
                     <div>
-                        <WaitingRepairInquiryBoxUser />
+                        <WaitingRepairInquiryBoxUser inquiryData={inquiryData} />
                     </div>
                     <div>
-                        <RejectRepairInquiryBoxUser />
+                        <RejectRepairInquiryBoxUser inquiryData={inquiryData} />
                     </div>
+                </div>
+            </div>
+            {/* hp */}
+            <div className="w-full h-full flex flex-col gap-4">
+                <div className="flex h-1/4 gap-4 laptop:hidden">
+                    <PurchaseInquiryLetterBox refetchInquiryData={refetchInquiryData} />
+                </div>
+                <div className="flex h-1/4 laptop:hidden">
+                    <RepairInquryLetterBox refetchInquiryData={refetchInquiryData} />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <ApprovePurchaseBoxUser refetchInquiryData={refetchInquiryData} inquiryData={inquiryData} />
+                    <ApproveRepairBoxUser refetchInquiryData={refetchInquiryData} inquiryData={inquiryData} />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <WaitingPurchaseInquiryBoxUser refetchInquiryData={refetchInquiryData} inquiryData={inquiryData} />
+                    <WaitingRepairInquiryBoxUser refetchInquiryData={refetchInquiryData} inquiryData={inquiryData} />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <RejectPurchaseInquiryBoxUser refetchInquiryData={refetchInquiryData} inquiryData={inquiryData} />
+                    <RejectRepairInquiryBoxUser refetchInquiryData={refetchInquiryData} inquiryData={inquiryData} />
                 </div>
             </div>
         </div>

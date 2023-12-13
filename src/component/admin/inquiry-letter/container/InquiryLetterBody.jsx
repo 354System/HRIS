@@ -14,7 +14,7 @@ const InquiryLetterBodyAdmin = () => {
 
     return (
         <div className="bg-white w-full rounded-lg p-7">
-            <div className="flex items-center justify-between w-full h-20">
+            <div className="flex hp:flex-col items-center justify-between w-full laptop:h-20 hp:gap-4">
                 <div className="flex gap-3">
                     <button className={`h-12 w-36 focus:outline-none transition-colors duration-300 rounded-lg font-semibold tracking-wide text-sm ${repairTable ? 'bg-purple  text-white' : 'bg-gray-200 text-gray-500 border border-gray-500 hover:bg-purple/50 hover:text-white transition-colors duration-200'}`}
                         onClick={() => {
@@ -31,14 +31,14 @@ const InquiryLetterBodyAdmin = () => {
                         Purchase Inquiry
                     </button>
                 </div>
-                <div>
+                <div className="">
                     <TextInput
                         theme={flowbiteTheme}
                         type="text"
                         id="search"
                         placeholder="Quick Search..."
                         icon={FiSearch}
-                        className="w-96"
+                        className="laptop:w-96 hp:w-full"
                         value={searchKeyword}
                         onChange={(e) => setSearchKeyword(e.target.value)}
                     />

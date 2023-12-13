@@ -84,12 +84,13 @@ const ChartDivisiWeekly = () => {
     };
 
     const barOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             x: {
-                stacked: true,
+                type: 'category',
             },
             y: {
-                stacked: true,
                 beginAtZero: true,
                 max: 100,
                 barThickness: 50,
@@ -118,9 +119,11 @@ const ChartDivisiWeekly = () => {
     }, []);
 
     return (
-        <div className="w-full h-full flex flex-col justify-between bg-white p-5 rounded-r-lg">
+        <div className="w-full h-full flex flex-col justify-center items-center bg-white p-5 rounded-r-lg">
             <h1 className='text-2xl font-bold text-primary '>Weekly Attendence</h1>
-            <Bar data={barData} options={barOptions}/>
+            <div className="w-full h-full hp:h-64 hp:mt-8">
+                <Bar data={barData} options={barOptions} />
+            </div>
         </div>
     )
 }

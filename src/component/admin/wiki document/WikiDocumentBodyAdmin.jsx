@@ -3,44 +3,19 @@ import { HiOutlineDocumentDownload } from "react-icons/hi";
 import { IoMdEye } from "react-icons/io";
 import { useFetchWikiDocument } from "../../../api/wiki document/useFetchWikiDocument";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
-import { DefaultLayoutPlugin, defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { useEffect, useState } from "react";
 import DetailWikiDocument from "./component/modal/detailDocument";
 const WikiDocumentBodyAdmin = () => {
-    const { data: wikiData, isLoading, isError } = useFetchWikiDocument()
+    const { data: wikiData, isLoading } = useFetchWikiDocument()
     const [selectedItem, setSelectedItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [url, setUrl] = useState([]);
-    const fileType = "application/pdf";
-    useEffect(() => {
-        if (wikiData) {
-            // Mapping setiap objek Wiki
-            wikiData.forEach((data) => {
-                if (data.file && data.file.data && data.file.type === 'Buffer') {
-                    // Convert buffer to base64
-                    const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(data.file.data)));
-    
-                    // Create base64 URL
-                    const base64URL = `data:application/pdf;base64,${base64String}`;
-    
-                    // Set URL ke dalam state atau lakukan apa yang Anda perlukan
-                    // Misalnya, simpan URL dalam bentuk array jika Anda ingin menyimpan URL untuk semua objek
-                    // Jangan lupa mempertimbangkan cara terbaik untuk mengelola URL dalam aplikasi Anda
-                    setUrl((prevUrls) => [...prevUrls, base64URL]);
-                }
-            });
-        }
-    }, [wikiData]);
-    
-
-
-    console.log(url);
 
     return (
-        <div className="w-full px-5 bg-white rounded-b-lg">
-            <table className="w-full">
+        <div className="w-full laptop:px-5 hp:p-5 bg-white rounded-b-lg hp:overflow-x-auto  ">
+            <table className="laptop:w-full hp:w-[400px]">
                 <thead>
                     <tr className="w-full border-t-2 border-b-2">
                         <th className="p-4 text-left">No</th>
@@ -52,12 +27,7 @@ const WikiDocumentBodyAdmin = () => {
                     {wikiData ? wikiData.map((data, index) => (
                         <tr key={index} className="border-b">
                             <td className="text-[#252C58] p-4">{index + 1}</td>
-                            {url && url.map((url, index) => (
-                                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                                    <Viewer fileUrl={url} plugins={[defaultLayoutPlugin]} />
-                                </Worker>
-                            ))
-                            }
+                            <td className="text-[#252C58] p-4">{data.title}</td>
                             <td className="flex gap-x-1 justify-end p-4">
                                 <button className="group w-10 h-10 flex justify-center items-center rounded-lg mb-4 bg-purple text-white hover:bg-purple-dark transition-colors duration-200 ease-in-out">
                                     <IoMdEye onClick={() => { setIsModalOpen(true), setSelectedItem(data) }} size={20} className="group-hover:scale-125 duration-200 transition-transform" />

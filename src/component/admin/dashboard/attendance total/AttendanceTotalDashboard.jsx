@@ -39,7 +39,7 @@ const TotalAttendanceDashboard = ({ presenceData, permissionData, paidLeaveData 
     }, [presenceData, permissionData, paidLeaveData]);
 
     return (
-        <div className="w-full bg-white p-5 rounded-lg">
+        <div className="w-full bg-white p-5 rounded-lg laptop:mb-40 hp:mb-20">
             <TADheader 
             presenceData={presenceData}
             permissionData={permissionData} 

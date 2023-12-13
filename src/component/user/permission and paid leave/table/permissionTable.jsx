@@ -6,10 +6,11 @@ import { BsSortDown, BsSortUp } from "react-icons/bs";
 import { Dropdown } from "flowbite-react";
 
 const PermissionTableUser = ({ searchKeyword }) => {
-    const [selectedStatus, setSelectedStatus] = useState('Default');
+    const [selectedStatus, setSelectedStatus] = useState('All');
     const [selectDate, setSelectDate] = useState(false);
 
     const { data: permissionData } = usePermissionCurrentUser()
+
     function approvalStatus(approval) {
         if (approval === 'Approved') {
             return <td className=" text-center"><span className="text-green bg-green/10 p-2 font-semibold rounded text-sm">Approved</span></td>
@@ -19,6 +20,7 @@ const PermissionTableUser = ({ searchKeyword }) => {
             return <td className=" text-center"><span className="text-yellow bg-yellow/10 p-2 font-semibold rounded text-sm">Wait For Response</span></td>
         }
     }
+
     const sortedData = useMemo(() => {
         let orderedData = permissionData;
 
@@ -38,9 +40,8 @@ const PermissionTableUser = ({ searchKeyword }) => {
             });
         }
 
-        if (selectedStatus !== 'Default') {
+        if (selectedStatus !== 'All') {
             const matchingStatusData = orderedData?.filter((item) => item.approval === selectedStatus);
-            const nonMatchingStatusData = orderedData?.filter((item) => item.approval !== selectedStatus);
 
             if (matchingStatusData.length > 0) {
                 if (selectDate) {
@@ -51,8 +52,11 @@ const PermissionTableUser = ({ searchKeyword }) => {
                     matchingStatusData?.sort((a, b) => new Date(b.date) - new Date(a.date));
                 }
 
-                orderedData = [...matchingStatusData, ...nonMatchingStatusData];
+                orderedData = [...matchingStatusData];
+            } else {
+                orderedData = [];
             }
+
         } else {
             if (selectDate) {
                 // Jika selectDate true, urutkan dari terlama hingga terbaru
@@ -78,7 +82,7 @@ const PermissionTableUser = ({ searchKeyword }) => {
                         <th className="">End Date</th>
                         <th className="flex justify-center p-4">
                             <Dropdown label="Status" inline>
-                                <Dropdown.Item className={`${selectedStatus === 'Default' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('Default')}>Default</Dropdown.Item>
+                                <Dropdown.Item className={`${selectedStatus === 'All' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('All')}>All</Dropdown.Item>
                                 <Dropdown.Item className={`${selectedStatus === 'Wait For Response' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Wait For Response')}>Wait For Response</Dropdown.Item>
                                 <Dropdown.Item className={`${selectedStatus === 'Approved' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Approved')}>Approved</Dropdown.Item>
                                 <Dropdown.Item className={`${selectedStatus === 'Reject' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Reject')}>Rejected</Dropdown.Item>
@@ -87,18 +91,20 @@ const PermissionTableUser = ({ searchKeyword }) => {
                         </th>
                     </tr>
                 </thead>
-                {sortedData ? sortedData?.map((data, index) => (
-                    <tbody>
+                <tbody>
+                    {sortedData && sortedData?.map((data, index) => (
                         <tr key={index} className="border-b">
                             <td className="text-purple">{index + 1}</td>
                             <td className="text-primary p-4 laptop:max-w-[90px]">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
                             <td className="text-primary hp:max-w-[90px]">{data.izin}</td>
-                            <td className="text-purple ">{format(new Date(data.fromdate), 'dd-MM-yyyy')}</td>
-                            <td className="text-purple">{format(new Date(data.untildate), 'dd-MM-yyyy')}</td>
+                            <td className="text-purple ">{data.fromdate ? format(new Date(data.fromdate), 'dd-MM-yyyy') : '-'}</td>
+                            <td className="text-purple">{data.untildate ? format(new Date(data.untildate), 'dd-MM-yyyy') : '-'}</td>
                             {approvalStatus(data.approval)}
                         </tr>
-                    </tbody>
-                )) : <Spinner className="absolute left-1/2" />}
+                    ))}
+                    {sortedData?.length === 0 && <tr><td className="p-4 laptop:text-center hp:text-left text-lg font-semibold" colSpan={6}>Data Not Available</td></tr>}
+                    {permissionData === undefined && <tr><td className="laptop:text-center hp:text-start" colSpan={6}><Spinner size={'lg'} color="purpler" /></td></tr>}
+                </tbody>
             </table>
         </div>
     )

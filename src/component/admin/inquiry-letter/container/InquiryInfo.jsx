@@ -7,11 +7,15 @@ import WaitingPurchaseBoxAdmin from "../component/inquiry-info/WaitingPurchaseBo
 import RejectPurchaseInquiryBoxAdmin from "../component/inquiry-info/RejectPurchaseBox"
 import WaitingRepairBoxAdmin from "../component/inquiry-info/WaitingRepairBox"
 import RejectRepairInquiryBoxAdmin from "../component/inquiry-info/RejectRepairBox"
+import ApproveRepairBoxUser from "../../../user/inquiry letter/component/inquiry info/ApproveRepairDeviceBox"
+import { useFetchAllInquiryLetter } from "../../../../api/fetchData/useFetchAllInquiryLetter"
 
 const InquiryLetterInfoAdmin = () => {
+    const { data: requestData, isLoading } = useFetchAllInquiryLetter()
     return (
         <div className="w-full h-full flex">
-            <div className="w-full h-full flex flex-col gap-6">
+            {/* laptop */}
+            <div className="w-full h-full flex flex-col gap-6 hp:hidden">
                 <div className="flex h-1/2 gap-8">
                     <div data-tooltip-id="purchase">
                         <TotalReqInquiryPurchaseBoxAdmin />
@@ -41,6 +45,27 @@ const InquiryLetterInfoAdmin = () => {
                     <div>
                         <RejectRepairInquiryBoxAdmin />
                     </div>
+                </div>
+            </div>
+            {/* hp */}
+            <div className="w-full h-full flex flex-col gap-4 laptop:hidden">
+                <div className="flex h-1/4">
+                    <TotalReqInquiryPurchaseBoxAdmin requestData={requestData} />
+                </div>
+                <div className="flex h-1/4">
+                    <TotalReqInquiryRepairBoxAdmin requestData={requestData} />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <ApprovePurchaseBoxAdmin />
+                    <ApproveRepairBoxUser />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <WaitingPurchaseBoxAdmin />
+                    <WaitingRepairBoxAdmin />
+                </div>
+                <div className="flex h-1/6 gap-3 laptop:hidden">
+                    <RejectPurchaseInquiryBoxAdmin />
+                    <RejectRepairInquiryBoxAdmin />
                 </div>
             </div>
         </div>

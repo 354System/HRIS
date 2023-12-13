@@ -40,8 +40,8 @@ const TableDataUser = () => {
   return (
     <div className="bg-white w-full rounded-lg p-5 mb-10">
       <HeaderDataUser searchUser={searchUser} dataUsers={users} setSearchUser={setSearchUser} addUserPopUp={setAddUserPopUp} />
-      <div className="w-full">
-        <table className="w-full ">
+      <div className="w-full hp:overflow-x-auto">
+        <table className="laptop:w-full hp:w-[800px]">
           <thead>
             <tr className="border-b-2 border-t-2 text-primary">
               <th className="p-5 text-left">ID</th>

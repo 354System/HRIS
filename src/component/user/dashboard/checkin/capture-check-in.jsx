@@ -7,7 +7,7 @@ import { usePresent } from "../../../../api/attendance/usePresent";
 import format from "date-fns/format";
 import { Spinner } from "@chakra-ui/react";
 import { IoCamera } from "react-icons/io5";
-const Camera = ({ checkInPopUp, status, refetchPresence }) => {
+const CaptureCheckin = ({ checkInPopUp, status, refetchPresence }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [resultPopUp, setResultPopUp] = useState(false);
   const [devices, setDevices] = useState([]);
@@ -84,7 +84,7 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
           return distance;
         }
 
-        const allowedDistance = 20;
+        const allowedDistance = 12;
         const distance = calculateDistance(companyLatitude, companyLongitude, userLatitude, userLongitude);
         setRadius(allowedDistance);
         setDistance(distance);
@@ -153,14 +153,17 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
       const formData = new FormData();
       formData.append("image", file);
       formData.append("checkin", checkInFormatted);
-      formData.append("absen", "Work From Office");
+      formData.append("absen", status);
 
-      // mengirim http request ke server
-      if (distance <= radius) {
-        mutate(formData);
+      if (status === 'Work From Office') {
+        if (distance <= radius) {
+          mutate(formData);
+        } else {
+          console.log('');
+          setErrorMsg('Anda tidak berada di jarak yang ditentukan');
+        }
       } else {
-        console.log('');
-        setErrorMsg('Anda tidak berada di jarak yang ditentukan');
+        mutate(formData);
       }
     } catch (error) {
       console.error('Error dalam capturePhoto:', error);
@@ -174,7 +177,7 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
         <Result datas={dataAbsensi} checkInPopUp={checkInPopUp} />
       ) :
         <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
-          <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-6 laptop:w-[650px] laptop:h-[90%] hp:w-11/12 hp:min-h-2/3 rounded-lg">
+          <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-6 laptop:w-[650px] laptop:h-[90%] hp:w-11/12 hp:h-3/4 rounded-lg">
             <div onClick={() => checkInPopUp(false)} className="flex justify-end">
               <button
                 className="absolute top-0 right-0 -mr-3 -mt-3 bg-black transition-transform transform hover:scale-105 hover:bg-gray-900 hover:shadow-lg w-[41.64px] h-[41.64px] rounded-full flex items-center justify-center">
@@ -194,11 +197,11 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
                 {errorMsg && <span className="hp:text-sm text-red-500">{errorMsg}</span>}
               </div>
             </div>
-            <div className="w-full h-full">
+            <div className="w-full h-full ">
               {devices.map((device, key) => (
-                <div key={key} className="relative h-[85%] flex justify-center">
+                <div key={key} className="relative h-[85%]">
                   <Webcam
-                    className=" rounded-lg h-full"
+                    className="rounded-lg h-full"
                     audio={false}
                     videoConstraints={{ deviceId: device.deviceId }}
                     ref={webcamRef}
@@ -222,4 +225,4 @@ const Camera = ({ checkInPopUp, status, refetchPresence }) => {
   );
 };
 
-export default Camera;
+export default CaptureCheckin;

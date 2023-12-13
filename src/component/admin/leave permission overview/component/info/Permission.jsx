@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 const Permission = ({ permissionData }) => {
   return (
-    <div className="w-64 h-full flex flex-col justify-between bg-yellow rounded p-5">
+    <div className="laptop:w-64 h-full hp:w-full flex flex-col justify-between bg-yellow rounded p-5">
       <div className="flex justify-between items-center">
         <div className="text-3xl font-bold text-white">
           <span>{permissionData?.length}</span>

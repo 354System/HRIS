@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Icon } from '@iconify/react';
-import { AiFillExclamationCircle } from "react-icons/ai";
 import { useLogin } from "../api/authToken/useLogin";
 import { Spinner } from "@chakra-ui/react";
 import { Button, Flowbite, Label, TextInput } from "flowbite-react";
 import { flowbiteTheme } from "../lib/flowbiteTheme";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Login = () => {
-
-    const [showPassword, setShowPassword] = useState(false);
+    const [user, setUser] = useState({
+        email: '',
+        password: '',
+    });
     const [color, setColor] = useState({
         email: 'gray',
         password: 'gray'
     })
+    const [showPassword, setShowPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState('')
+
     const [textIndex, setTextIndex] = useState(0);
     const texts = [
         "Very Good \n Works Are Waiting For You",
@@ -31,18 +34,7 @@ const Login = () => {
 
     const lines = texts[textIndex].split('\n');
 
-    const [user, setUser] = useState({
-        email: '',
-        password: '',
-    });
-
-    const handleChangeText = (e) => {
-        setUser((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
+    //function untuk mencari field yang kosong
     const findFirstEmptyField = () => {
         const fields = ['email', 'password'];
         for (const field of fields) {
@@ -52,6 +44,7 @@ const Login = () => {
         }
         return null;
     };
+
     const validateInput = () => {
         const { email, password } = user;
         const missingFields = [];
@@ -80,6 +73,13 @@ const Login = () => {
         }
     }
 
+    const handleChangeText = (e) => {
+        setUser((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value,
+        }));
+    };
+
     const { mutate, isPending } = useLogin({
         onSuccess: async (data) => {
             localStorage.setItem('authToken', data.token);
@@ -106,16 +106,18 @@ const Login = () => {
             const inputElement = document.getElementById(firstEmptyField);
             inputElement.focus();
             inputElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setColor({
-                email: firstEmptyField === 'email' ? 'failure' : 'gray',
-                password: firstEmptyField === 'password' ? 'failure' : 'gray',
-            })
+            setColor((prevState) => ({
+                ...prevState,
+                email: !email ? 'failure' : 'gray',
+                password: !password ? 'failure' : 'gray',
+            }))
         }
     };
 
     return (
         <div className="flex w-full h-screen">
-            <div className="laptop:flex laptop:w-[70%] laptop:h-full hp:hidden bg-purple items-center justify-center relative">
+            {/* hp-hidden */}
+            <div className="hp:hidden flex items-center justify-center relative w-[70%] h-full bg-purple">
                 <div className="absolute w-full h-screen bg-repeat">
                     <img src="src/assets/ssss 1.png" alt="" className="h-full" />
                 </div>
@@ -137,9 +139,10 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <div className="hp:bg-white laptop:bg-white laptop:justify-between p-8 hp:py-20 flex flex-col laptop:w-[30%] laptop:h-full hp:w-full hp:h-full">
-                <div className="laptop:w-[70%] hp:w-full flex justify-center h-10">
-                    <img src="src/assets/logo terbaru.png" alt="" className="hp:w-2/3 laptop:w-full" />
+
+            <div className="flex flex-col laptop:justify-between laptop:w-[30%] laptop:h-full hp:w-full hp:h-full hp:py-20 p-8 laptop:bg-white hp:bg-purple/10">
+                <div className="flex justify-center h-10 laptop:w-[70%] hp:w-full">
+                    <img src="src/assets/logo terbaru.png" alt="" className="laptop:w-full hp:w-2/3" />
                 </div>
                 <div className="flex flex-col text-xl gap-2 w-full hp:py-20">
                     <h1 className="font-semibold mb-3">Nice to see you again</h1>
@@ -172,22 +175,15 @@ const Login = () => {
                                     placeholder="Enter Password"
                                     required
                                 />
-                                <Icon
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    icon={showPassword ? "ph:eye-slash" : "ph:eye"}
-                                    width={20}
-                                    className="cursor-pointer absolute bottom-3 right-4"
-                                    role="button"
-                                    type="button"
-                                />
+                                <div className="w-5 h-5 absolute bottom-3 right-4 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaRegEyeSlash /> : <FaRegEye />}</div>
                             </div>
                             {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
                             <div className="mb-5 flex justify-end">
                                 <h1 className="text-purple text-xs hover:underline hover:font-semibold cursor-pointer">Forgot Your Password?</h1>
                             </div>
                             <div>
-                                <Button type="submit" color="purple" disabled={isPending} className="w-full h-12">
-                                    {isPending ? <Spinner size={"sm"} color="white" /> : "Sign In"}
+                                <Button type="submit" disabled={isPending} color="purple" isProcessing={isPending} processingSpinner={<Spinner size={"sm"} color="white" />} className="w-full h-12 active:scale-95 transition-all duration-100">
+                                    Sign In
                                 </Button>
                             </div>
                         </Flowbite>

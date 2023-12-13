@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import Camera from "./capture-check-in";
+import CaptureCheckin from "./capture-check-in";
 
 const CheckIn = ({ CheckInPopUp, refetchPresence }) => {
 
-  const [WFO, setWFO] = useState(false)
+  const [cameraCapture, setCameraCapture] = useState(false)
   const [status, setStatus] = useState('')
 
   const handleCheckinWFO = () => {
-    setWFO(true);
+    setCameraCapture(true);
     setStatus('Work From Office')
   };
+
+  const handleCheckinWFH = () => {
+    setCameraCapture(true);
+    setStatus('Work From Home')
+  }
 
   const handleClose = () => {
     CheckInPopUp(false)
@@ -18,7 +23,7 @@ const CheckIn = ({ CheckInPopUp, refetchPresence }) => {
 
   return (
     <>
-      {WFO ? <Camera refetch={refetchPresence} status={status} checkInPopUp={CheckInPopUp} refetchPresence={refetchPresence} /> : 
+      {cameraCapture ? <CaptureCheckin refetch={refetchPresence} status={status} checkInPopUp={CheckInPopUp} refetchPresence={refetchPresence} /> : 
         <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
           <div className="fixed top-1/2 transform -translate-y-1/2 bg-white p-8 laptop:w-2/5 hp:w-11/12 laptop:h-80 hp:h-2/5 rounded-lg">
             <div className="absolute top-0 right-0 -mr-2 -mt-2">
@@ -42,7 +47,7 @@ const CheckIn = ({ CheckInPopUp, refetchPresence }) => {
                 </h1>
               </div>
               <div className="flex flex-col items-center gap-2 group">
-                <button className="flex justify-center items-center laptop:h-32 hp:w-24 hp:h-24 bg-purple hover:bg-purple-dark transition-all duration-200 laptop:w-32 rounded-full transform group-hover:scale-105">
+                <button onClick={handleCheckinWFH} className="flex justify-center items-center laptop:h-32 hp:w-24 hp:h-24 bg-purple hover:bg-purple-dark transition-all duration-200 laptop:w-32 rounded-full transform group-hover:scale-105">
                   <Icon icon="solar:home-linear" color="white" width="42.17" />
                 </button>
                 <h1 className="text-center text-primary font-bold transition-all transform group-hover:scale-105">

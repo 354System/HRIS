@@ -75,8 +75,8 @@ const PurchaseInquiryDetailAdmin = ({ data, setDetailModal, refetchInquiryData }
     }
 
     return (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/60 w-full h-full cursor-default">
-            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 bg-white p-5 w-1/2 h-4/5 rounded-lg flex flex-col">
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/60 w-full min-h-screen cursor-default">
+            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 bg-white p-5 laptop:w-1/2 hp:w-3/4 h-4/5 rounded-lg flex flex-col">
                 <div className="absolute top-2 right-2">
                     <button
                         onClick={() => setDetailModal(false)}

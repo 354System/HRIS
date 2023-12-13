@@ -9,7 +9,7 @@ import { HiOutlineDocumentText } from "react-icons/hi";
 import { TbDeviceIpadHorizontal } from "react-icons/tb";
 import { AiOutlineDollarCircle } from "react-icons/ai";
 import { flowbiteTheme } from "../../../../../../../lib/flowbiteTheme";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { confirmAlert, successAlert } from "../../../../../../../lib/sweetAlert";
 import { useApprovalInquiryLetter } from "../../../../../../../api/inquiry letter/useApproveRejectInquiryLetter";
 import { Spinner } from "@chakra-ui/react";
@@ -19,11 +19,11 @@ const PurchaseInquiryDetailUser = ({ data, setDetailModal, refetchInquiryData })
 
     function approvalStatus(approval) {
         if (approval === 'Approved') {
-            return <div>Status : <span className="text-green bg-green/10 p-2 font-semibold rounded text-sm">Approved</span></div>
+            return <div className="w-full text-start font-semibold">Status : <span className="text-green bg-green/10 p-2 font-semibold rounded text-sm">Approved</span></div>
         } else if (approval === 'Reject' || approval === 'Canceled') {
-            return <div>Status : <span className="text-red bg-red/10 p-2 font-semibold rounded text-sm">{approval === 'Reject' ? 'Rejected' : 'Canceled'}</span></div>
+            return <div className="w-full text-start font-semibold">Status : <span className="text-red bg-red/10 p-2 font-semibold rounded text-sm">{approval === 'Reject' ? 'Rejected' : 'Canceled'}</span></div>
         } else if (approval === 'Wait For Response') {
-            return <div className="font-semibold">Status : <span className="text-yellow bg-yellow/10 p-2 font-semibold rounded text-sm">Wait For Response</span></div>
+            return <div className="w-full text-start font-semibold">Status : <span className="text-yellow bg-yellow/10 p-2 font-semibold rounded text-sm">Wait For Response</span></div>
         } else {
             return <div>Status : <span className="text-yellow bg-yellow/10 p-2 font-semibold rounded text-sm">Pending</span></div>
         }
@@ -57,8 +57,8 @@ const PurchaseInquiryDetailUser = ({ data, setDetailModal, refetchInquiryData })
     }
 
     return (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20 bg-black/60 w-full h-full cursor-default">
-            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 bg-white p-5 w-1/2 h-4/5 rounded-lg flex flex-col">
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full min-h-screen flex items-center justify-center z-20 bg-black/60 cursor-default">
+            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 flex flex-col laptop:w-1/2 laptop:h-4/5 hp:w-11/12 hp:h-3/4 p-5 hp:overflow-y-auto rounded-lg bg-white">
                 <div className="absolute top-2 right-2">
                     <button
                         onClick={() => setDetailModal(false)}

@@ -43,6 +43,7 @@ const TADtable = ({ presence, permission, paidLeave, }) => {
             groupedData[user?._id].cuti++;
         }
     });
+    console.log(groupedData);
 
     return (
         <div className="laptop:mt-5 hp:mt-40 w-full text-center hp:overflow-x-auto">

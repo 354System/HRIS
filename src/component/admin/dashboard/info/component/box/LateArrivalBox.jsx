@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 const LateArrivalBox = ({ data }) => {
     const lateArrival = data?.filter((item) => item.type === 'Late').length;
     return (
-        <div className="w-64 h-full flex flex-col justify-between bg-white rounded p-5">
+        <div className="laptop:w-2/6 hp:w-1/2 h-full flex flex-col justify-between bg-white rounded p-5">
             <div className="flex justify-between items-center">
                 <div className='text-3xl font-bold text-primary'>
                     <span>{lateArrival}</span>
@@ -13,14 +13,6 @@ const LateArrivalBox = ({ data }) => {
             </div>
             <div>
                 <span className="text-base text-primary font-bold">Late Arrival</span>
-                <div className='hp:hidden flex items-center gap-1'>
-                    <div className='w-4 h-4 bg-[#CE7171] flex items-center justify-center rounded-full p-1'>
-                        <img src="src/assets/Vector.svg" alt="" />
-                    </div>
-                    <div>
-                        <span className='text-xs text-grey'>+3% Increase than yesterday</span>
-                    </div>
-                </div>
             </div>
         </div>
     )

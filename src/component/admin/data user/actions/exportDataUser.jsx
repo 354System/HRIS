@@ -10,7 +10,7 @@ const ExportDataUser = ({ dataUsers }) => {
     }
     return (
         <div className="w-full h-10 flex justify-end">
-            <button onClick={handleExportToExcel} className="bg-[#275b1d] hover:bg-[#183013] transition duration-300 w-36 h-10 rounded-lg flex items-center justify-center gap-x-2">
+            <button onClick={handleExportToExcel} className="bg-[#275b1d] hover:bg-[#183013] transition duration-300 laptop:w-36 hp:w-full h-10 rounded-lg flex items-center justify-center gap-x-2">
                 <Icon icon="icon-park-solid:excel" fontSize={20} color="white"/>
                 <p className="text-sm text-white font-bold">Export to Excel</p>
             </button>

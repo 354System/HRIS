@@ -73,7 +73,7 @@ const RealtimeInsightBoxUser = ({ data, refetchPresence }) => {
   }, []);
 
   return (
-    <div className="laptop:w-64 hp:w-full h-full bg-white rounded flex flex-col justify-between items-center p-5">
+    <div className="laptop:w-full hp:w-full h-full bg-white rounded flex flex-col justify-between items-center p-5">
       <div className="flex gap-4 w-full items-center">
         <BsSun size={50} className="text-purple" />
         <div className="flex flex-col w-full">
@@ -121,7 +121,7 @@ const RealtimeInsightBoxUser = ({ data, refetchPresence }) => {
                 </Button>
               )}
               {presentDataToday && presentDataToday?.[0].checkout ? (
-                <Link to="/attendance-history">
+                <Link to="/attendance-overview">
                   <button
                     className="w-52 h-[37px] flex items-center justify-center rounded p-3 bg-purple hover:bg-purple-dark transition duration-200 ease-in-out">
                     <span className="text-white text-sm font-bold">View Presence History</span>

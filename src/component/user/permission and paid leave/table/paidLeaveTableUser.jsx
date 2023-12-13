@@ -5,7 +5,7 @@ import { BsSortDown, BsSortUp } from "react-icons/bs";
 import { Dropdown } from "flowbite-react";
 import { useMemo, useState } from "react";
 const PaidLeaveTableUser = ({ searchKeyword }) => {
-    const [selectedStatus, setSelectedStatus] = useState('Default');
+    const [selectedStatus, setSelectedStatus] = useState('All');
     const [selectDate, setSelectDate] = useState(false);
 
     const { data: LeaveData } = useLeaveCurrentUser()
@@ -18,7 +18,7 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
             return <td className=" text-center"><span className="text-yellow bg-yellow/10 p-2 font-semibold rounded text-sm">Wait For Response</span></td>
         }
     }
-    
+
     const sortedData = useMemo(() => {
         let orderedData = LeaveData;
 
@@ -27,7 +27,7 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
                 return Object.values(item).some(value => {
                     if (typeof value === 'string') {
                         // If it's a string, check if it includes the searchKeyword
-                       return value.toLowerCase().includes(searchKeyword.toLowerCase());
+                        return value.toLowerCase().includes(searchKeyword.toLowerCase());
                     } else if (item.date) {
                         // If it's a date, format it to 'dd-MMMM-yyyy' and check for inclusion
                         const formattedDate = format(new Date(item.date), 'dd-MM-yyyy');
@@ -38,9 +38,8 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
             });
         }
 
-        if (selectedStatus !== 'Default') {
+        if (selectedStatus !== 'All') {
             const matchingStatusData = orderedData?.filter((item) => item.approval === selectedStatus);
-            const nonMatchingStatusData = orderedData?.filter((item) => item.approval !== selectedStatus);
 
             if (matchingStatusData.length > 0) {
                 if (selectDate) {
@@ -50,8 +49,9 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
                     // Jika selectDate false, urutkan dari terbaru hingga terlama
                     matchingStatusData?.sort((a, b) => new Date(b.date) - new Date(a.date));
                 }
-
-                orderedData = [...matchingStatusData, ...nonMatchingStatusData];
+                orderedData = [...matchingStatusData];
+            } else {
+                orderedData = [];
             }
         } else {
             if (selectDate) {
@@ -65,9 +65,11 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
 
         return orderedData;
     }, [LeaveData, searchKeyword, selectedStatus, selectDate]);
+
+    console.log(sortedData);
     return (
-        <div className="laptop:mt-5 hp:mt-10 w-full h-96 text-center hp:overflow-x-auto">
-            <table className="laptop:w-full hp:w-[600px]">
+        <div className="laptop:mt-5 hp:mt-10 w-full text-center hp:overflow-x-auto">
+            <table className="laptop:w-full hp:w-[700px]">
                 <thead>
                     <tr className="border-b-4 border-t-2 text-grey text-center">
                         <th className="p-4">No</th>
@@ -77,7 +79,7 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
                         <th className="">End Date</th>
                         <th className="flex justify-center p-4">
                             <Dropdown label="Status" inline>
-                                <Dropdown.Item className={`${selectedStatus === 'Default' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('Default')}>Default</Dropdown.Item>
+                                <Dropdown.Item className={`${selectedStatus === 'All' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('All')}>All</Dropdown.Item>
                                 <Dropdown.Item className={`${selectedStatus === 'Wait For Response' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Wait For Response')}>Wait For Response</Dropdown.Item>
                                 <Dropdown.Item className={`${selectedStatus === 'Approved' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Approved')}>Approved</Dropdown.Item>
                                 <Dropdown.Item className={`${selectedStatus === 'Reject' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Reject')}>Rejected</Dropdown.Item>
@@ -86,18 +88,21 @@ const PaidLeaveTableUser = ({ searchKeyword }) => {
                         </th>
                     </tr>
                 </thead>
-                {sortedData ? sortedData?.map((data, index) => (
+                {sortedData && sortedData?.map((data, index) => (
                     <tbody>
                         <tr key={index} className="border-b">
                             <td className="text-purple">{index + 1}</td>
                             <td className="text-primary p-4 laptop:max-w-[90px]">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
                             <td className="text-primary hp:max-w-[90px]">{data.cuti}</td>
-                            <td className="text-purple ">{format(new Date(data.fromdate), 'HH:mm')}</td>
-                            <td className="text-purple">{format(new Date(data.untildate), 'HH:mm')}</td>
+                            <td className="text-purple ">{data.fromdate ? format(new Date(data.fromdate), 'dd-MM-yyyy') : 'N/A'}</td>
+                            <td className="text-purple">{data.untildate ? format(new Date(data.untildate), 'dd-MM-yyyy') : 'N/A'}</td>
                             {approvalStatus(data.approval)}
+
                         </tr>
                     </tbody>
-                )) : <Spinner className="absolute left-1/2" />}
+                ))}
+                {sortedData.length === 0 && <tr><td className="text-center" colSpan={6}>No Data Available</td></tr>}
+                {LeaveData === undefined && <tr><td className="text-center" colSpan={6}><Spinner /></td></tr>}
             </table>
         </div>
     )

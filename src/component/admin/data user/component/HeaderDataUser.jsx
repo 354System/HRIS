@@ -1,6 +1,7 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { Icon } from "@iconify/react";
 import ExportDataUser from "../actions/exportDataUser";
+import { TextInput } from "flowbite-react";
 
 const HeaderDataUser = ({ addUserPopUp, searchUser, setSearchUser, dataUsers }) => {
     const handleAddUserPopUp = () => {
@@ -8,27 +9,23 @@ const HeaderDataUser = ({ addUserPopUp, searchUser, setSearchUser, dataUsers }) 
     }
 
     return (
-        <div className="flex mb-8">
-            <div className="relative flex-1">
-                <AiOutlineSearch
-                    className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400 dark:text-gray-600"
-                    size={20}
-                />
-                <input
+        <div className="flex hp:flex-col-reverse mb-8 gap-4">
+            <div className="w-full">
+                <TextInput
                     type="text"
                     value={searchUser}
                     onChange={(e) => setSearchUser(e.target.value)}
                     id="base-input"
-                    className="w-96 h-10 pl-10 bg-white border-2 border-[#D5D9DD] text-sm placeholder:text-grey rounded"
+                    className="laptop:w-96 hp:w-full h-10"
                     placeholder="Quick Search..."
                     required
                 />
             </div>
-            <ExportDataUser dataUsers={dataUsers}/>
-            <div className="ml-4">
+            <div className="laptop:ml-4 flex gap-3 w-full">
+                <ExportDataUser dataUsers={dataUsers} />
                 <button
                     onClick={handleAddUserPopUp}
-                    className="bg-purple hover:bg-[#532160] transition duration-300 w-[168px] h-[40px] rounded-lg flex items-center justify-center"
+                    className="bg-purple hover:bg-[#532160] transition duration-300 laptop:w-52 hp:w-full h-10 rounded-lg flex items-center justify-center"
                 >
                     <Icon
                         icon="zondicons:add-solid"

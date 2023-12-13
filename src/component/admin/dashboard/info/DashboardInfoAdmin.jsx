@@ -10,34 +10,34 @@ import TotalEmployedBox from "./component/box/TotalEmployeBox"
 const DashboardInfoAdmin = () => {
     const { data: allPresence } = useFetchAllPresence();
     return (
-        <div className="w-full h-full flex hp:flex-col">
-            <div className="laptop:w-72 gap-6 hp:w-full justify-center items-center h-full">
+        <div className="w-full h-full flex hp:flex-col laptop:gap-8">
+            <div className="laptop:w-1/4 gap-6 hp:w-full justify-center items-center h-full">
                 <RealtimeBoxAdmin />
             </div>
             {/* laptop */}
-            <div className="flex flex-col gap-8 hp:hidden">
-                <div className="flex h-1/2 gap-8">
+            <div className="flex flex-col gap-8 w-3/4 hp:hidden">
+                <div className="w-full flex h-1/2 gap-8">
                     <TotalEmployedBox />
-                    <OnTimeBoxAdmin />
+                    <OnTimeBoxAdmin data={allPresence} />
                     <AbsentBoxAdmin />
                 </div>
-                <div className="flex h-1/2 gap-8 hp:hidden">
-                    <LateArrivalBox />
+                <div className="w-full flex h-1/2 gap-8 hp:hidden">
+                    <LateArrivalBox data={allPresence} />
                     <EarlyDepartureBox />
                     <TimeOffBox />
                 </div>
             </div>
             {/* hp */}
-            <div className="laptop:hidden flex flex-col mt-4 gap-2">
-                <div className="flex h-1/4 gap-2 mt-2">
+            <div className="w-full laptop:hidden flex flex-col mt-4 gap-2">
+                <div className="w-full flex h-1/4 gap-2 mt-2">
                     <TotalEmployedBox />
                     <TimeOffBox />
                 </div>
-                <div className="flex h-1/4 gap-2">
+                <div className="w-full flex h-1/4 gap-2">
                     <OnTimeBoxAdmin data={allPresence}/>
                     <LateArrivalBox data={allPresence}/>
                 </div>
-                <div className="flex max-h-1/4 gap-2">
+                <div className="w-full flex max-h-1/4 gap-2">
                     <EarlyDepartureBox data={allPresence}/>
                     <AbsentBoxAdmin data={allPresence}/>
                 </div>

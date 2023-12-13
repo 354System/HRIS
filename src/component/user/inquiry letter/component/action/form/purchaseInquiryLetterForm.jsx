@@ -179,7 +179,7 @@ const PurchaseInquiryLetterForm = ({ setPurchaseFormPopUp, refetchInquiryData })
 
     return (
         <div className="fixed w-full min-h-screen inset-0 flex items-center justify-center z-20 bg-black/60">
-            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 bg-white p-5 laptop:w-1/2 laptop:h-4/5 hp:w-11/12 hp:h-1/2 rounded-lg flex flex-col">
+            <div className="fixed overflow-y-auto top-1/2 transform -translate-y-1/2 bg-white p-5 laptop:w-1/2 laptop:h-4/5 hp:w-11/12 hp:h-11/12 rounded-lg flex flex-col">
                 <div className="absolute top-2 right-2 ">
                     <button
                         onClick={() => setPurchaseFormPopUp(false)}
