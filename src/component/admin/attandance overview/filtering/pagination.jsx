@@ -33,7 +33,7 @@ function Pagination({ currentPage, setCurrentPage, totalPages }) {
     }
 
     return (
-        <div className="flex justify-center items-center h-1/5 mt-5 gap-3">
+        <div className="w-full flex justify-center items-center h-1/5 mt-8 gap-3">
             <Flowbite theme={{ theme: flowbiteTheme }}>
                 <Button onClick={prevPage} disabled={currentPage.pageSearch ? currentPage.pageSearch === 1 : currentPage.pageFilter ? currentPage.pageFilter === 1 : currentPage.page === 1} color='primary' className=''>
                     <GrFormPreviousLink size={20} />

@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useAuthInfo } from './use context/useAuthInfo'
 import PrivateRoute from './privat-router/privatRoute'
 import Login from './auth/Login'
-import DashboardAdmin from './pages/admin/Dashboard'
 import DashboardUser from './pages/user/dashboard'
 import AttendanceOverview from './pages/admin/AttendanceOverview'
 import AttendanceHistoryUser from './pages/user/AttendanceHistory'
@@ -16,6 +15,7 @@ import PathNotFound from './pages/path not found/PathNotFound'
 import InquiryLetterUser from './pages/user/InquiryLetter'
 import InquiryLetterAdmin from './pages/admin/InquiryLetter'
 import Tes from './pages/test'
+import DashboardAdmin from './pages/admin/Dashboard'
 function App() {
   const { userData } = useAuthInfo()
   const role = userData?.role

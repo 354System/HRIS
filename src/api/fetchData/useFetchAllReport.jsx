@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 
-export const useFetchAllPresence = ({ currentPage, searchKeyword, startDate, endDate }) => {
+export const useFetchAllReport = ({ currentPage, searchKeyword, startDate, endDate }) => {
 
     const { data, isLoading, refetch, isSuccess } = useQuery({
         queryKey: currentPage ? ['allPresence', { page: currentPage }] : ['allPresence', { page: 'all' }],
         queryFn: async () => {
-            const userDataResponse = await axiosInstance.get('/absensi/all', {
+            const userDataResponse = await axiosInstance.get('/absensi/history', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 },

@@ -7,8 +7,7 @@ import RealtimeBoxAdmin from "./component/box/RealtimeBox"
 import TimeOffBox from "./component/box/TimeOffBox"
 import TotalEmployedBox from "./component/box/TotalEmployeBox"
 
-const DashboardInfoAdmin = () => {
-    const { data: allPresence } = useFetchAllPresence();
+const DashboardInfoAdmin = ({ allPresence }) => {
     return (
         <div className="w-full h-full flex hp:flex-col laptop:gap-8">
             <div className="laptop:w-1/4 gap-6 hp:w-full justify-center items-center h-full">
@@ -19,7 +18,7 @@ const DashboardInfoAdmin = () => {
                 <div className="w-full flex h-1/2 gap-8">
                     <TotalEmployedBox />
                     <OnTimeBoxAdmin data={allPresence} />
-                    <AbsentBoxAdmin />
+                    <AbsentBoxAdmin data={allPresence} />
                 </div>
                 <div className="w-full flex h-1/2 gap-8 hp:hidden">
                     <LateArrivalBox data={allPresence} />

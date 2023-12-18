@@ -6,7 +6,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DetailWikiDocument from "./component/modal/detailDocument";
 const WikiDocumentBodyAdmin = () => {
     const { data: wikiData, isLoading } = useFetchWikiDocument()
@@ -27,7 +27,7 @@ const WikiDocumentBodyAdmin = () => {
                     {wikiData ? wikiData.map((data, index) => (
                         <tr key={index} className="border-b">
                             <td className="text-[#252C58] p-4">{index + 1}</td>
-                            <td className="text-[#252C58] p-4">{data.title}</td>
+                            <td className="text-[#252C58] p-4 hover:bg-gray-100" onClick={() => { setIsModalOpen(true), setSelectedItem(data) }}>{data.title}</td>
                             <td className="flex gap-x-1 justify-end p-4">
                                 <button className="group w-10 h-10 flex justify-center items-center rounded-lg mb-4 bg-purple text-white hover:bg-purple-dark transition-colors duration-200 ease-in-out">
                                     <IoMdEye onClick={() => { setIsModalOpen(true), setSelectedItem(data) }} size={20} className="group-hover:scale-125 duration-200 transition-transform" />
@@ -46,7 +46,7 @@ const WikiDocumentBodyAdmin = () => {
                     )) : null}
                 </tbody>
             </table>
-            <DetailWikiDocument setIsOpen={setIsModalOpen} data={selectedItem} />
+            {isModalOpen && <DetailWikiDocument isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} data={selectedItem} />}
         </div>
     )
 }

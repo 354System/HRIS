@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx"
 import { Icon } from '@iconify/react';
 const ExportDataUser = ({ dataUsers }) => {
+    
     const handleExportToExcel = () => {
         var workbook = XLSX.utils.book_new();
         var worksheet = XLSX.utils.json_to_sheet(dataUsers);

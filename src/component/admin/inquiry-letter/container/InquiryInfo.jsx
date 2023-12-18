@@ -2,7 +2,6 @@ import { Tooltip } from "flowbite-react"
 import TotalReqInquiryPurchaseBoxAdmin from "../component/inquiry-info/TotalRequestPurchase"
 import TotalReqInquiryRepairBoxAdmin from "../component/inquiry-info/TotalRequestRepair"
 import ApprovePurchaseBoxAdmin from "../component/inquiry-info/ApprovePurchaseBox"
-import App from "../../../../App"
 import WaitingPurchaseBoxAdmin from "../component/inquiry-info/WaitingPurchaseBox"
 import RejectPurchaseInquiryBoxAdmin from "../component/inquiry-info/RejectPurchaseBox"
 import WaitingRepairBoxAdmin from "../component/inquiry-info/WaitingRepairBox"
@@ -50,10 +49,10 @@ const InquiryLetterInfoAdmin = () => {
             {/* hp */}
             <div className="w-full h-full flex flex-col gap-4 laptop:hidden">
                 <div className="flex h-1/4">
-                    <TotalReqInquiryPurchaseBoxAdmin requestData={requestData} />
+                    <TotalReqInquiryPurchaseBoxAdmin requestData={requestData?.form} />
                 </div>
                 <div className="flex h-1/4">
-                    <TotalReqInquiryRepairBoxAdmin requestData={requestData} />
+                    <TotalReqInquiryRepairBoxAdmin requestData={requestData?.form} />
                 </div>
                 <div className="flex h-1/6 gap-3 laptop:hidden">
                     <ApprovePurchaseBoxAdmin />

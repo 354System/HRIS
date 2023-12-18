@@ -173,6 +173,7 @@ const LeaveApplications = ({ leave, refetchPaidLeave }) => {
     validateInput()
     const { cuti, fromdate, untildate, description, otherReason, file } = data
     const formData = new FormData();
+    formData.append('type', 'cuti');
     formData.append('cuti', cuti === 'Enter Other Reason' ? otherReason : cuti);
     formData.append('fromdate', fromdate);
     formData.append('untildate', untildate);

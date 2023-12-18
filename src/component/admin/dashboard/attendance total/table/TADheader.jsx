@@ -1,41 +1,13 @@
 import React, { useState } from 'react';
-import { SlCalender } from 'react-icons/sl';
-import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format, subMonths } from 'date-fns';
 import { Datepicker, Flowbite } from 'flowbite-react';
 import { flowbiteTheme } from '../../../../../lib/flowbiteTheme';
 
-const TADheader = ({ presenceData, permissionData, paidLeaveData, setFilteredPresence, setFilteredPermission, setFilteredPaidLeave }) => {
-    const [startDate, setStartDate] = useState(subMonths(new Date(), 1)); // Default sebulan yang lalu
-    const [endDate, setEndDate] = useState(new Date());
+const TADheader = ({ setStartDate, setEndDate, startDate, endDate, refetch }) => {
 
     const handleFilter = () => {
-        // Kloning startDate dan atur waktu menjadi awal hari (tengah malam)
-        const awalHari = new Date(startDate);
-        awalHari.setHours(0, 0, 0, 0);
-
-        // Kloning endDate dan atur waktu menjadi akhir hari (11:59:59 PM)
-        const akhirHari = new Date(endDate);
-        akhirHari.setHours(23, 59, 59, 999);
-
-        const filteredPresence = presenceData?.filter((item) => {
-            const itemDate = new Date(item.createdAt);
-            return itemDate >= awalHari && itemDate <= akhirHari;
-        });
-        setFilteredPresence(filteredPresence);
-
-        const filteredPermission = permissionData?.filter((item) => {
-            const itemDate = new Date(item.createdAt);
-            return itemDate >= awalHari && itemDate <= akhirHari;
-        });
-        setFilteredPermission(filteredPermission);
-
-        const filteredPaidLeave = paidLeaveData?.filter((item) => {
-            const itemDate = new Date(item.createdAt);
-            return itemDate >= awalHari && itemDate <= akhirHari;
-        });
-        setFilteredPaidLeave(filteredPaidLeave);
+        refetch()
     };
 
     const dayClassName = (date) => {

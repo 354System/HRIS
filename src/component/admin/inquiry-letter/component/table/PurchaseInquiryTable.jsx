@@ -91,7 +91,7 @@ const PurchaseInquiryTableAdmin = ({ data: purchaseData, refetch, searchKeyword 
         onSuccess: (data) => {
             console.log(data);
             refetch();
-            successAlert({ title: "Success Approve", text: `id : ${selectedItem._id}, title : ${selectedItem.title} has been ${data.data?.approval}` });
+            successAlert({ title: `Success ${data.data?.approval}`, text: `id : ${selectedItem._id}, title : ${selectedItem.title} has been ${data.data?.approval}` });
             setSelectedItem(null);
         },
         onError: (error) => {

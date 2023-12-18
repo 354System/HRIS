@@ -93,7 +93,7 @@ const AttendanceBody = ({ searchKeyword, filteredPresence: presenceData }) => {
             return 'bg-yellow/80 text-white p-2'
         }
     }
-
+    
     return (
         <div className="w-full hp:overflow-x-auto mt-5">
             <table className="laptop:w-full hp:w-[1000px] laptop:rounded-lg hp:rounded">
@@ -121,7 +121,7 @@ const AttendanceBody = ({ searchKeyword, filteredPresence: presenceData }) => {
                     {sortedData && sortedData?.map((data, index) => (
                         <tr key={index} className='border-b text-center'>
                             <td>{index + 1}</td>
-                            <td className=" p-4 max-w-[90px]">{format(new Date(data.date), 'dd-MM-yyyy')}</td>
+                            <td className=" p-4 max-w-[90px]">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</td>
                             <td><span className={`${statusStyle(data)} p-2`}>{data.absen}</span></td>
                             <td><span className={`${arrivalStyle(data)} p-2`}>{data.type === 'Present' ? 'On Time' : data.type}</span></td>
                             <td className={`${checkInStyle(data)}`}>{data.checkin ? format(new Date(data.checkin), 'HH:mm') : '-:-:-'}</td>

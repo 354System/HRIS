@@ -7,10 +7,26 @@ import { FiSearch } from "react-icons/fi";
 import { useFetchAllInquiryLetter } from "../../../../api/fetchData/useFetchAllInquiryLetter";
 
 const InquiryLetterBodyAdmin = () => {
-    const { data, isLoading, refetch } = useFetchAllInquiryLetter();
+    const [currentPage, setCurrentPage] = useState({
+        page: 1,
+        all: null,
+        pageSearch: null,
+        pageFilter: null
+    });
+    const [searchKeyword, setSearchKeyword] = useState("")
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
+
+    const { data, isLoading, refetch } = useFetchAllInquiryLetter({
+        currentPage,
+        searchKeyword,
+        startDate,
+        endDate,
+    });
+
     const [repairTable, setRepairTable] = useState(true);
     const [purchaseTable, setPurchaseTable] = useState(false);
-    const [searchKeyword, setSearchKeyword] = useState('');
+
 
     return (
         <div className="bg-white w-full rounded-lg p-7">
@@ -44,8 +60,8 @@ const InquiryLetterBodyAdmin = () => {
                     />
                 </div>
             </div>
-            {repairTable ? <RepairInquiryTableAdmin data={data} searchKeyword={searchKeyword} refetch={refetch} /> : null}
-            {purchaseTable ? <PurchaseInquiryTableAdmin data={data} searchKeyword={searchKeyword} refetch={refetch} /> : null}
+            {repairTable ? <RepairInquiryTableAdmin data={data?.form} searchKeyword={searchKeyword} refetch={refetch} /> : null}
+            {purchaseTable ? <PurchaseInquiryTableAdmin data={data?.form} searchKeyword={searchKeyword} refetch={refetch} /> : null}
         </div>
     )
 }

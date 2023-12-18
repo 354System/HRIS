@@ -1,9 +1,15 @@
 import { Icon } from '@iconify/react';
 import { useFetchAllPaidLeave } from '../../../../../../api/fetchData/useFetchAllPaidLeave';
 import { useFetchAllPermission } from '../../../../../../api/fetchData/useFetchAllPermission';
+import { useState } from 'react';
 const TimeOffBox = () => {
-    const { data: paidLeaveData, refetch: refetchDataPaidLeave } = useFetchAllPaidLeave();
-    const { data: permissionData, refetch: refetchDataPermission } = useFetchAllPermission();
+    const [currentPage, setCurrentPage] = useState({
+        page: null,
+        all: 'all',
+      })
+    
+    const { data: paidLeaveData, refetch: refetchDataPaidLeave } = useFetchAllPaidLeave({ currentPage });
+    const { data: permissionData, refetch: refetchDataPermission } = useFetchAllPermission({ currentPage });
     const timeOffLength = (paidLeaveData?.length || 0) + (permissionData?.length || 0);
     return (
         <div className="laptop:w-2/6 hp:w-1/2 h-full flex flex-col justify-between bg-white rounded p-5">

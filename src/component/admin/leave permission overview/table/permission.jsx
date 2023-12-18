@@ -1,15 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { format, intervalToDuration } from "date-fns";
-import { Dropdown, Spinner } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import { PiDotsThreeCircleFill } from "react-icons/pi";
 import { IoIosCheckmarkCircle, IoIosInformationCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
-import PermissionDetailAdmin from "../modal/permissionDetailAdmin";
+import PermissionDetailAdmin from "../component/detail/permission/permissionDetailAdmin";
 import { BsSortDown, BsSortUp } from "react-icons/bs";
 import { confirmAlert, errorAlert, pendingAlert, successAlert } from "../../../../lib/sweetAlert";
 import { useApprovalPermission } from "../../../../api/permission/useApprovalPermission";
+import Pagination from "../filtering/permission/pagination";
+import { Spinner } from "@chakra-ui/react";
 
-const TablePermissionAdmin = ({ permissionData, refetchDataPermission, searchKeyword }) => {
+const TablePermissionAdmin = ({ permissionData, refetchDataPermission, currentPage, setCurrentPage, totalPages, setSearchKeyword }) => {
   const [selectedItem, setSelectedItem] = useState(null)
   const [detailModal, setDetailModal] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState('Default');
@@ -45,65 +47,19 @@ const TablePermissionAdmin = ({ permissionData, refetchDataPermission, searchKey
     permissionData.totalDays = formattedDuration;
   })
 
-  const sortedData = useMemo(() => {
-    let orderedData = permissionData;
-
-    if (searchKeyword.trim() !== '') {
-      orderedData = orderedData?.filter((item) => {
-        return Object.values(item).some(value => {
-          if (typeof value === 'string') {
-            // If it's a string, check if it includes the searchKeyword
-            return value.toLowerCase().includes(searchKeyword.toLowerCase());
-          } else if (typeof value === 'object' && value !== null) {
-            // If it's an object, check if any of its values match the searchKeyword
-            return Object.values(value).some(innerValue => {
-              if (typeof innerValue === 'string') {
-                return innerValue.toLowerCase().includes(searchKeyword.toLowerCase());
-              } else if (typeof innerValue === 'object' && innerValue !== null) {
-                // If it's an object inside the user object, check its values
-                return Object.values(innerValue).some(nestedValue =>
-                  nestedValue.toLowerCase().includes(searchKeyword.toLowerCase())
-                );
-              }
-              return false;
-            });
-          } else if (value instanceof Date) {
-            // If it's a date, format it to 'dd-MM-yyyy' and check for inclusion
-            const formattedDate = format(value, 'dd-MM-yyyy');
-            return formattedDate.toLowerCase().includes(searchKeyword.toLowerCase());
-          }
-          return false;
-        });
-      });
-    }
-
-    if (selectedStatus !== 'Default') {
-      const matchingStatusData = orderedData?.filter((item) => item.approval === selectedStatus);
-      const nonMatchingStatusData = orderedData?.filter((item) => item.approval !== selectedStatus);
-
-      if (matchingStatusData.length > 0) {
-        if (selectDate) {
-          // Jika selectDate true, urutkan dari terlama hingga terbaru
-          matchingStatusData?.sort((a, b) => new Date(a.date) - new Date(b.date));
-        } else {
-          // Jika selectDate false, urutkan dari terbaru hingga terlama
-          matchingStatusData?.sort((a, b) => new Date(b.date) - new Date(a.date));
-        }
-
-        orderedData = [...matchingStatusData, ...nonMatchingStatusData];
+  const handleStatus = async (status) => {
+    setSelectedStatus(status);
+    await setSearchKeyword(status);
+    await setCurrentPage((prevState) => ({
+      ...prevState,
+      permission: {
+        ...prevState.permission,
+        pageSearch: 1
       }
-    } else {
-      if (selectDate) {
-        // Jika selectDate true, urutkan dari terlama hingga terbaru
-        orderedData?.sort((a, b) => new Date(a.date) - new Date(b.date));
-      } else {
-        // Jika selectDate false, urutkan dari terbaru hingga terlama
-        orderedData?.sort((a, b) => new Date(b.date) - new Date(a.date));
-      }
-    }
+    }))
+    await refetchDataPermission();
+  }
 
-    return orderedData;
-  }, [permissionData, searchKeyword, selectedStatus, selectDate]);
 
   const { mutate, isPending } = useApprovalPermission({
     id: selectedItem?._id,
@@ -170,21 +126,21 @@ const TablePermissionAdmin = ({ permissionData, refetchDataPermission, searchKey
             <th className="p-4">Total Days</th>
             <th className="p-4 flex justify-center">
               <Dropdown label="Status" inline>
-                <Dropdown.Item className={`${selectedStatus === 'Default' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('Default')}>Default</Dropdown.Item>
-                <Dropdown.Item className={`${selectedStatus === 'Wait For Response' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Wait For Response')}>Wait For Response</Dropdown.Item>
-                <Dropdown.Item className={`${selectedStatus === 'Approved' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Approved')}>Approved</Dropdown.Item>
-                <Dropdown.Item className={`${selectedStatus === 'Reject' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => setSelectedStatus('Reject')}>Rejected</Dropdown.Item>
-                <Dropdown.Item className={`${selectedStatus === 'Canceled' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => setSelectedStatus('Canceled')}>Canceled</Dropdown.Item>
+                <Dropdown.Item className={`${selectedStatus === 'Default' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => handleStatus('')}>All</Dropdown.Item>
+                <Dropdown.Item className={`${selectedStatus === 'Wait For Response' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => handleStatus('Wait For Response')}>Wait For Response</Dropdown.Item>
+                <Dropdown.Item className={`${selectedStatus === 'Approved' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => handleStatus('Approved')}>Approved</Dropdown.Item>
+                <Dropdown.Item className={`${selectedStatus === 'Reject' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200}`} onClick={() => handleStatus('Rejected')}>Rejected</Dropdown.Item>
+                <Dropdown.Item className={`${selectedStatus === 'Canceled' ? 'bg-purple text-white hover:bg-purple' : 'hover:bg-purple/50 hover:text-white'} transition-colors duration-200`} onClick={() => handleStatus('Canceled')}>Canceled</Dropdown.Item>
               </Dropdown>
             </th>
             <th className="p-4">Action</th>
           </tr>
         </thead>
         <tbody>
-          {sortedData && sortedData.map((data, index) => (
+          {permissionData && permissionData.map((data, index) => (
             <tr className="border-b text-center" key={index}>
               <td className="text-primary p-4">{index + 1}</td>
-              <td className="text-primary text-left p-4">{data.user.name}</td>
+              <td className="text-primary text-left p-4 hover:bg-gray-100 " onClick={() => { setSelectedItem(data), setDetailModal(true) }}>{data.user.name}</td>
               <td className="text-purple p-4">{data.createdAt ? format(new Date(data.createdAt), 'dd-MM-yyyy') : 'N/A'}</td>
               <td className="text-purple p-4">{data.fromdate ? format(new Date(data.fromdate), 'dd-MM-yyyy') : 'N/A'}</td>
               <td className="text-purple p-4">{data.untildate ? format(new Date(data.untildate), 'dd-MM-yyyy') : 'N/A'}</td>
@@ -210,10 +166,12 @@ const TablePermissionAdmin = ({ permissionData, refetchDataPermission, searchKey
               </td>
             </tr>
           ))}
-          {sortedData?.length === 0 && <tr><td className="laptop:text-center hp:text-start" colSpan={8}>No Data Available</td></tr>}
-          {permissionData === undefined && <tr><td className="laptop:text-center hp:text-start" colSpan={8}><Spinner size={'lg'} color={'purple'} /></td></tr>}
+          {permissionData === undefined ? <p className="absolute left-1/2"><Spinner color="purple" size="sm" /></p>
+            :
+            permissionData?.length === 0 && <p className="absolute left-1/2 text-lg ">No Data Available</p>}
         </tbody>
       </table >
+      <Pagination totalPages={totalPages.permission} currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {detailModal && <PermissionDetailAdmin data={selectedItem} setDetailModal={setDetailModal} />}
     </div>
   );

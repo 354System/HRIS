@@ -88,8 +88,6 @@ const RepairInquiryTableAdmin = ({ data: repairData, refetch, searchKeyword }) =
 
         return orderedData;
     }, [repairData, searchKeyword, selectedStatus, selectDate]);
-    console.log(sortedData);
-    console.log(selectedItem);
 
     const { mutate, isPending } = useApprovalInquiryLetter({
         id: selectedItem?._id,

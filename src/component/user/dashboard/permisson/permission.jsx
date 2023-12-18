@@ -161,12 +161,12 @@ const Permision = ({ popUp }) => {
     validateInput()
     const { izin, fromdate, untildate, description, otherReason, file } = permission
     const formData = new FormData();
+    formData.append('type', 'permission');
     formData.append('izin', izin === 'Enter Other Reason' ? otherReason : izin);
     formData.append('fromdate', fromdate);
     formData.append('untildate', untildate);
     formData.append('description', description);
     formData.append('image', file);
-
     if (validateInput()) {
       setErrorMsg((prevState) => ({
         ...prevState,

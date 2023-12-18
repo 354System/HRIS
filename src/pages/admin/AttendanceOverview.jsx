@@ -16,7 +16,6 @@ const AttendanceOverview = () => {
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [filteredPresence, setFilteredPresence] = useState(null)
-    console.log(currentPage);
 
     const { data: presenceData, isLoading, refetch: refetchPresence } = useFetchAllPresence({
         currentPage,
@@ -47,7 +46,7 @@ const AttendanceOverview = () => {
             <Navbar sideBarMenu={sideBarMenu} setSideBarMenu={setSideBarMenu} />
             <div className="w-full mt-28 mb-10 laptop:p-7 laptop:pl-28 hp:p-3">
                 <AOTableHeader refetchPresence={refetchPresence} presenceData={presenceData} setFilteredPresence={setFilteredPresence} searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} currentPage={currentPage} setCurrentPage={setCurrentPage} startDate={startDate} endDate={endDate} setStartDate={setStartDate} setEndDate={setEndDate} />
-                <AOtable isLoading={isLoading} filteredPresence={filteredPresence} currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={presenceData?.totalPages} searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
+                <AOtable isLoading={isLoading} refetchPresence={refetchPresence} filteredPresence={filteredPresence} currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={presenceData?.totalPages} searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
             </div>
         </div>
     )

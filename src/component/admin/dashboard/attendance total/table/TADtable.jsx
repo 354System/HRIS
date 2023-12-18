@@ -1,10 +1,9 @@
-const TADtable = ({ presence, permission, paidLeave, }) => {
+const TADtable = ({ data }) => {
     // Mengelompokkan data berdasarkan ID karyawan
     const groupedData = {};
 
-    presence?.forEach((item) => {
+    data?.data.forEach((item) => {
         const { user, type, absen } = item;
-
         if (!groupedData[user?._id]) {
             groupedData[user?._id] = {
                 employe: user?.name,
@@ -20,34 +19,26 @@ const TADtable = ({ presence, permission, paidLeave, }) => {
         }
         if (absen === 'Work From Office') {
             groupedData[user?._id].hadir++;
-        }
-        if (type === 'Present') {
+        } if (absen === 'Work From Home') {
+            groupedData[user?._id].hadir++;
+        } if (type === 'Present') {
             groupedData[user?._id].ontime++;
         } if (type === 'Late') {
             groupedData[user?._id].late++;
         } if (type === 'Absent') {
             groupedData[user?._id].absent++;
-        }
-    });
-
-    permission?.forEach((item) => {
-        const { user } = item;
-        if (groupedData[user?._id]) {
+        } if (type === 'izin' && approval === 'Approved') {
             groupedData[user?._id].izin++;
-        }
-    });
-
-    paidLeave?.forEach((item) => {
-        const { user } = item;
-        if (groupedData[user?._id]) {
+        } if (type === 'cuti' && approval === 'Approved') {
             groupedData[user?._id].cuti++;
         }
     });
+
     console.log(groupedData);
 
     return (
         <div className="laptop:mt-5 hp:mt-40 w-full text-center hp:overflow-x-auto">
-        <table className="laptop:w-full hp:w-[1000px]">
+            <table className="laptop:w-full hp:w-[1000px]">
                 <thead>
                     <tr className="bg-gray-200 text-primary">
                         <th className="p-4">No</th>

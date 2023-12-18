@@ -6,9 +6,9 @@ import { GrDocumentText } from "react-icons/gr"
 import { IoIosCheckmarkCircle, IoMdClose } from "react-icons/io"
 import { MdCancel, MdOutlineDocumentScanner } from "react-icons/md"
 import { useState } from "react"
-import { useApprovalInquiryLetter } from "../../../../api/inquiry letter/useApproveRejectInquiryLetter"
-import { confirmAlert, successAlert } from "../../../../lib/sweetAlert"
-import { flowbiteTheme } from "../../../../lib/flowbiteTheme"
+import { useApprovalInquiryLetter } from "../../../../../../api/inquiry letter/useApproveRejectInquiryLetter"
+import { confirmAlert, successAlert } from "../../../../../../lib/sweetAlert"
+import { flowbiteTheme } from "../../../../../../lib/flowbiteTheme"
 
 const PermissionDetailAdmin = ({ data, setDetailModal, refetchPermissionData }) => {
     const [errorMsg, setErrorMsg] = useState("")
