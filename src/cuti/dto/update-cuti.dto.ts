@@ -5,7 +5,7 @@ import { Category } from "src/schemas/cuti.schema";
 
 export class UpdateCutiDto {
 
-    @IsString()
+    // @IsString()
     approval: Category;
 
 

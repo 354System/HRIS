@@ -5,8 +5,8 @@ import { IsString } from "class-validator";
 export class UpdateAbsensiDto {
 
     @IsString()
-    checkout: Date;
-    
+    checkout: string;
+
 
 
 }

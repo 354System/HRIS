@@ -13,11 +13,11 @@ export class CreateCutiDto {
 
     // @IsString()
     untildate: Date;
-    
+
     file: Buffer;
-    
+
     // @IsString()
-    description : string;
+    description: string;
 
     user: User;
 

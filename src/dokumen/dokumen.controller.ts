@@ -19,7 +19,7 @@ export class DokumenController {
   @UseInterceptors(FileInterceptor('image'))
   @UseGuards(AuthGuard())
   createFormRepair(@UploadedFile() image: BufferedFile, @Body() createDokumenDto: CreateDokumenDto, @Req() req,): Promise<Dokumen> {
-      return this.dokumenService.createDokumen(createDokumenDto, req.user,image);
+    return this.dokumenService.createDokumen(createDokumenDto, req.user, image);
   }
 
   // @Post('file')

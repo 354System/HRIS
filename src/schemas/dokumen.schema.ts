@@ -12,7 +12,7 @@ export class Dokumen extends Document implements IDokumen {
 
     @Prop()
     title: string;
-    
+
     @Prop()
     file: Buffer;
 

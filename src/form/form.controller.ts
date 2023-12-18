@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Req, UseGuards, Query, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Body, Controller, Post, Get, Req, UseGuards, Query, Patch, Param, Delete, UseInterceptors, UploadedFile, HttpException, HttpStatus } from '@nestjs/common';
 import { FormService } from './form.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Query as ExpressQuery } from 'express-serve-static-core';
@@ -35,14 +35,19 @@ export class FormController {
     }
 
     @Patch('update/:id')
-    async updateForm(@Param('id') id: string, @Body() updateFormDto: UpdateFormDto): Promise<Form> {
-        return this.formService.updateForm(id, updateFormDto);
+    @UseGuards(AuthGuard())
+    async updateForm(@Param('id') id: string, @Body() updateFormDto: UpdateFormDto, @Req() req,): Promise<Form> {
+        if (req.user.role === "Admin") {
+            return this.formService.updateForm(id, updateFormDto);
+        } else {
+            throw new HttpException('Unathorized', HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @Get('by/:id')
-    async getAbsensiByUserId(@Param('id') id: string, @Query() query: ExpressQuery) {
-        const absensi = await this.formService.findAbsensiByUserId(id, query);
-        return absensi;
+    async getFormByUserId(@Param('id') id: string, @Query() query: ExpressQuery) {
+        const Form = await this.formService.findFormByUserId(id, query);
+        return Form;
     }
 
     // @Post('file')

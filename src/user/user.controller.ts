@@ -8,67 +8,67 @@ import { LoginDto } from './dto/login.dto';
 import { RolesGuard } from './roles.guard';
 import { Roles } from './roles.decorator';
 import { JWTAuthGuard } from './jwt-auth.guard';
-import {request} from "express"
+import { request } from "express"
 
 @Controller('user')
 export class UserController {
-    
-    constructor(private userService: UserService,) { }
 
-    
-    
-    @Post('/create')
-    // @Roles('Public') // Anda perlu membuat decorator ini
-    // @UseGuards(RolesGuard) // Gunakan guard yang Anda buat
-    createUser(@Body() createUserDto: CreateUserDto):Promise<{token:string}> {
-        return this.userService.createUser(createUserDto)
-    }
+  constructor(private userService: UserService,) { }
 
-    @Post('/login')
-    login(@Body() loginDto: LoginDto ):Promise<{token:string}>{
-        return this.userService.login(loginDto)
-    } 
-    
-    @Patch('/update/:id')
-    updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
-        return this.userService.updateUser(id, updateUserDto)
-    }
 
-    @Get('/all')
-    async getAllUsers(@Query() query: ExpressQuery, @Param('id') id: string): Promise<User[]> {
-        return this.userService.findAll(query)
-    }
 
-    @Get('by/:id')
-    async getUserById( @Param('id') id: string): Promise<User> {
-        return this.userService.getUserById(id)
-    }
+  @Post('/create')
+  // @Roles('Public') // Anda perlu membuat decorator ini
+  // @UseGuards(RolesGuard) // Gunakan guard yang Anda buat
+  createUser(@Body() createUserDto: CreateUserDto): Promise<{ token: string }> {
+    return this.userService.createUser(createUserDto)
+  }
 
-    @Delete('/delete/:id')
-         deleteUser(
-        @Param('id')
-        id: string
-    ): Promise<User> {
-        return this.userService.deleteById(id);
-    }
+  @Post('/login')
+  login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
+    return this.userService.login(loginDto)
+  }
 
-    @UseGuards(JWTAuthGuard)
-    @Get('/user-info')
-    getUserInfo(@Request() req) {
-      return {   
-        user_info: req?.user,
-      };
-    }
+  @Patch('/update/:id')
+  updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
+    return this.userService.updateUser(id, updateUserDto)
+  }
 
-    @Post('add-annual-leave')
-    async addAnnualLeaveToAllUsers(): Promise<string> {
-      try {
-        await this.userService.addAnnualLeaveToAllUsers();
-        return 'Success: Annual leave added to all users';
-      } catch (error) {
-        console.error('Error adding annual leave to all users:', error);
-        throw error;
-      }
+  @Get('/all')
+  async getAllUsers(@Query() query: ExpressQuery, @Param('id') id: string): Promise<User[]> {
+    return this.userService.findAll(query)
+  }
+
+  @Get('by/:id')
+  async getUserById(@Param('id') id: string): Promise<User> {
+    return this.userService.getUserById(id)
+  }
+
+  @Delete('/delete/:id')
+  deleteUser(
+    @Param('id')
+    id: string
+  ): Promise<User> {
+    return this.userService.deleteById(id);
+  }
+
+  @UseGuards(JWTAuthGuard)
+  @Get('/user-info')
+  getUserInfo(@Request() req) {
+    return {
+      user_info: req?.user,
+    };
+  }
+
+  @Post('add-annual-leave')
+  async addAnnualLeaveToAllUsers(): Promise<string> {
+    try {
+      await this.userService.addAnnualLeaveToAllUsers();
+      return 'Success: Annual leave added to all users';
+    } catch (error) {
+      console.error('Error adding annual leave to all users:', error);
+      throw error;
     }
+  }
 
 }

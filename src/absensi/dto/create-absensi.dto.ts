@@ -11,9 +11,9 @@ export class CreateAbsensiDto {
 
     // @IsString()
     checkin: string;
-    
+
     // @IsDate()
-    date: Date;
+    date: string;
 
     image: Buffer;
 

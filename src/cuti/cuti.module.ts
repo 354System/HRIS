@@ -8,12 +8,12 @@ import { User, UserSchema } from 'src/schemas/user.schema';
 import { MinioClientModule } from 'src/minio/minio-client.module';
 
 @Module({
-  imports:[
+  imports: [
     MinioClientModule,
     UserModule,
-    MongooseModule.forFeature([{name:'Cuti', schema: CutiSchema}]),
+    MongooseModule.forFeature([{ name: 'Cuti', schema: CutiSchema }]),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),],
-    providers: [CutiService,MinioClientModule],
-    controllers: [CutiController,]
+  providers: [CutiService, MinioClientModule],
+  controllers: [CutiController,]
 })
-export class CutiModule {}
+export class CutiModule { }

@@ -5,11 +5,13 @@ import { IUser } from "./interface.user";
 export interface IIzin {
 
     izin: string;
-    
+
     approval: Category;
 
     fromdate: Date;
 
+    date: Date;
+    
     untildate: Date;
 
     file: string;

@@ -4,7 +4,7 @@ import { Document } from "mongoose";
 
 
 @Schema({
-    timestamps:true,
+    timestamps: true,
 })
 export class User extends Document {
 
@@ -16,7 +16,7 @@ export class User extends Document {
 
     @Prop()
     password: string;
-    
+
     @Prop()
     address: string;
 
@@ -25,13 +25,13 @@ export class User extends Document {
 
     @Prop()
     divisi: string;
-    
+
     @Prop()
     position: string;
 
     @Prop()
     role: string;
-     
+
     @Prop()
     remainingCuti: number;
 

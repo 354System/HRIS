@@ -10,6 +10,8 @@ export interface ICuti {
 
     fromdate: Date;
 
+    date: Date;
+
     untildate: Date;
 
     file: string;

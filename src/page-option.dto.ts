@@ -4,9 +4,9 @@ import { IsEnum, IsInt, IsOptional, Max, Min } from "class-validator";
 // import { Order } from "../constants";
 
 export enum Order {
-    ASC = "ASC",
-    DESC = "DESC",
-  }
+  ASC = "ASC",
+  DESC = "DESC",
+}
 
 export class PageOptionsDto {
   @ApiPropertyOptional({ enum: Order, default: Order.ASC })

@@ -5,12 +5,12 @@ export class CreateUserDto {
   @IsString()
   name: string;
 
-  @IsEmail({},{message:'please enter correct email'})
+  @IsEmail({}, { message: 'please enter correct email' })
   email: string;
 
   @IsString()
   @MinLength(6)
-  password: string; 
+  password: string;
 
   @IsString()
   address: string;
@@ -20,7 +20,7 @@ export class CreateUserDto {
 
   @IsString()
   divisi: string;
-  
+
   @IsString()
   position: string;
 

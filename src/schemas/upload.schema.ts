@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 
 @Schema({
-    timestamps:true,
+    timestamps: true,
 })
-export class Upload{
-    
+export class Upload {
+
     @Prop()
     imageUrl: string;
 

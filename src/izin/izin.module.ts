@@ -7,11 +7,11 @@ import { UserModule } from 'src/user/user.module';
 import { MinioClientModule } from 'src/minio/minio-client.module';
 
 @Module({
-  imports:[
+  imports: [
     MinioClientModule,
     UserModule,
-    MongooseModule.forFeature([{name:'Izin', schema: IzinSchema}])],
-  providers: [IzinService,MinioClientModule],
+    MongooseModule.forFeature([{ name: 'Izin', schema: IzinSchema }])],
+  providers: [IzinService, MinioClientModule],
   controllers: [IzinController,]
 })
-export class IzinModule {}
+export class IzinModule { }

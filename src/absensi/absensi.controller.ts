@@ -29,18 +29,23 @@ export class AbsensiController {
     @UploadedFile() image: BufferedFile,
     @Body() createAbsensiDto: CreateAbsensiDto,
     @Req() req,): Promise<Absensi> {
-    return await this.absensiService.createAbsensi(createAbsensiDto, req.user,image);
+    return await this.absensiService.createAbsensi(createAbsensiDto, req.user, image);
   }
 
   @Get('by/:id')
   async getAbsensiByUserId(@Param('id') id: string, @Query() query: ExpressQuery) {
-    const absensi = await this.absensiService.findAbsensiByUserId(id,query);
+    const absensi = await this.absensiService.findAbsensiByUserId(id, query);
     return absensi;
   }
 
   @Patch('checkout/:id')
   async updateCheckout(@Param('id') id: string, @Body() updateAbsensiDto: UpdateAbsensiDto): Promise<Absensi> {
     return this.absensiService.updateCheckout(id, updateAbsensiDto);
+  }
+
+  @Post('create-absent-data')
+  async createAbsentDataForCurrentDay(): Promise<void> {
+    await this.absensiService.createAbsentDataForCurrentDay();
   }
 
   // @Post('file')
@@ -51,9 +56,21 @@ export class AbsensiController {
   //   return await this.absensiService.uploadSingle(image)
   // }
 
-  // @Get('/absent-users')
-  // async getAbsentUsersToday() {
-  //   return await this.absensiService.getAllUsersWhoHaveNotMarkedAttendanceToday();
-  // }
+  @Get('/absent-users')
+  async getAbsentUsersToday() {
+    return await this.absensiService.getAllUsersWhoHaveNotMarkedAttendanceToday();
+  }
+
+  @Get('/history')
+  async getAllDataSortedByDate(@Query() query: ExpressQuery) {
+    const result = await this.absensiService.getAllDataSortedByDate(query);
+  
+  const data = result.data; // Data yang dipaginasi
+  const totalPages = result.totalPages; // Jumlah total halaman
+
+  // Lakukan proses lanjutan dengan 'data' dan 'totalPages' sesuai kebutuhan Anda
+  
+  return { data, totalPages };
+  }
 
 }

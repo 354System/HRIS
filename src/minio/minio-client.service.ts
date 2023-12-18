@@ -6,8 +6,8 @@ import * as crypto from 'crypto'
 
 @Injectable()
 export class MinioClientService {
-    private readonly logger: Logger;
-    private readonly baseBucket = config.MINIO_BUCKET
+  private readonly logger: Logger;
+  private readonly baseBucket = config.MINIO_BUCKET
 
   public get client() {
     return this.minio.client;
@@ -21,18 +21,19 @@ export class MinioClientService {
 
   public async upload(file: BufferedFile, baseBucket: string = this.baseBucket) {
     // console.log("File object:", file);
-    if(!(file.mimetype.includes('jpeg') || file.mimetype.includes('png') || file.mimetype.includes('pdf'))) {
+    if (!(file.mimetype.includes('jpeg') || file.mimetype.includes('png') || file.mimetype.includes('pdf'))) {
       throw new HttpException('Error uploading file', HttpStatus.BAD_REQUEST)
     }
-    let temp_filename = Date.now().toString()
-    let hashedFileName = crypto.createHash('md5').update(temp_filename).digest("hex");
+    // untuk meng-hash nama file
+    // let temp_filename = Date.now().toString();
+    // let hashedFileName = crypto.createHash('md5').update(temp_filename).digest("hex");
     let ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
 
-    let filename = hashedFileName + ext
+    let filename =  ext
     const fileName: string = `${filename}`;
     const fileBuffer = file.buffer;
-    this.client.putObject(baseBucket,fileName,fileBuffer, function(err, res) {
-      if(err) throw new HttpException('Error uploading file', HttpStatus.BAD_REQUEST)
+    this.client.putObject(baseBucket, fileName, fileBuffer, function (err, res) {
+      if (err) throw new HttpException('Error uploading file', HttpStatus.BAD_REQUEST)
     })
 
     return {
@@ -41,8 +42,8 @@ export class MinioClientService {
   }
 
   async delete(objetName: string, baseBucket: string = this.baseBucket) {
-    this.client.getObject(baseBucket, objetName, function(err, res) {
-      if(err) throw new HttpException("Oops Something wrong happend", HttpStatus.BAD_REQUEST)
+    this.client.getObject(baseBucket, objetName, function (err, res) {
+      if (err) throw new HttpException("Oops Something wrong happend", HttpStatus.BAD_REQUEST)
     })
   }
 }

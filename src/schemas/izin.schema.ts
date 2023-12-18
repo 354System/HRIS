@@ -9,32 +9,42 @@ export enum Category {
     Reject = 'Reject'
 }
 
+export enum Category1 {
+    Permission = 'Permission',
+}
+
 
 
 @Schema({
-    timestamps:true,
+    timestamps: true,
 })
 
-export class Izin extends Document implements IIzin{
+export class Izin extends Document implements IIzin {
 
     @Prop()
     izin: string;
 
     @Prop()
     approval: Category;
-    
+
     @Prop()
     fromdate: Date;
-    
+
+    @Prop()
+    date: Date;
+
     @Prop()
     untildate: Date;
-    
+
     @Prop()
     file: string;
-    
+
     @Prop()
-    description : string;
-    
+    description: string;
+
+    @Prop()
+    type: Category1;
+
     @Prop()
     user: User;
 

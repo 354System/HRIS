@@ -10,10 +10,10 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
-    PassportModule.register({defaultStrategy: 'jwt'}),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
-      useFactory:(config: ConfigService) => {
+      useFactory: (config: ConfigService) => {
         return {
           secret: config.get<string>('JWT_SECRET'),
           signOptions: {
@@ -22,9 +22,9 @@ import { JwtStrategy } from './jwt.strategy';
         };
       },
     }),
-    MongooseModule.forFeature([{name:'User', schema: UserSchema}])],
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
   controllers: [UserController],
-  providers: [UserService,JwtStrategy],
-  exports:[JwtStrategy,PassportModule,UserService],
+  providers: [UserService, JwtStrategy],
+  exports: [JwtStrategy, PassportModule, UserService],
 })
-export class UserModule {}
+export class UserModule { }

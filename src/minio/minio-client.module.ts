@@ -16,4 +16,4 @@ import { MinioClientService } from './minio-client.service';
   providers: [MinioClientService],
   exports: [MinioClientService]
 })
-export class MinioClientModule {}
+export class MinioClientModule { }

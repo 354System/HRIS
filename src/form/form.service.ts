@@ -18,23 +18,69 @@ export class FormService {
 
   ) { }
 
-  async findAll(query: Query): Promise<Form[]> {
+  async findAll(query: Query): Promise<any> {
+    const resPerPage = 10;
+    const currentPage = Number(query.page) || 1;
+    const skip = resPerPage * (currentPage - 1);
 
-    const resPerPage = 10
-    const currentPage = Number (query.page) || 1
-    const skip = resPerPage * (currentPage - 1)
+    let totalData = 0;
+    let form = [];
 
+    if (!query.page && !query.keyword) {
+      totalData = await this.formModel.countDocuments().exec();
+      form = await this.formModel.find().sort({ createdAt: -1 }).skip(skip).limit(resPerPage).exec();
 
-    const keyword = query.keyword ? {
-      'user.name': {
-        $regex: query.keyword,
-        $options: 'i',
-      }
-    } : {};
+    } else if (query.startDate && query.endDate) {
+      const startDate = new Date(query.startDate as string);
+      const endDate = new Date(query.endDate as string);
 
-    const forms = await this.formModel.find({ ...keyword });
-    return forms;
+      endDate.setDate(endDate.getDate() + 1);
+
+      totalData = await this.formModel.countDocuments({ date: { $gte: startDate, $lte: endDate } }).exec();
+      form = await this.formModel.find({ date: { $gte: startDate, $lte: endDate } }).sort({ createdAt: 1 }).skip(skip).limit(resPerPage).exec();
+
+    } else {
+      const keywordFilter = query.keyword ? {
+        $or: [
+          { 'user.name': { $regex: query.keyword, $options: 'i' } },
+          { 'user.divisi': { $regex: query.keyword, $options: 'i' } },
+          { 'approval': { $regex: query.keyword, $options: 'i' } },
+          { 'title': { $regex: query.keyword, $options: 'i' } },
+          { 'name': { $regex: query.keyword, $options: 'i' } },
+        ],
+      } : {};
+
+      totalData = await this.formModel.countDocuments({ $and: [{ ...keywordFilter }] }).exec();
+      form = await this.formModel.find({ ...keywordFilter }).sort({ createdAt: -1 }).skip(skip).limit(resPerPage).exec();
+    }
+
+    if (query.page === 'all' && !query.keyword && !query.startDate && !query.endDate) {
+      form = await this.formModel.find().sort({ createdAt: -1 }).exec();
+      return { form, totalPages: 1 };
+    } else if (query.page === 'all' && query.keyword) {
+      form = await this.formModel.find({
+        $or: [
+          { 'user.name': { $regex: query.keyword, $options: 'i' } },
+          { 'user.divisi': { $regex: query.keyword, $options: 'i' } },
+          { 'approval': { $regex: query.keyword, $options: 'i' } },
+          { 'title': { $regex: query.keyword, $options: 'i' } },
+          { 'name': { $regex: query.keyword, $options: 'i' } },
+        ],
+      }).sort({ createdAt: -1 }).exec();
+      return { form, totalPages: 1 };
+
+    } else if (query.page === 'all' && query.startDate && query.endDate) {
+      const startDate = new Date(query.startDate as string);
+      const endDate = new Date(query.endDate as string);
+      form = await this.formModel.find({ date: { $gte: startDate, $lte: endDate } }).exec();
+      return { form, totalPages: 1 };
+    }
+
+    const totalPages = Math.ceil(totalData / resPerPage);
+
+    return { form, totalPages };
   }
+
 
 
   async createForm(form: any, user: User, image: BufferedFile): Promise<Form> {
@@ -62,7 +108,7 @@ export class FormService {
     const form = await this.formModel.findById(id);
 
     if (!form) {
-      throw new HttpException('Absensi not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Form not found', HttpStatus.NOT_FOUND);
     }
     // Pastikan bahwa "checkout" ada dalam data yang dikirim dari frontend
     if (!updateFormDto.approval) {
@@ -73,9 +119,9 @@ export class FormService {
     form.approval = updateFormDto.approval; // Pastikan konversi ke tipe Date jika perlu
 
     // Simpan perubahan ke database
-    const updatedAbsensi = await form.save();  
+    const updatedForm = await form.save();
 
-    return updatedAbsensi;
+    return updatedForm;
   }
 
   async deleteById(id: string): Promise<Form> {
@@ -83,13 +129,13 @@ export class FormService {
     });
   }
 
-  async findAbsensiByUserId(id: string, query: Query): Promise<Form[]> {
+  async findFormByUserId(id: string, query: Query): Promise<Form[]> {
 
     const resPerPage = 10
-    const currentPage = Number (query.page) || 1
+    const currentPage = Number(query.page) || 1
     const skip = resPerPage * (currentPage - 1)
 
-    return this.formModel.find({ 'user._id': id }).exec();
+    return this.formModel.find({ 'user._id': id }).sort({ createdAt: -1 }).limit(resPerPage).skip(skip).exec();
   }
 
   async uploadSingle(image: BufferedFile) {

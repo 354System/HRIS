@@ -20,31 +20,31 @@ export enum Category {
     timestamps: true,
 })
 export class Form extends Document implements IForm {
-    
+
     @Prop()
     category: Category1;
 
     @Prop()
     approval: Category;
-    
+
     @Prop()
     title: string;
-    
+
     @Prop()
     date: Date;
-    
+
     @Prop()
     chronology: string;
-    
+
     @Prop()
     damage: string;
-    
+
     @Prop()
     name: string;
-    
+
     @Prop()
     reason: string;
-    
+
     @Prop()
     cost: string;
 

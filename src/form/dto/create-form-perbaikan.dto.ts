@@ -7,21 +7,21 @@ import { User } from "src/schemas/user.schema";
 
 export class CreateFormRepairDto {
 
-    category:Category1;
+    category: Category1;
 
     approval: Category;
 
     // @IsString()
     title: string;
-    
+
     date: Date;
-    
+
     // @IsString()
     chronology: string;
-    
+
     // @IsString()
     damage: string;
-    
+
     // @IsString()
     cost: string;
 

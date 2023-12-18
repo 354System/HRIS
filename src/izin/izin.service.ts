@@ -19,24 +19,71 @@ export class IzinService {
     ) { }
 
 
-    async findAll(query: Query): Promise<Izin[]> {
+    async findAll(query: Query): Promise<any> {
+        const resPerPage = 10;
+        const currentPage = Number(query.page) || 1;
+        const skip = resPerPage * (currentPage - 1);
 
-        const resPerPage = 10
-        const currentPage = Number (query.page) || 1
-        const skip = resPerPage * (currentPage - 1)
+        let totalData = 0;
+        let izin = [];
 
-        const keyword = query.keyword ? {
-            'user.name': {
-                $regex: query.keyword,
-                $options: 'i',
-            }
-        } : {};
+        if (!query.page && !query.keyword) {
+            totalData = await this.izinModel.countDocuments().exec();
+            izin = await this.izinModel.find().sort({ createdAt: -1 }).skip(skip).limit(resPerPage).exec();
 
-        const absensis = await this.izinModel.find({ ...keyword });
-        return absensis;
+        } else if (query.startDate && query.endDate) {
+            const startDate = new Date(query.startDate as string);
+            const endDate = new Date(query.endDate as string);
+
+            endDate.setDate(endDate.getDate() + 1);
+
+            totalData = await this.izinModel.countDocuments({ createdAt: { $gte: startDate, $lte: endDate } }).exec();
+            izin = await this.izinModel.find({ createdAt: { $gte: startDate, $lte: endDate } }).sort({ createdAt: 1 }).skip(skip).limit(resPerPage).exec();
+
+        } else {
+            const keywordFilter = query.keyword ? {
+                $or: [
+                    { 'user.name': { $regex: query.keyword, $options: 'i' } },
+                    { 'user.divisi': { $regex: query.keyword, $options: 'i' } },
+                    { 'izin': { $regex: query.keyword, $options: 'i' } },
+                    { 'type': { $regex: query.keyword, $options: 'i' } },
+                    { 'approval': { $regex: query.keyword, $options: 'i' } },
+                ],
+            } : {};
+
+            totalData = await this.izinModel.countDocuments({ $and: [{ ...keywordFilter }] }).exec();
+            izin = await this.izinModel.find({ ...keywordFilter }).sort({ createdAt: -1 }).skip(skip).limit(resPerPage).exec();
+        }
+
+        if (query.page === 'all' && !query.keyword && !query.startDate && !query.endDate) {
+            izin = await this.izinModel.find().sort({ createdAt: -1 }).exec();
+            return { izin, totalPages: 1 };
+        } else if (query.page === 'all' && query.keyword) {
+            izin = await this.izinModel.find({
+                $or: [
+                    { 'user.name': { $regex: query.keyword, $options: 'i' } },
+                    { 'user.divisi': { $regex: query.keyword, $options: 'i' } },
+                    { 'izin': { $regex: query.keyword, $options: 'i' } },
+                    { 'type': { $regex: query.keyword, $options: 'i' } },
+                    { 'approval': { $regex: query.keyword, $options: 'i' } },
+                ],
+            }).sort({ createdAt: -1 }).exec();
+            return { izin, totalPages: 1 };
+
+        } else if (query.page === 'all' && query.startDate && query.endDate) {
+            const startDate = new Date(query.startDate as string);
+            const endDate = new Date(query.endDate as string);
+            izin = await this.izinModel.find({ date: { $gte: startDate, $lte: endDate } }).exec();
+            return { izin, totalPages: 1 };
+        }
+
+        const totalPages = Math.ceil(totalData / resPerPage);
+
+        return { izin, totalPages };
     }
 
-    async createIzin(izin: any, user: User, image: BufferedFile): Promise<Izin> {
+
+    async createIzin(izin: any, user: User, image: BufferedFile,): Promise<Izin> {
         const Time = new Date();
 
         let uploaded_image = await this.minioClientService.upload(image)
@@ -60,13 +107,13 @@ export class IzinService {
 
 
 
-    async findIzinByUserId(id: string,query: Query): Promise<Izin[]> {
+    async findIzinByUserId(id: string, query: Query): Promise<Izin[]> {
 
         const resPerPage = 10
-        const currentPage = Number (query.page) || 1
+        const currentPage = Number(query.page) || 1
         const skip = resPerPage * (currentPage - 1)
         // Menggunakan metode `find` untuk mencari izin berdasarkan ID pengguna
-        return this.izinModel.find({ 'user._id': id }).exec();
+        return this.izinModel.find({ 'user._id': id }).sort({ createdAt: -1 }).limit(resPerPage).skip(skip).exec();
     }
 
 
@@ -81,7 +128,7 @@ export class IzinService {
             throw new HttpException('Invalid data: "approval" field is missing', HttpStatus.BAD_REQUEST);
         }
 
-        // Setel nilai "approval" ke entitas "cuti"
+        // Setel nilai "approval" ke entitas "izin"
         izin.approval = updateIzinDto.approval;
 
         // Simpan perubahan ke database

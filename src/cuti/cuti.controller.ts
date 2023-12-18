@@ -13,7 +13,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class CutiController {
 
     constructor(private cutiService: CutiService,
-        ) { }
+    ) { }
 
     @Get('/all')
     @UseGuards(AuthGuard())
@@ -32,8 +32,8 @@ export class CutiController {
 
     @Get('by/:id')
     async getCutiByUserId(@Param('id') id: string, @Query() query: ExpressQuery) {
-        const absensi = await this.cutiService.findCutiByUserId(id,query);
-        return absensi;
+        const cuti = await this.cutiService.findCutiByUserId(id, query);
+        return cuti;
     }
 
     @Patch('approved/:id')

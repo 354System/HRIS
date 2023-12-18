@@ -3,16 +3,15 @@ import { DokumenController } from './dokumen.controller';
 import { DokumenService } from './dokumen.service';
 import { MinioClientModule } from 'src/minio/minio-client.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UploadSchema } from 'src/schemas/upload.schema';
 import { UserModule } from 'src/user/user.module';
 import { DokumenSchema } from 'src/schemas/dokumen.schema';
 
 @Module({
-  imports:[
+  imports: [
     MinioClientModule,
     UserModule,
-    MongooseModule.forFeature([{name:'Dokumen', schema: DokumenSchema}]),],
+    MongooseModule.forFeature([{ name: 'Dokumen', schema: DokumenSchema }]),],
   controllers: [DokumenController],
-  providers: [DokumenService,MinioClientModule]
+  providers: [DokumenService, MinioClientModule]
 })
-export class DokumenModule {}
+export class DokumenModule { }

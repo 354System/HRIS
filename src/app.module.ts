@@ -11,6 +11,7 @@ import { MinioClientModule } from './minio/minio-client.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DokumenModule } from './dokumen/dokumen.module';
 import { FormModule } from './form/form.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -20,6 +21,9 @@ import { FormModule } from './form/form.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DB_URI),
+    MulterModule.register({
+      dest: './uploads'
+    }),
     UserModule,
     AbsensiModule,
     IzinModule,
@@ -30,4 +34,4 @@ import { FormModule } from './form/form.module';
   controllers: [AppController,],
   providers: [AppService,],
 })
-export class AppModule {}
+export class AppModule { }

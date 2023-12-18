@@ -7,21 +7,21 @@ import { User } from "src/schemas/user.schema";
 
 export class CreateFormPurchaseDto {
 
-    category:Category1;
+    category: Category1;
 
     approval: Category;
 
     // @IsString()
     title: string;
-    
+
     date: Date;
-    
+
     // @IsString()
     name: string
-    
+
     // @IsString()
     reason: string
-    
+
     // @IsString()
     cost: string
 

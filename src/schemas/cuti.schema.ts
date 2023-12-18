@@ -9,33 +9,44 @@ export enum Category {
     Reject = 'Reject'
 }
 
+export enum Category1 {
+    Leave = 'Leave',
+
+}
+
 @Schema({
-    timestamps:true,
+    timestamps: true,
 })
-export class Cuti extends Document implements ICuti{
+export class Cuti extends Document implements ICuti {
 
     @Prop()
-    cuti: string;   
+    cuti: string;
 
     @Prop()
     approval: Category;
-    
+
     @Prop()
     fromdate: Date;
     
     @Prop()
+    date: Date;
+
+    @Prop()
     untildate: Date;
-    
+
     @Prop()
     file: string;
-    
-    @Prop() 
-    description : string;
-    
+
+    @Prop()
+    description: string;
+
+    @Prop()
+    type: Category1;
+
     @Prop()
     user: User;
 
-    
+
 
 }
 

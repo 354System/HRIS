@@ -22,10 +22,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
 
     async validate(payload) {
-        const { id, role} = payload;
+        const { id, role } = payload;
 
         const user = await this.userModel.findById(id);
-        
+
 
         if (!user) {
             throw new UnauthorizedException('login first to access this endpoint.')
@@ -36,5 +36,5 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         // }
         return user;
     }
-    
+
 }

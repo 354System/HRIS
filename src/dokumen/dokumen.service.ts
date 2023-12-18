@@ -31,11 +31,11 @@ export class DokumenService {
         name: user.name,
       },
       file: uploaded_image.url,
-      
+
     });
 
     console.log(uploaded_image.url);
-    
+
     const res = await this.dokumenModel.create(data);
     return res;
   }
@@ -46,7 +46,7 @@ export class DokumenService {
     const newUpload = new this.dokumenModel({
       file: uploaded_image.url,
     });
-    
+
     await newUpload.save();
 
     return {

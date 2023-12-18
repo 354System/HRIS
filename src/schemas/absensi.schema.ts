@@ -4,12 +4,12 @@ import { Document } from "mongoose";
 import { IAbsensi } from "src/interface/interface.absensi";
 
 export enum Category1 {
-    WFO = 'Work From Office',
+    WFO = 'Work From Office',//status
     WFH = 'Work Form Home'
 }
 
 export enum Category {
-    Present = 'Present',
+    Present = 'Present',//type
     Late = 'Late',
     Absent = 'Absent'
 }
@@ -25,7 +25,7 @@ export class Absensi extends Document implements IAbsensi {
 
     @Prop()
     date: Date;
-    
+
     @Prop()
     checkin: string;
 

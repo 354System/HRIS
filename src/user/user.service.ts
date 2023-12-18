@@ -14,7 +14,7 @@ import * as schedule from 'node-schedule';
 export class UserService {
   constructor(
     @InjectModel(User.name)
-    private userModel: Model<User>,
+    public userModel: Model<User>,
     public jwtService: JwtService,
 
   ) { }
@@ -131,7 +131,7 @@ export class UserService {
     if (!isPasswordMatched) {
       throw new UnauthorizedException('Invalid Password')
     }
-    const token = this.jwtService.sign({ id: user._id, role: user.role})
+    const token = this.jwtService.sign({ id: user._id, role: user.role })
     const role = user.role
     const username = user.name
     const useremail = user.email
